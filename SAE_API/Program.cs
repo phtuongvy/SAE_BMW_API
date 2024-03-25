@@ -56,10 +56,27 @@ namespace SAE_API
             builder.Services.AddScoped<IDataRepository<EstDans>, EstDanssManager>();
             builder.Services.AddScoped<IDataRepository<Estimer>, EstimerManager>();
             builder.Services.AddScoped<IDataRepository<Favoris>, FavorisManager>();
-            builder.Services.AddScoped<IDataRepository<Equipement>, EquipementManager>();
-            builder.Services.AddScoped<IDataRepository<Equipement>, EquipementManager>();
-            builder.Services.AddScoped<IDataRepository<Equipement>, EquipementManager>();
-            builder.Services.AddScoped<IDataRepository<Equipement>, EquipementManager>();
+            builder.Services.AddScoped<IDataRepository<GammeMoto>, GammeMotoManager>();
+            builder.Services.AddScoped<IDataRepository<Illustrer>, IllustrerManager>();
+            builder.Services.AddScoped<IDataRepository<Moto>, MotoManager>();
+            builder.Services.AddScoped<IDataRepository<MotoDisponible>, MotoDisponibleManager>();
+            builder.Services.AddScoped<IDataRepository<MoyenDePaiement>, MoyenDePaiementManager>();
+            builder.Services.AddScoped<IDataRepository<Pack>, PackManager>();
+            builder.Services.AddScoped<IDataRepository<PeutContenir>, PeutContenirManager>();
+            builder.Services.AddScoped<IDataRepository<PeutEquiper>, PeutEquiperManager>();
+            builder.Services.AddScoped<IDataRepository<PeutUtiliser>, PeutUtiliserManager>();
+            builder.Services.AddScoped<IDataRepository<Photo>, PhotoManager>();
+            builder.Services.AddScoped<IDataRepository<Posseder>, PossederManager>();
+            builder.Services.AddScoped<IDataRepository<Presente>, PresenteManager>();
+            builder.Services.AddScoped<IDataRepository<PriseRendezvous>, PriseRendezvousManager>();
+            builder.Services.AddScoped<IDataRepository<Provenance>, ProvenanceManager>();
+            builder.Services.AddScoped<IDataRepository<RepriseMoto>, RepriseMotoManager>();
+            builder.Services.AddScoped<IDataRepository<Reservation>, ReservationManager>();
+            builder.Services.AddScoped<IDataRepository<Segement>, SegementManager>();
+            builder.Services.AddScoped<IDataRepository<Stock>, StockManager>();
+            builder.Services.AddScoped<IDataRepository<TailleEquipement>, TailleEquipementManager>();
+            builder.Services.AddScoped<IDataRepository<Transation>, TransationManager>();
+            builder.Services.AddScoped<IDataRepository<TypeEquipement>, TypeEquipementManager>();
 
             builder.Services.AddRazorPages();
 
