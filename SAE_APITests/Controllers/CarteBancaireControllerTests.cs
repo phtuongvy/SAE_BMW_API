@@ -26,11 +26,12 @@ namespace SAE_API.Controllers.Tests
         [TestInitialize]
         public void Init()
         {
-            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server=localhost;port=5432;Database=RatingFilmsDB; uid=postgres;password=postgres;");
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
             context = new BMWDBContext(builder.Options);
             dataRepository = new CarteBancaireManager(context);
             controller = new CarteBancaireController(dataRepository);
         }
+
         /// <summary>
         /// Test Contrôleur 
         /// </summary>
@@ -125,42 +126,40 @@ namespace SAE_API.Controllers.Tests
         [TestMethod]
         public void PutCarteBancaireTestAvecMoq()
         {
-            ICollection<Acquerir> AcquisC = new List<Acquerir>
-            {
-                new Acquerir { /* initialisez les propriétés de l'objet ici */ },
-                new Acquerir { /* un autre objet Acquerir */ }
-            };
 
             // Arrange
-            CarteBancaire catre = new CarteBancaire
+            CarteBancaire carteToUpdate = new CarteBancaire
             {
-                IdCb = 1,
+                IdCb = 2000,
                 NomCarte = "NUNES EMILIO Ricardo ",
                 NumeroCb = "12345678901234",
                 MoisExpiration = 02,
                 AnneeExpiration = 25,
                 CryptoCb = "093",
-                AcquisCB = AcquisC
+                
             };
-            CarteBancaire catre2 = new CarteBancaire
+            CarteBancaire updatedCarte = new CarteBancaire
             {
-                IdCb = 2,
+                IdCb = 21000,
                 NomCarte = "NUNES  ",
                 NumeroCb = "1234567890123fzeoizjf",
                 MoisExpiration = 03,
                 AnneeExpiration = 25,
                 CryptoCb = "093",
-                AcquisCB = AcquisC
+                
             };
             var mockRepository = new Mock<IDataRepository<CarteBancaire>>();
-            mockRepository.Setup(x => x.GetByIdAsync(2).Result).Returns(catre2);
-            var userController = new CarteBancaireController(mockRepository.Object);
+            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(carteToUpdate);
+            mockRepository.Setup(repo => repo.UpdateAsync(carteToUpdate, carteToUpdate)).Returns(Task.CompletedTask);
+      
+
+            var controller = new CarteBancaireController(mockRepository.Object);
 
             // Act
-            var actionResult = userController.PutCarteBancaire(2, catre).Result;
+            var result = controller.PutCarteBancaire(21000, updatedCarte).Result;
 
             // Assert
-            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult");
+            Assert.IsInstanceOfType(result, typeof(NoContentResult), "La réponse n'est pas du type attendu NoContentResult");
         }
 
         /// <summary>
@@ -206,25 +205,21 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod()]
-        public void DeleteUtilisateurTest()
+        public void DeleteCarteBancaireTest()
         {
             // 
-            ICollection<Acquerir> AcquisC = new List<Acquerir>
-            {
-                new Acquerir { /* initialisez les propriétés de l'objet ici */ },
-                new Acquerir { /* un autre objet Acquerir */ }
-            };
+            
 
             // Arrange
             CarteBancaire catre = new CarteBancaire
             {
-                IdCb = 1,
+                IdCb = 200,
                 NomCarte = "NUNES EMILIO Ricardo ",
                 NumeroCb = "12345678901234",
                 MoisExpiration = 02,
                 AnneeExpiration = 25,
                 CryptoCb = "093",
-                AcquisCB = AcquisC
+              
             };
             context.CartesBancaires.Add(catre);
             context.SaveChanges();
@@ -240,7 +235,7 @@ namespace SAE_API.Controllers.Tests
 
 
         [TestMethod]
-        public void DeleteUtilisateurTest_AvecMoq()
+        public void DeleteCarteBancaireTest_AvecMoq()
         {
             ICollection<Acquerir> AcquisC = new List<Acquerir>
             {
