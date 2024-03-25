@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE_API", "SAE_API\SAE_API.csproj", "{D2C0EEF8-2449-4E72-A64F-BFD480F523BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE_APITests", "SAE_APITests\SAE_APITests.csproj", "{0C166DF3-F8D9-4172-98A6-41B8B9E75235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE_APITests", "SAE_APITests\SAE_APITests.csproj", "{0C166DF3-F8D9-4172-98A6-41B8B9E75235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE_BMW_JWT", "SAE_BMW_JWT\SAE_BMW_JWT.csproj", "{A3A40670-B324-4B7F-969B-BDE089B7BF62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0C166DF3-F8D9-4172-98A6-41B8B9E75235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C166DF3-F8D9-4172-98A6-41B8B9E75235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C166DF3-F8D9-4172-98A6-41B8B9E75235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A40670-B324-4B7F-969B-BDE089B7BF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A40670-B324-4B7F-969B-BDE089B7BF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A40670-B324-4B7F-969B-BDE089B7BF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A40670-B324-4B7F-969B-BDE089B7BF62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
