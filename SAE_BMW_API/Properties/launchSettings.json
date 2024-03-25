@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:33464",
-      "sslPort": 44373
+      "applicationUrl": "http://localhost:7521",
+      "sslPort": 44364
     }
   },
   "profiles": {
-    "SAE_BMW_JWT": {
+    "SAE_BMW_API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7129;http://localhost:5175",
+      "applicationUrl": "https://localhost:7118;http://localhost:5294",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

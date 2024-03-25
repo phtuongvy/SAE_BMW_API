@@ -1,4 +1,4 @@
-namespace SAE_BMW_JWT
+namespace SAE_BMW_API
 {
     public class WeatherForecast
     {
