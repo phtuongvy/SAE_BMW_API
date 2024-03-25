@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAE_API.Models.EntityFramework;
+using SAE_API.Repository;
 
 namespace SAE_API.Models.DataManager
 {
-    public class CouleurEquipementManager
+    public class CouleurEquipementManager: IDataRepository<CouleurEquipement>
     {
         readonly BMWDBContext? bmwDBContext;
 

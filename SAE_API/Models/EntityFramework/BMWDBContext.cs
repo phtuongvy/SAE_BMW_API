@@ -25,6 +25,7 @@ namespace SAE_API.Models.EntityFramework
         public virtual DbSet<EquipementAccessoire> EquipementAccessoires { get; set; }
         public virtual DbSet<EquipementMotoOption> EquipementMotoOptions { get; set; }
         public virtual DbSet<EstDans> EstDanss { get; set; } // Note: Vérifie le pluriel pour cette entité
+        public virtual DbSet<Favoris> Favoriss { get; set; }
         public virtual DbSet<Illustrer> Illustrers { get; set; }
         public virtual DbSet<Pack> Packs { get; set; }
         public virtual DbSet<PeutUtiliser> PeutUtilisers { get; set; }
