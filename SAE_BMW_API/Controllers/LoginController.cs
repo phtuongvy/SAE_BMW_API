@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using SAE_API.Models.EntityFramework;
 using SAE_BMW_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,9 +14,9 @@ namespace SAE_BMW_API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private List<User> appUsers = new List<User>
+        private List<CompteClient> appUsers = new List<CompteClient>
             {
-            new User { FullName = "Vincent COUTURIER", UserName = "vince", Password = "1234",
+            new CompteClient { NomClient = , UserName = "vince", Password = "1234",
             UserRole = "Admin" },
             new User { FullName = "Marc MACHIN", UserName = "marc", Password = "1234", UserRole =
             "User" }
