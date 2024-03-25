@@ -22,6 +22,7 @@ namespace SAE_API
             builder.Services.AddScoped<IDataRepository<AChoisi>, AChoisiManager>();
             builder.Services.AddScoped<IDataRepository<AChoisiOption>, AChoisiOptionManager>();
             builder.Services.AddScoped<IDataRepository<Acquerir>, AcquerirManager>();
+            builder.Services.AddScoped<IDataRepository<Adresse>, AdresseManager>();
             builder.Services.AddScoped<IDataRepository<APourCouleur>, APourCouleurManager>();
             builder.Services.AddScoped<IDataRepository<APourTaille>, APourTailleManager>();
             builder.Services.AddScoped<IDataRepository<APourValeur>, APourValeurManager>();

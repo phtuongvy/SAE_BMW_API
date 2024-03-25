@@ -21,6 +21,7 @@ namespace SAE_API.Controllers
             this._adresse = adresseRepository;
         }
 
+        // GET: api/Adresses
         [HttpGet]
         [ActionName("GetAdresses")]
         public async Task<ActionResult<IEnumerable<Adresse>>> GetAdresses()
@@ -28,14 +29,14 @@ namespace SAE_API.Controllers
             return await _adresse.GetAllAsync();
         }
 
-        // GET: api/Utilisateurs/5
+        // GET: api/Adresses/5
         [HttpGet("{id}")]
         [ActionName("GetAdresseById")]
         public async Task<ActionResult<Adresse>> GetAdresseById(int id)
         {
 
             var adresse = await _adresse.GetByIdAsync(id);
-            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            //var utilisateur = await _context.Adresses.FindAsync(id);
             if (adresse == null)
             {
                 return NotFound();
@@ -44,7 +45,7 @@ namespace SAE_API.Controllers
         }
 
 
-        // PUT: api/Utilisateurs/5
+        // PUT: api/Adresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [ActionName("PutAdresse")]
@@ -54,19 +55,19 @@ namespace SAE_API.Controllers
             {
                 return BadRequest();
             }
-            var userToUpdate = await _adresse.GetByIdAsync(id);
-            if (userToUpdate == null)
+            var adresseToUpdate = await _adresse.GetByIdAsync(id);
+            if (adresseToUpdate == null)
             {
                 return NotFound();
             }
             else
             {
-                await _adresse.UpdateAsync(userToUpdate.Value, adresse);
+                await _adresse.UpdateAsync(adresseToUpdate.Value, adresse);
                 return NoContent();
             }
         }
 
-        // POST: api/Utilisateurs
+        // POST: api/Adresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [ActionName("PostAdresse")]
@@ -80,7 +81,7 @@ namespace SAE_API.Controllers
             return CreatedAtAction("GetAdresseById", new { id = adresse.IdAdresse }, adresse); // GetById : nom de l’action
         }
 
-        // DELETE: api/Utilisateurs/5
+        // DELETE: api/Adresses/5
         [HttpDelete("{id}")]
         [ActionName("DeleteAdresse")]
         public async Task<IActionResult> DeleteAdresse(int id)
