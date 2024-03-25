@@ -89,9 +89,9 @@ namespace SAE_API
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-            //app.UseAuthentication();
+
             app.UseAuthorization();
 
 
