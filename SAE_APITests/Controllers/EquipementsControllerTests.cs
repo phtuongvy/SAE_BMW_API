@@ -197,6 +197,7 @@ namespace SAE_API.Controllers.Tests
 
             Equipement equipement = new Equipement
             {
+                IdEquipement = 1000,
                 IdSegment = 1,
                 IdCollection = 1,
                 IdTypeEquipement = 1,
@@ -212,7 +213,7 @@ namespace SAE_API.Controllers.Tests
             var res = controller.PostEquipement(equipement).Result;
 
             // Arrange
-            Equipement equipement_nouveau = context.Equipements.Find(41);
+            Equipement? equipement_nouveau = context.Equipements.Find(1000);
             equipement.IdEquipement = equipement_nouveau.IdEquipement;
             Assert.AreEqual(equipement, equipement_nouveau,"Equipements pas identiques ");
         }

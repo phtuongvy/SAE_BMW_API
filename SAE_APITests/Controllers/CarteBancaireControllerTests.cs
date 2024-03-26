@@ -181,7 +181,7 @@ namespace SAE_API.Controllers.Tests
         {
             // Arrange
 
-            CarteBancaire catre = new CarteBancaire
+            CarteBancaire carte = new CarteBancaire
             {
                 IdCb = 100,
                 NomCarte = "NUNES EMILIO Ricardo ",
@@ -193,18 +193,18 @@ namespace SAE_API.Controllers.Tests
             };
 
             // Act
-            var result = controller.PostCarteBancaire(catre).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+            var result = controller.PostCarteBancaire(carte).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
 
             // Assert
             // On récupère l'utilisateur créé directement dans la BD grace à son mail unique
-            CarteBancaire? userRecupere = context.CartesBancaires
-                .Where(u => u.IdCb == catre.IdCb)
+            CarteBancaire? carteRecupere = context.CartesBancaires
+                .Where(u => u.IdCb == carte.IdCb)
                 .FirstOrDefault();
 
             // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
             // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
-            catre.IdCb = userRecupere.IdCb;
-            Assert.AreEqual(userRecupere, catre, "Utilisateurs pas identiques");
+            carte.IdCb = carteRecupere.IdCb;
+            Assert.AreEqual(carteRecupere, carte, "Utilisateurs pas identiques");
         }
 
         [TestMethod]
