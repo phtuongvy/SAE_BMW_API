@@ -38,6 +38,16 @@ namespace SAE_API.Controllers.Tests
         [TestMethod()]
         public void CarteBancaireControllerTest()
         {
+            // Arrange
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+            context = new BMWDBContext(builder.Options);
+            dataRepository = new CarteBancaireManager(context);
+
+            // Act
+            var cartebancaire = new CarteBancaireController(dataRepository);
+
+            // Assert
+            Assert.IsNotNull(cartebancaire, "L'instance de MaClasse ne devrait pas être null.");
 
         }
 
@@ -150,7 +160,7 @@ namespace SAE_API.Controllers.Tests
             };
             var mockRepository = new Mock<IDataRepository<CarteBancaire>>();
             mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(carteToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(carteToUpdate, carteToUpdate)).Returns(Task.CompletedTask);
+            mockRepository.Setup(repo => repo.UpdateAsync(carteToUpdate, updatedCarte)).Returns(Task.CompletedTask);
       
 
             var controller = new CarteBancaireController(mockRepository.Object);
@@ -165,18 +175,46 @@ namespace SAE_API.Controllers.Tests
         /// <summary>
         /// Test PostUtilisateur 
         /// </summary>
-        [TestMethod]
+        /// 
+        [TestMethod()]
         public void PostCarteBancaireTest()
+        {
+            // Arrange
+
+            CarteBancaire catre = new CarteBancaire
+            {
+                IdCb = 100,
+                NomCarte = "NUNES EMILIO Ricardo ",
+                NumeroCb = "12345678901234",
+                MoisExpiration = 02,
+                AnneeExpiration = 25,
+                CryptoCb = "093",
+
+            };
+
+            // Act
+            var result = controller.PostCarteBancaire(catre).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+
+            // Assert
+            // On récupère l'utilisateur créé directement dans la BD grace à son mail unique
+            CarteBancaire? userRecupere = context.CartesBancaires
+                .Where(u => u.IdCb == catre.IdCb)
+                .FirstOrDefault();
+
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            catre.IdCb = userRecupere.IdCb;
+            Assert.AreEqual(userRecupere, catre, "Utilisateurs pas identiques");
+        }
+
+        [TestMethod]
+        public void PostCarteBancaireTest_Mok()
         {
             // Arrange
             var mockRepository = new Mock<IDataRepository<CarteBancaire>>();
             var userController = new CarteBancaireController(mockRepository.Object);
 
-            ICollection<Acquerir> AcquisC = new List<Acquerir>
-            {
-                new Acquerir { /* initialisez les propriétés de l'objet ici */ },
-                new Acquerir { /* un autre objet Acquerir */ }
-            };
+           
 
             // Arrange
             CarteBancaire catre = new CarteBancaire
@@ -187,7 +225,7 @@ namespace SAE_API.Controllers.Tests
                 MoisExpiration = 02,
                 AnneeExpiration = 25,
                 CryptoCb = "093",
-                AcquisCB = AcquisC
+
             };
             // Act
             var actionResult = userController.PostCarteBancaire(catre).Result;
@@ -201,15 +239,12 @@ namespace SAE_API.Controllers.Tests
         }
 
         /// <summary>
-        /// Test DeleteUtilisateu 
+        /// Test Delete 
         /// </summary>
 
         [TestMethod()]
         public void DeleteCarteBancaireTest()
         {
-            // 
-            
-
             // Arrange
             CarteBancaire catre = new CarteBancaire
             {
