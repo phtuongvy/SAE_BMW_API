@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SAE_API.Models;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SAE_API.Controllers
 {
@@ -86,6 +88,8 @@ namespace SAE_API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var hashedPassword = ComputeSha256Hash(compteClient.Password);
+            compteClient.Password = hashedPassword;
             await dataRepository.AddAsync(compteClient);
             return CreatedAtAction("GetUtilisateurById", new { id = compteClient.IdCompteClient }, compteClient); // GetById : nom de l’action
         }
@@ -118,6 +122,27 @@ namespace SAE_API.Controllers
         {
             return Ok("This is a response from Admin method");
         }
+
+        // to encrypt password data
+        private string ComputeSha256Hash(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
+        }
+
+
+
+
 
     }
 }

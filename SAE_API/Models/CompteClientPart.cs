@@ -4,7 +4,7 @@ namespace SAE_API.Models.EntityFramework
 {
     public partial class CompteClient
     {
-        public CompteClient(int idCompteClient, string? nomClient, string? prenomClient, string? civiliteClient, string? numeroClient, string? email, DateTime? datenaissanceClient, byte[]? password, string? clientRole, ICollection<Enregistrer> enregistrerCompteClient, ICollection<Effectuer> effectuerCompteClient, ICollection<Acquerir> acquisComptes, ICollection<Favoris> favorisCompteClient, ICollection<Transation> transationCompteClient, Adresse adresseCompteClient, CompteAdmin compteAdminCompteClient, CompteClientProfessionnel compteClientProfessionnelCompteClient, ICollection<Estimer> estimerCompteClient, ICollection<RepriseMoto> repriseMotoCompteClient)
+        public CompteClient(int idCompteClient, string? nomClient, string? prenomClient, string? civiliteClient, string? numeroClient, string? email, DateTime? datenaissanceClient, string? password, string? clientRole, ICollection<Enregistrer> enregistrerCompteClient, ICollection<Effectuer> effectuerCompteClient, ICollection<Acquerir> acquisComptes, ICollection<Favoris> favorisCompteClient, ICollection<Transation> transationCompteClient, Adresse adresseCompteClient, CompteAdmin compteAdminCompteClient, CompteClientProfessionnel compteClientProfessionnelCompteClient, ICollection<Estimer> estimerCompteClient, ICollection<RepriseMoto> repriseMotoCompteClient)
         {
             IdCompteClient = idCompteClient;
             NomClient = nomClient;
@@ -37,7 +37,7 @@ namespace SAE_API.Models.EntityFramework
                    NumeroClient == client.NumeroClient &&
                    Email == client.Email &&
                    DatenaissanceClient == client.DatenaissanceClient &&
-                   EqualityComparer<byte[]?>.Default.Equals(Password, client.Password) &&
+                   EqualityComparer<string?>.Default.Equals(Password, client.Password) &&
                    ClientRole == client.ClientRole &&
                    EqualityComparer<ICollection<Enregistrer>>.Default.Equals(EnregistrerCompteClient, client.EnregistrerCompteClient) &&
                    EqualityComparer<ICollection<Effectuer>>.Default.Equals(EffectuerCompteClient, client.EffectuerCompteClient) &&

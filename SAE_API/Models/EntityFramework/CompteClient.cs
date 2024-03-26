@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography;
+
 
 namespace SAE_API.Models.EntityFramework
 {
@@ -48,7 +50,7 @@ namespace SAE_API.Models.EntityFramework
         public DateTime? DatenaissanceClient { get; set; }
 
         [Column("ccl_password", TypeName = "bytea")]
-        public byte[]? Password { get; set; }
+        public string? Password { get; set; }
 
         [Column("ccl_clientrole")]
         [StringLength(50)]
