@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SAE_API.Models;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
 
@@ -100,6 +102,21 @@ namespace SAE_API.Controllers
             }
             await dataRepository.DeleteAsync(compteClient.Value);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("GetUserData")]
+        [Authorize(Policy = Policies.User)]
+        public IActionResult GetUserData()
+        {
+            return Ok("This is a response from user method");
+        }
+        [HttpGet]
+        [Route("GetAdminData")]
+        [Authorize(Policy = Policies.Admin)]
+        public IActionResult GetAdminData()
+        {
+            return Ok("This is a response from Admin method");
         }
 
     }
