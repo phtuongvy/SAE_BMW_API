@@ -166,7 +166,7 @@ namespace SAE_API.Controllers.Tests
         /// Test PostUtilisateur 
         /// </summary>
         [TestMethod]
-        public void PostCarteBancaireTest()
+        public void PostCarteBancaireTestAvecMoq()
         {
             // Arrange
             var mockRepository = new Mock<IDataRepository<CarteBancaire>>();
@@ -199,6 +199,8 @@ namespace SAE_API.Controllers.Tests
             catre.IdCb = ((CarteBancaire)result.Value).IdCb;
             Assert.AreEqual(catre, (CarteBancaire)result.Value, "Utilisateurs pas identiques");
         }
+
+
 
         /// <summary>
         /// Test DeleteUtilisateu 

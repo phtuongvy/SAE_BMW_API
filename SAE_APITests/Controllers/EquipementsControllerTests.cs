@@ -117,30 +117,17 @@ namespace SAE_API.Controllers.Tests
         }
 
         [TestMethod]
-        public void PostEquipementTest_AvecMoq()
+        public void PutEquipementTest_AvecMoq()
         {
             // Arrange
-            Equipement commande = new Equipement
+            var fakeId = 100;
+            var equipementToUpdate = new Equipement
             {
-                IdEquipement = 100,
+                IdEquipement = fakeId,
                 IdSegment = 1,
                 IdCollection = 1,
                 IdTypeEquipement = 1,
-                NomEquipement = "Casque bleu ",
-                DescriptionEquipement = "blabla",
-                DetailEquipement = "oui",
-                DureeEquipement = "3",
-                PrixEquipement = 6762,
-                Sexe = "F"
-            };
-
-            Equipement commande2 = new Equipement
-            {
-                IdEquipement = 1002,
-                IdSegment = 1,
-                IdCollection = 1,
-                IdTypeEquipement = 1,
-                NomEquipement = "Casque bleu ",
+                NomEquipement = "Casque bleu",
                 DescriptionEquipement = "blabla",
                 DetailEquipement = "oui",
                 DureeEquipement = "3",
@@ -149,21 +136,26 @@ namespace SAE_API.Controllers.Tests
             };
 
             var mockRepository = new Mock<IDataRepository<Equipement>>();
-            mockRepository.Setup(x => x.GetByIdAsync(101).Result).Returns(commande2);
-            var userController = new EquipementsController(mockRepository.Object);
+            mockRepository.Setup(x => x.GetByIdAsync(fakeId))
+                .ReturnsAsync(equipementToUpdate); // Simule la récupération de l'équipement existant
+            mockRepository.Setup(x => x.UpdateAsync(equipementToUpdate, equipementToUpdate)).Returns(Task.CompletedTask);
+
+            var controller = new EquipementsController(mockRepository.Object);
 
             // Act
-            var actionResult = userController.PutEquipement(2, commande).Result;
+            var actionResult = controller.PutEquipement(fakeId, equipementToUpdate).Result;
 
             // Assert
-            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult");
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult)); // On s'attend à ce qu'aucun contenu ne soit retourné pour une mise à jour réussie
+            mockRepository.Verify(); // Vérifie que toutes les configurations vérifiables sur le mock ont bien été appelées
         }
+    
 
         /// <summary>
         /// Test PostEquipementTest 
         /// </summary>
         [TestMethod()]
-        public void PostEquipementTest()
+        public void PostEquipementTestAvecMoq()
         {
             // Arrange
             var mockRepository = new Mock<IDataRepository<Equipement>>();
@@ -193,6 +185,36 @@ namespace SAE_API.Controllers.Tests
             Assert.IsInstanceOfType(result.Value, typeof(Equipement), "Pas un Commande");
             equipement.IdEquipement = ((Equipement)result.Value).IdEquipement;
             Assert.AreEqual(equipement, (Equipement)result.Value, "Commande pas identiques");
+        }
+
+        /// <summary>
+        /// Test PostEquipementTest 
+        /// </summary>
+        [TestMethod]
+        public void PostEquipementTest()
+        {
+            // Arrange
+
+            Equipement equipement = new Equipement
+            {
+                IdSegment = 1,
+                IdCollection = 1,
+                IdTypeEquipement = 1,
+                NomEquipement = "Casque bleu ",
+                DescriptionEquipement = "blabla",
+                DetailEquipement = "oui",
+                DureeEquipement = "3",
+                PrixEquipement = 6762,
+                Sexe = "F"
+            };
+
+            // Act
+            var res = controller.PostEquipement(equipement).Result;
+
+            // Arrange
+            Equipement equipement_nouveau = context.Equipements.Find(41);
+            equipement.IdEquipement = equipement_nouveau.IdEquipement;
+            Assert.AreEqual(equipement, equipement_nouveau,"Equipements pas identiques ");
         }
 
         /// <summary>
