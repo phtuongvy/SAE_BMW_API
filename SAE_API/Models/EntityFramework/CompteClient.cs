@@ -71,15 +71,15 @@ namespace SAE_API.Models.EntityFramework
 
         [InverseProperty(nameof(Adresse.ClientAdresse))]
         //public virtual ICollection<Adresse> AdresseCompteClient { get; set; }
-        public virtual Adresse AdresseCompteClient { get; set; }
+        public virtual Adresse? AdresseCompteClient { get; set; }
 
         [InverseProperty(nameof(CompteAdmin.CompteClientCompteAdmin))]
-        public virtual CompteAdmin CompteAdminCompteClient { get; set; }
+        public virtual CompteAdmin? CompteAdminCompteClient { get; set; }
 
         [InverseProperty(nameof(CompteClientPrive.CompteClientCompteClientPrive))]
-        public virtual CompteClientPrive CompteClientPriveCompteClient { get; set; }
+        public virtual CompteClientPrive? CompteClientPriveCompteClient { get; set; }
         [InverseProperty(nameof(CompteClientProfessionnel.CompteClientCompteClientProfessionnel))]
-        public virtual CompteClientProfessionnel CompteClientProfessionnelCompteClient { get; set; }
+        public virtual CompteClientProfessionnel? CompteClientProfessionnelCompteClient { get; set; }
         [InverseProperty(nameof(Estimer.CompteClientEstimer))]
         public virtual ICollection<Estimer> EstimerCompteClient { get; set; }
 
