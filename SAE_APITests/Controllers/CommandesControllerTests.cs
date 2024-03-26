@@ -39,11 +39,21 @@ namespace SAE_API.Controllers.Tests
         [TestMethod()]
         public void CommandesControllerTest()
         {
+            // Arrange
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+            context = new BMWDBContext(builder.Options);
+            dataRepository = new CommandeManager(context);
+
+            // Act
+            var cartebancaire = new CommandesController(dataRepository);
+
+            // Assert
+            Assert.IsNotNull(cartebancaire, "L'instance de MaClasse ne devrait pas être null.");
 
         }
 
         /// <summary>
-        /// Test GetCommandesTest 
+        /// Test Get 
         /// </summary>
         [TestMethod()]
         public void GetCommandesTest()
@@ -57,7 +67,7 @@ namespace SAE_API.Controllers.Tests
         }
 
         /// <summary>
-        /// Test GetCommandeByIdTest 
+        /// Test GetByIdTest 
         /// </summary>
         [TestMethod()]
         public void GetCommandeByIdTest()
@@ -97,29 +107,61 @@ namespace SAE_API.Controllers.Tests
         }
 
         /// <summary>
-        /// Test PutCommande 
+        /// Test Put 
         /// </summary>
         [TestMethod()]
         public void PutCommandeTest()
         {
-            // Arrange
-            Random rnd = new Random();
-            int chiffre = rnd.Next(1, 1000000000);
-            Commande commande = context.Commandes.Find(1);
+            Commande userAtester = context.Commandes.Find(1);
 
             // Act
-            var res = controller.PutCommande(1, commande);
+            var res = controller.PutCommande(1, userAtester);
 
             // Arrange
-            CarteBancaire nouvellecarte = context.CartesBancaires.Find(1);
-            Assert.AreEqual(commande, nouvellecarte);
+            Commande nouvellecarte = context.Commandes.Find(1);
+            Assert.AreEqual(userAtester, nouvellecarte);
         }
 
         [TestMethod]
-        public void PutUtilisateurTest_AvecMoq()
+        public void PutCommandeTest_AvecMoq()
+        {
+            Commande commande = new Commande
+            {
+                IdCommande = 100,
+                PrixFraisLivraison = 30,
+                DateCommande = new DateTime(2003, 3, 10),
+                PrixTotal = 100,
+            };
+
+            Commande commande2 = new Commande
+            {
+                IdCommande = 100,
+                PrixFraisLivraison = 30,
+                DateCommande = new DateTime(2003, 3, 10),
+                PrixTotal = 100,
+            };
+
+            mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(userToUpdate);
+            mockRepository.Setup(x => x.UpdateAsync(userToUpdate, userUpdated)).Returns(Task.CompletedTask);
+
+            // Act
+            var actionResult = userController.PutUtilisateur(100, userUpdated).Result;
+
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Not a NoContentResult");
+
+        }
+
+        /// <summary>
+        /// Test Post
+        /// </summary>
+        [TestMethod()]
+        public void PostCommandeTest()
         {
             // Arrange
-            byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
+            Random rnd = new Random();
+            int chiffre = rnd.Next(1, 1000000000);
+
 
             Commande commande = new Commande
             {
@@ -129,30 +171,25 @@ namespace SAE_API.Controllers.Tests
                 PrixTotal = 100,
             };
 
-            Commande commande2 = new Commande
-            {
-                IdCommande = 101,
-                PrixFraisLivraison = 30,
-                DateCommande = new DateTime(10 / 03 / 2003),
-                PrixTotal = 100,
-            };
-
-            var mockRepository = new Mock<IDataRepository<Commande>>();
-            mockRepository.Setup(x => x.GetByIdAsync(101).Result).Returns(commande2);
-            var userController = new CommandesController(mockRepository.Object);
-
             // Act
-            var actionResult = userController.PutCommande(2, commande).Result;
+            var result = controller.PostCommande(commande).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
 
             // Assert
-            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult");
-        }
+            // On récupère l'utilisateur créé directement dans la BD grace à son mail unique
+            Commande? userRecupere = context.Commandes
+                .Where(u => u.IdCommande == commande.IdCommande)
+                .FirstOrDefault();
 
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            commande.IdCommande = userRecupere.IdCommande;
+            Assert.AreEqual(userRecupere, commande, "Utilisateurs pas identiques");
+        }
         /// <summary>
-        /// Test PostUtilisateur 
+        /// Test Post Avex MOQ 
         /// </summary>
         [TestMethod()]
-        public void PostCommandeTest()
+        public void PostCommandeTest_AvecMoq()
         {
             // Arrange
             var mockRepository = new Mock<IDataRepository<Commande>>();
@@ -161,7 +198,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             Commande catre = new Commande
             {
-                IdCommande = 1,
+                IdCommande = 100,
                 PrixFraisLivraison = 30,
                 DateCommande = new DateTime(10 / 03 / 2003),
                 PrixTotal = 100,
@@ -183,9 +220,8 @@ namespace SAE_API.Controllers.Tests
         [TestMethod()]
         public void DeleteCommandeTest()
         {
-            // Arrange
-
-            Commande commande = new Commande
+            // Crée une série fictive pour supprimer
+            var carteASupprimer = new Commande()
             {
                 IdCommande = 100,
                 PrixFraisLivraison = 30,
@@ -193,16 +229,17 @@ namespace SAE_API.Controllers.Tests
                 PrixTotal = 100,
             };
 
-            context.Commandes.Add(commande);
-            context.SaveChanges();
+            _context.Utilisateurs.Add(utilisateurASupprimer);
+            _context.SaveChanges();
 
-            // Act
-            Commande deletedCommande = context.Commandes.FirstOrDefault(u => u.IdCommande == commande.IdCommande);
-            _ = controller.DeleteCommande(deletedCommande.IdCommande).Result;
+            // Ajoute la série fictive à la base de données pour la supprimer ensuite
+            utilisateursController.DeleteUtilisateur(utilisateurASupprimer.UtilisateurId).Wait();
 
-            // Arrange
-            Commande res = context.Commandes.FirstOrDefault(u => u.IdCommande == commande.IdCommande);
-            Assert.IsNull(res, "Commande non supprimé");
+            List<Utilisateur> listeUtilisateurs = utilisateursController.GetUtilisateurs().Result.Value.ToList();
+
+            // Vérifie si la série a été supprimée en essayant de la récupérer
+            var deletedUser = listeUtilisateurs.FirstOrDefault(u => u.UtilisateurId == utilisateurASupprimer.UtilisateurId);
+            Assert.IsNull(deletedUser, "L'utilisateur n'a pas été supprimée de la base de données.");
         }
 
         [TestMethod()]
