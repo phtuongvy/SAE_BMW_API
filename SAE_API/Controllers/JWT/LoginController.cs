@@ -17,8 +17,6 @@ namespace SAE_API.Controllers.JWT
     {
         private readonly IConfiguration _config;
         private readonly IDataRepository<CompteClient> dataRepository;
-        private readonly BMWDBContext dbContext;
-        private List<CompteClient> appUsers = new List<CompteClient>();
 
         public LoginController(IConfiguration config, IDataRepository<CompteClient> dataRepo)
         {
@@ -27,10 +25,10 @@ namespace SAE_API.Controllers.JWT
         }
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] CompteClient login)
+        public async Task<IActionResult> Login([FromBody] CompteClient login)
         {
             IActionResult response = Unauthorized();
-            CompteClient user = AuthenticateUser(login);
+            CompteClient user = await AuthenticateUser(login);
             if (user != null)
             {
                 var tokenString = GenerateJwtToken(user);
@@ -42,10 +40,11 @@ namespace SAE_API.Controllers.JWT
             }
             return response;
         }
-        private CompteClient AuthenticateUser(CompteClient user)
+        private async Task<CompteClient> AuthenticateUser(CompteClient user)
         {
-            
-            return dataRepository.GetAllAsync().SingleOrDefault(x => x.Email.ToUpper() == user.Email.ToUpper() &&
+            var comptes = await dataRepository.GetAllAsync();
+
+            return comptes.Value.SingleOrDefault(x => x.Email.ToUpper() == user.Email.ToUpper() &&
            x.Password == user.Password);
         }
         private string GenerateJwtToken(CompteClient userInfo)
