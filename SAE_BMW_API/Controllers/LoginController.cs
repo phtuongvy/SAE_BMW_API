@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SAE_API.Models.EntityFramework;
+using SAE_API.Repository;
 using SAE_BMW_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,53 +15,45 @@ namespace SAE_BMW_API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private List<CompteClient> appUsers = new List<CompteClient>
-            {
-            new CompteClient { NomClient = , UserName = "vince", Password = "1234",
-            UserRole = "Admin" },
-            new User { FullName = "Marc MACHIN", UserName = "marc", Password = "1234", UserRole =
-            "User" }
-            };
+        private List<CompteClient> appUsers = new List<CompteClient>();
 
         public LoginController(IConfiguration config)
         {
             _config = config;
         }
 
-
-
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] User login)
+        public IActionResult Login([FromBody] CompteClient login)
         {
             IActionResult response = Unauthorized();
-            User user = AuthenticateUser(login);
-            if (user != null)
+            CompteClient compteClient = AuthenticateUser(login);
+            if (compteClient != null)
             {
-                var tokenString = GenerateJwtToken(user);
+                var tokenString = GenerateJwtToken(compteClient);
                 response = Ok(new
                 {
                     token = tokenString,
-                    userDetails = user,
+                    userDetails = compteClient,
                 });
             }
             return response;
         }
-        private User AuthenticateUser(User user)
+        private CompteClient AuthenticateUser(CompteClient compteClient)
         {
-            return appUsers.SingleOrDefault(x => x.UserName.ToUpper() == user.UserName.ToUpper() &&
-            x.Password == user.Password);
+            return appUsers.SingleOrDefault(x => x.Email.ToUpper() == compteClient.Email.ToUpper() &&
+            x.Password == compteClient.Password);
         }
-        private string GenerateJwtToken(User userInfo)
+        private string GenerateJwtToken(CompteClient userInfo)
         {
             var securityKey = new
             SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-                new Claim("fullName", userInfo.FullName.ToString()),
-                new Claim("role",userInfo.UserRole),
+                new Claim(JwtRegisteredClaimNames.Sub, userInfo.Email),
+                new Claim("Email", userInfo.Email.ToString()),
+                new Claim("role",userInfo.ClientRole),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
             var token = new JwtSecurityToken(

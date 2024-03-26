@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using SAE_API.Models;
 using SAE_API.Models.DataManager;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
+using System.Text;
 
 namespace SAE_API
 {
@@ -80,6 +84,33 @@ namespace SAE_API
             builder.Services.AddDbContext<BMWDBContext>(options =>
               options.UseNpgsql(builder.Configuration.GetConnectionString("BMWDBContextRemote")));
 
+            // add services authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                 .AddJwtBearer(options =>
+                 {
+                     options.RequireHttpsMetadata = false;
+                     options.SaveToken = true;
+                     options.TokenValidationParameters = new TokenValidationParameters
+                     {
+                         ValidateIssuer = true,
+                         ValidateAudience = true,
+                         ValidateLifetime = true,
+                         ValidateIssuerSigningKey = true,
+                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                         ValidAudience = builder.Configuration["Jwt:Audience"],
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+                         ClockSkew = TimeSpan.Zero
+                     };
+                 });
+
+            // add services authorization
+            builder.Services.AddAuthorization(config =>
+            {
+                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
+                config.AddPolicy(Policies.User, Policies.UserPolicy());
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -91,7 +122,7 @@ namespace SAE_API
 
             app.UseHttpsRedirection();
 
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
