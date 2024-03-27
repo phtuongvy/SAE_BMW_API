@@ -8,6 +8,8 @@ using SAE_API.Models.EntityFramework;
 using SAE_API.Models;
 using System;
 using SAE_API.Repository;
+using NuGet.Protocol.Plugins;
+using System.Security.Cryptography;
 
 namespace SAE_API.Controllers.JWT
 {
@@ -23,6 +25,7 @@ namespace SAE_API.Controllers.JWT
             _config = config;
             dataRepository = dataRepo;
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] CompteClient login)
@@ -40,12 +43,15 @@ namespace SAE_API.Controllers.JWT
             }
             return response;
         }
+
         private async Task<CompteClient> AuthenticateUser(CompteClient user)
         {
             var comptes = await dataRepository.GetAllAsync();
 
-            return comptes.Value.SingleOrDefault(x => x.Email.ToUpper() == user.Email.ToUpper() &&
-           x.Password == user.Password);
+            //var hashedPassword = ComputeSha256Hash(user.Password.ToString());
+
+            return comptes.Value.FirstOrDefault(x => x.Email.Trim().ToUpper() == user.Email.Trim().ToUpper() &&
+            x.Password == user.Password);
         }
         private string GenerateJwtToken(CompteClient userInfo)
         {
@@ -68,5 +74,7 @@ namespace SAE_API.Controllers.JWT
              );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
     }
 }
