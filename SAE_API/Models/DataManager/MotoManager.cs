@@ -26,7 +26,37 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<Moto>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Motos.FirstOrDefaultAsync(u => u.MotoId == id);
+            var motoWithDetails = await bmwDBContext.Motos
+                .Where(m => m.MotoId == id)
+                .Include(m => m.GammeMotoMoto)
+                 
+                .Include(m => m.APourValeurMoto)
+                    .ThenInclude(v => v.CaracteristiqueMotoPourValeur)
+                     .ThenInclude(c => c.CategorieCaracteristiqueMotoCaracteristiqueMoto)
+                .Include(m => m.PeutContenirMoto)
+                    .ThenInclude(pc => pc.ColorisPeutContenir)
+                    .ThenInclude(c => c.PhotoColoris)
+                .Include(m => m.PeutEquiperMoto)
+                    .ThenInclude(pe => pe.PackPeutEquiper)
+                .Include(m => m.ConfigurationMotoMoto)
+                    .ThenInclude(c => c.ColorisConfigurationMoto)
+                    .ThenInclude(cc => cc.PhotoColoris)
+                .Include(m => m.MotoDisponibleMoto)
+                .Include(m => m.PossederMoto)
+                    .ThenInclude(p => p.EquipementMotoOptionPosseder)
+                .Include(m => m.IllustrerMoto)
+                    .ThenInclude(i => i.PhotoIllustrer)
+                .Include(m => m.EstDansMoto)
+                    .ThenInclude(e => e.StockEstDans)
+                    .ThenInclude(s => s.ConcessionnaireStock)
+                .FirstOrDefaultAsync();
+
+            if (motoWithDetails == null)
+            {
+                return new NotFoundResult();
+            }
+
+            return new ActionResult<Moto>(motoWithDetails);
         }
         //recherche par nom de moto
         public async Task<ActionResult<Moto>> GetByStringAsync(string nom)
