@@ -23,41 +23,68 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Motos.ToListAsync();
         }
-        //recherche par ID moto
-        public async Task<ActionResult<Moto>> GetByIdAsync(int id)
+
+        public async Task<ActionResult<IEnumerable<object>>> GetAllAsync1()
         {
-            var motoWithDetails = await bmwDBContext.Motos
-                .Where(m => m.MotoId == id)
-                .Include(m => m.GammeMotoMoto)
-                 
-                .Include(m => m.APourValeurMoto)
-                    .ThenInclude(v => v.CaracteristiqueMotoPourValeur)
-                     .ThenInclude(c => c.CategorieCaracteristiqueMotoCaracteristiqueMoto)
-                .Include(m => m.PeutContenirMoto)
-                    .ThenInclude(pc => pc.ColorisPeutContenir)
-                    .ThenInclude(c => c.PhotoColoris)
-                .Include(m => m.PeutEquiperMoto)
-                    .ThenInclude(pe => pe.PackPeutEquiper)
-                .Include(m => m.ConfigurationMotoMoto)
-                    .ThenInclude(c => c.ColorisConfigurationMoto)
-                    .ThenInclude(cc => cc.PhotoColoris)
-                .Include(m => m.MotoDisponibleMoto)
-                .Include(m => m.PossederMoto)
-                    .ThenInclude(p => p.EquipementMotoOptionPosseder)
-                .Include(m => m.IllustrerMoto)
-                    .ThenInclude(i => i.PhotoIllustrer)
-                .Include(m => m.EstDansMoto)
-                    .ThenInclude(e => e.StockEstDans)
-                    .ThenInclude(s => s.ConcessionnaireStock)
-                .FirstOrDefaultAsync();
+            var motos = await bmwDBContext.Motos
+                .Select(m => new
+                {
+                    motoid = m.MotoId,
+                    motonom = m.NomMoto,
+                    motoprix = m.PrixMoto,
+                    motogamme = m.GammeMotoMoto.NomGammeMoto, // Assurez-vous que la relation est correctement configurée
+                    motophotos = m.IllustrerMoto.Select(i => i.PhotoIllustrer.LienPhoto).ToList(),
+                })
+                .ToListAsync();
 
-            if (motoWithDetails == null)
-            {
-                return new NotFoundResult();
-            }
-
-            return new ActionResult<Moto>(motoWithDetails);
+            return motos; 
         }
+
+
+        //recherche par ID moto
+        public async Task<ActionResult<object>> GetByIdCustomAsync1(int id)
+        {
+            var moto = await bmwDBContext.Motos
+            .Where(m => m.MotoId == id)
+            .Select(m => new
+            {
+                motoid = m.MotoId,
+                motonom = m.NomMoto,
+                motoprix = m.PrixMoto,
+                motogamme = m.GammeMotoMoto.NomGammeMoto,
+                motodescription = m.DescriptionMoto,
+                motophotos = m.IllustrerMoto.Select(i => i.PhotoIllustrer.LienPhoto).ToList(),
+
+                motocaracteristique = m.APourValeurMoto.Select(v => new
+                {
+                    caracteristiqueid = v.CaracteristiqueMotoPourValeur.IdCaracteristiqueMoto,
+                    caracteristiquevaleur = v.CaracteristiqueMotoPourValeur.ValeurCaracteristiqueMoto,
+                    caracteristiquenom = v.CaracteristiqueMotoPourValeur.NomCaracteristiqueMoto,
+                    caracteristiquecategorienom = v.CaracteristiqueMotoPourValeur.CategorieCaracteristiqueMotoCaracteristiqueMoto.NomCategorieCaracteristiqueMoto
+                }).ToList(),
+               
+                motocoloris = m.PeutContenirMoto.Select(c => new
+                {
+                    colorisnom = c.ColorisPeutContenir.NomColoris,
+                    colorisdescription = c.ColorisPeutContenir.DescriptionColoris,
+                    colorisprix = c.ColorisPeutContenir.PrixColoris,
+                    colorisphoto = c.ColorisPeutContenir.PhotoColoris.LienPhoto
+                }).ToList(),
+
+                motopacks = m.PeutEquiperMoto.Select(p => new
+                {
+                    packnom = p.PackPeutEquiper.NomPack,
+                    packdecription = p.PackPeutEquiper.DescriptionPack,
+                    packprix = p.PackPeutEquiper.PrixPack,
+                })
+            })
+            .FirstOrDefaultAsync();
+
+
+            return new ActionResult<object>(moto);
+        }
+
+
         //recherche par nom de moto
         public async Task<ActionResult<Moto>> GetByStringAsync(string nom)
         {
@@ -99,6 +126,11 @@ namespace SAE_API.Models.DataManager
         {
             bmwDBContext.Motos.Remove(moto);
             await bmwDBContext.SaveChangesAsync();
+        }
+
+        public Task<ActionResult<Moto>> GetByIdAsync(Int32 id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

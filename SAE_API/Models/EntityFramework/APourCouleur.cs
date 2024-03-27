@@ -18,6 +18,7 @@ namespace SAE_API.Models.EntityFramework
         // Propriétés de navigation
         [InverseProperty(nameof(Equipement.APourCouleurEquipement))]
         public virtual Equipement EquipementAPourCouleur { get; set; }
+
         [InverseProperty(nameof(CouleurEquipement.APourCouleurCouleurEquipement))]
         public virtual CouleurEquipement CouleurEquipementAPourCouleur { get; set; }
         

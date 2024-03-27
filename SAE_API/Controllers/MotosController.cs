@@ -26,18 +26,18 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetMotos")]
-        public async Task<ActionResult<IEnumerable<Moto>>> GetMotos()
+        public async Task<ActionResult<object>> GetMotosById()
         {
-            return await dataRepository.GetAllAsync();
+            return await dataRepository.GetAllAsync1();
         }
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetMotosById")]
-        public async Task<ActionResult<Moto>> GetMotosById(int id)
+        public async Task<ActionResult<object>> GetMotosById(int id)
         {
 
-            var moto = await dataRepository.GetByIdAsync(id);
+            var moto = await dataRepository.GetByIdCustomAsync1(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (moto == null)
             {

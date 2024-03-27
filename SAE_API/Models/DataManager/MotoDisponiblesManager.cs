@@ -56,6 +56,14 @@ namespace SAE_API.Models.DataManager
             bmwDBContext.MotoDisponibles.Remove(MotoDisponible);
             await bmwDBContext.SaveChangesAsync();
         }
+        public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

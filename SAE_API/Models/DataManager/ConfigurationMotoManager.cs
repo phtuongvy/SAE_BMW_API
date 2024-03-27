@@ -64,6 +64,14 @@ namespace SAE_API.Models.DataManager
             await bmwDbContext.SaveChangesAsync();
 
         }
+        public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

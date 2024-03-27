@@ -24,7 +24,15 @@ namespace SAE_API
             });
 
 
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("MyCorsPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5185") // Ajoutez ici l'URL de votre client
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -119,13 +127,22 @@ namespace SAE_API
                 config.AddPolicy(Policies.User, Policies.UserPolicy());
             });
 
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
+
+            app.UseCors("MyCorsPolicy");
             // Configure the HTTP request pipeline.
             //if (app.Environment.IsDevelopment())
             //{
             //}
+
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.MapRazorPages();
+
             app.UseSwagger();
             app.UseSwaggerUI();
 
