@@ -107,17 +107,15 @@ namespace SAE_API.Models.DataManager
                 equipementcollectionnom = m.CollectionEquipement.NomCollection,
                 equipementsexe = m.Sexe,
 
-                equipementcouleurs = m.APourCouleurEquipement.Select(v => new
+                equipementcouleurs = m.PresenteEquipement.Select(v => new
                 {
-                    couleurid = v.CouleurEquipementAPourCouleur.IdCouleurEquipement,
-                    couleurnom = v.CouleurEquipementAPourCouleur.NomCouleurEquipement,
-                    couleurphotos = v.CouleurEquipementAPourCouleur.PresenteCouleurEquipement.Select(i => new
-                    {
-                        couleurphotolien = i.PhotoPresente.LienPhoto
-                    }).ToList()
+                    couleurid = v.CouleurEquipementPresente.IdCouleurEquipement,
+                    couleurnom = v.CouleurEquipementPresente.NomCouleurEquipement,
+                    test = v.PhotoPresente.LienPhoto,
 
                 }).ToList(),
 
+               
 
                 equipementtailles = m.APourTailleEquipement.Select(c => new
                 {
