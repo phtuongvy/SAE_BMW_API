@@ -57,8 +57,8 @@ namespace SAE_API.Models.DataManager
 
                 motocaracteristique = m.APourValeurMoto.Select(v => new
                 {
-                    caracteristiqueid = v.IdCaracteristiqueMoto,
-                    caracteristiquevaleur = v.MotoAPourValeur,
+                    caracteristiqueid = v.CaracteristiqueMotoPourValeur.IdCaracteristiqueMoto,
+                    caracteristiquevaleur = v.CaracteristiqueMotoPourValeur.ValeurCaracteristiqueMoto,
                     caracteristiquenom = v.CaracteristiqueMotoPourValeur.NomCaracteristiqueMoto,
                     caracteristiquecategorienom = v.CaracteristiqueMotoPourValeur.CategorieCaracteristiqueMotoCaracteristiqueMoto.NomCategorieCaracteristiqueMoto
                 }).ToList(),
