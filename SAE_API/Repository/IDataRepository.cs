@@ -10,5 +10,8 @@ namespace SAE_API.Repository
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entityToUpdate, TEntity entity);
         Task DeleteAsync(TEntity entity);
+
+        Task<ActionResult<object>> GetByIdCustomAsync1(int id);
+        Task<ActionResult<IEnumerable<object>>> GetAllAsync1();
     }
 }
