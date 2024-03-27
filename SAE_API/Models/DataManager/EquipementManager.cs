@@ -31,13 +31,13 @@ namespace SAE_API.Models.DataManager
         // recherche toute les moto 
         public async Task<ActionResult<IEnumerable<Equipement>>> GetAllAsync()
         {
-            return await bmwDBContext.Equipements.ToListAsync();
+            throw new NotImplementedException();
         }
 
         //recherche par ID
-        public async Task<ActionResult<Equipement>> GetByIdAsync(Int32 id)
+        public async Task<ActionResult<Equipement>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Equipements.FirstOrDefaultAsync(u => u.IdEquipement == id);
+            throw new NotImplementedException();
         }
 
         //recherche par nom 
@@ -95,13 +95,56 @@ namespace SAE_API.Models.DataManager
                    .Where(e => e.SegementEquipement.IdSegement == idsegament )
                    .ToListAsync();
         }
-        public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
+        public async Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
         {
-            throw new NotImplementedException();
+            var equipement = await bmwDBContext.Equipements
+            .Where(m => m.IdEquipement == id)
+            .Select(m => new
+            {
+                equipementid = m.IdEquipement,
+                equipementnom = m.NomEquipement,
+                equipementprix = m.PrixEquipement,
+                equipementcollectionnom = m.CollectionEquipement.NomCollection,
+                equipementsexe = m.Sexe,
+
+                equipementcouleurs = m.APourCouleurEquipement.Select(v => new
+                {
+                    couleurid = v.CouleurEquipementAPourCouleur.IdCouleurEquipement,
+                    couleurnom = v.CouleurEquipementAPourCouleur.NomCouleurEquipement,
+                    couleurphotos = v.CouleurEquipementAPourCouleur.PresenteCouleurEquipement.Select(i => new
+                    {
+                        couleurphotolien = i.PhotoPresente.LienPhoto
+                    }).ToList()
+
+                }).ToList(),
+
+
+                equipementtailles = m.APourTailleEquipement.Select(c => new
+                {
+                    tailleid = c.TailleEquipementAPourTaille.IdTailleEquipement,
+                    taillenom = c.TailleEquipementAPourTaille.NomTailleEquipement,
+                }).ToList()
+            })
+            .FirstOrDefaultAsync();
+
+
+            return new ActionResult<object>(equipement);
         }
-        public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
+        public async Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
         {
-            throw new NotImplementedException();
+            var equipements = await bmwDBContext.Equipements
+                .Select(m => new
+                {
+                    equipementid = m.IdEquipement,
+                    equipementnom = m.NomEquipement,
+                    equipementprix = m.PrixEquipement,
+                    equipementcollection = m.CollectionEquipement.NomCollection, // Assurez-vous que la relation est correctement configurée
+                    equipementsexe = m.Sexe,
+                    equipementphotos = m.PresenteEquipement.Select(i => i.PhotoPresente.LienPhoto).FirstOrDefault(),
+                })
+                .ToListAsync();
+
+            return equipements; // ActionResult<IEnumerable<object>> automatiquement inféré
         }
     }
     

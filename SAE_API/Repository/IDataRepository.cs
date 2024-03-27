@@ -13,5 +13,6 @@ namespace SAE_API.Repository
 
         Task<ActionResult<object>> GetByIdCustomAsync1(int id);
         Task<ActionResult<IEnumerable<object>>> GetAllAsync1();
+        
     }
 }
