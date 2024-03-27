@@ -37,7 +37,7 @@ namespace SAE_API.Models.DataManager
                 })
                 .ToListAsync();
 
-            return motos; // ActionResult<IEnumerable<object>> automatiquement inféré
+            return motos; 
         }
 
 
@@ -69,7 +69,14 @@ namespace SAE_API.Models.DataManager
                     colorisdescription = c.ColorisPeutContenir.DescriptionColoris,
                     colorisprix = c.ColorisPeutContenir.PrixColoris,
                     colorisphoto = c.ColorisPeutContenir.PhotoColoris.LienPhoto
-                }).ToList()
+                }).ToList(),
+
+                motopacks = m.PeutEquiperMoto.Select(p => new
+                {
+                    packnom = p.PackPeutEquiper.NomPack,
+                    packdecription = p.PackPeutEquiper.DescriptionPack,
+                    packprix = p.PackPeutEquiper.PrixPack,
+                })
             })
             .FirstOrDefaultAsync();
 
