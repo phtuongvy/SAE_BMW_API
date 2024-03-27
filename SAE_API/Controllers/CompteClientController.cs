@@ -109,18 +109,18 @@ namespace SAE_API.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserData")]
+        [ActionName("GetUserData")]
         [Authorize(Policy = Policies.User)]
         public IActionResult GetUserData()
         {
             return Ok("This is a response from user method");
         }
         [HttpGet]
-        [Route("GetAdminData")]
+        [ActionName("GetAdminData")]
         [Authorize(Policy = Policies.Admin)]
         public IActionResult GetAdminData()
         {
-            return Ok("This is a response from Admin method");
+            return Ok("This is a response from admin method");
         }
 
         // to encrypt password data
