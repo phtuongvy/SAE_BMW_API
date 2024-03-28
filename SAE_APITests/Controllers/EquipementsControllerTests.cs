@@ -195,27 +195,29 @@ namespace SAE_API.Controllers.Tests
         {
             //// Arrange
 
-            //Equipement equipement = new Equipement
-            //{
-            //    IdEquipement = 1000,
-            //    IdSegment = 1,
-            //    IdCollection = 1,
-            //    IdTypeEquipement = 1,
-            //    NomEquipement = "Casque bleu ",
-            //    DescriptionEquipement = "blabla",
-            //    DetailEquipement = "oui",
-            //    DureeEquipement = "3",
-            //    PrixEquipement = 6762,
-            //    Sexe = "F"
-            //};
+            Equipement equipement = new Equipement
+            {
+                IdEquipement = 10000,
+                IdSegment = 1,
+                IdCollection = 1,
+                IdTypeEquipement = 1,
+                NomEquipement = "Casque bleu ",
+                DescriptionEquipement = "blabla",
+                DetailEquipement = "oui",
+                DureeEquipement = "3",
+                PrixEquipement = 6762,
+                Sexe = "F"
+            };
 
             //// Act
-            //var res = controller.PostEquipement(equipement).Result;
+            var res = controller.PostEquipement(equipement).Result;
 
             //// Arrange
-            //Equipement? equipement_nouveau = context.Equipements.Find(1000);
-            //equipement.IdEquipement = equipement_nouveau.IdEquipement;
-            //Assert.AreEqual(equipement, equipement_nouveau,"Equipements pas identiques ");
+            Equipement? equipement_nouveau = context.Equipements.Find(10000);
+            equipement.IdEquipement = equipement_nouveau.IdEquipement;
+            Assert.AreEqual(equipement, equipement_nouveau, "equipements pas identiques ");
+            controller.DeleteEquipement(equipement.IdEquipement);
+            
         }
 
         /// <summary>
@@ -244,11 +246,11 @@ namespace SAE_API.Controllers.Tests
             context.SaveChanges();
 
             // Act
-            Equipement deletedCommande = context.Equipements.FirstOrDefault(u => u.IdEquipement == equipement.IdEquipement);
-            _ = controller.DeleteEquipement(deletedCommande.IdEquipement).Result;
+            controller.DeleteEquipement(equipement.IdEquipement);
+            context.SaveChanges();
 
             // Arrange
-            Equipement res = context.Equipements.FirstOrDefault(u => u.IdEquipement == equipement.IdEquipement);
+            Equipement res = context.Equipements.Find(equipement.IdEquipement);
             Assert.IsNull(res, "Commande non supprimé");
         }
 

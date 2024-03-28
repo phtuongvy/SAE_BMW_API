@@ -17,16 +17,9 @@ namespace SAE_API.Models.DataManager
             bmwDBContext = context;
         }
 
-        public Task AddAsync(Equipement entity)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public async Task DeleteAsync(Equipement entity)
-        {
-            bmwDBContext.Equipements.Remove(entity);
-            await bmwDBContext.SaveChangesAsync();
-        }
+       
 
         // recherche toute les moto 
         public async Task<ActionResult<IEnumerable<Equipement>>> GetAllAsync()
@@ -37,7 +30,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID
         public async Task<ActionResult<Equipement>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await bmwDBContext.Equipements.FirstOrDefaultAsync(u => u.IdEquipement == id);
         }
 
         //recherche par nom 
@@ -143,6 +136,23 @@ namespace SAE_API.Models.DataManager
                 .ToListAsync();
 
             return equipements; // ActionResult<IEnumerable<object>> automatiquement inféré
+        }
+
+        Task IDataRepository<Equipement>.AddAsync(Equipement equipement)
+        {
+            
+            bmwDBContext.Equipements.AddAsync(equipement);
+            bmwDBContext.SaveChangesAsync();
+
+            return Task.CompletedTask;
+        }
+
+        public async Task DeleteAsync(Equipement equipement)
+        {
+            bmwDBContext.Equipements.Remove(equipement);
+            await bmwDBContext.SaveChangesAsync();
+
+            
         }
     }
     

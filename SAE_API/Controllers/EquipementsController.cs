@@ -106,7 +106,7 @@ namespace SAE_API.Controllers
             }
             await _equipementsRepository.DeleteAsync(equipement.Value);
             return NoContent();
-        }
 
+        }
     }
 }
