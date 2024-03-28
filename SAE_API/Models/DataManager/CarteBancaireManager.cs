@@ -27,10 +27,18 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.CartesBancaires.FirstOrDefaultAsync(u => u.IdCb == id);
         }
+        public async Task<ActionResult<CarteBancaire>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom de moto
         public async Task<ActionResult<CarteBancaire>> GetByStringAsync(string nom)
         {
             return await bmwDBContext.CartesBancaires.FirstOrDefaultAsync(u => u.NomCarte.ToUpper() == nom.ToUpper());
+        }
+        public async Task<ActionResult<CarteBancaire>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
         }
         //ajoute une moto 
         public async Task AddAsync(CarteBancaire entity)

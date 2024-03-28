@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/{id2}")]
         [ActionName("DeleteAChoisiOption")]
-        public async Task<IActionResult> DeleteAChoisiOption(int id)
+        public async Task<IActionResult> DeleteAChoisiOption(int id, int id2)
         {
-            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id);
+            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id, id2);
             if (AChoisiOption == null)
             {
                 return NotFound();

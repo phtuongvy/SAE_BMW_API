@@ -39,11 +39,18 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.CompteClients.FirstOrDefaultAsync(u => u.IdCompteClient == id);
         }
-
+        public async Task<ActionResult<CompteClient>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom 
         public async Task<ActionResult<CompteClient>> GetByStringAsync(String str)
         {
             return await bmwDBContext.CompteClients.FirstOrDefaultAsync(u => u.Email.ToUpper() == str.ToUpper());
+        }
+        public async Task<ActionResult<CompteClient>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
         }
 
         //Mise à jour d'un équipement 

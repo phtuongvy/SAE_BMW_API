@@ -27,6 +27,15 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Adresses.FirstOrDefaultAsync(u => u.IdAdresse == id);
         }
+
+        public Task<ActionResult<Adresse>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<Adresse>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom de moto
         public async Task<ActionResult<Adresse>> GetByStringAsync(string rue)
         {
@@ -72,5 +81,7 @@ namespace SAE_API.Models.DataManager
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

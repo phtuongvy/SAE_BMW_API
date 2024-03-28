@@ -28,7 +28,7 @@ namespace SAE_API
             {
                 options.AddPolicy("MyCorsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5185") // Ajoutez ici l'URL de votre client
+                    policy.WithOrigins("*") // Ajoutez ici l'URL de votre client
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
