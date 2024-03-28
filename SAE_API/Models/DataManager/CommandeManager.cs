@@ -24,7 +24,14 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDbContext.Commandes.FirstOrDefaultAsync(c => c.IdCommande == id);
         }
-
+        public async Task<ActionResult<Commande>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<Commande>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
+        }
         public async Task<ActionResult<Commande>> GetByStringAsync(string str)
         {
             throw new NotImplementedException();

@@ -27,6 +27,14 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.PriseRendezvouss.FirstOrDefaultAsync(u => u.IdConcessionnaire == id);
         }
+        public async Task<ActionResult<PriseRendezvous>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<PriseRendezvous>> GetByIdAsync(int id, int id2,int id3)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom de moto
         public async Task<ActionResult<PriseRendezvous>> GetByStringAsync(string nom)
         {

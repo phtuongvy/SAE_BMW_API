@@ -5,7 +5,7 @@ using SAE_API.Repository;
 
 namespace SAE_API.Models.DataManager
 {
-    public class MoyenDePaiementManager : IDataRepository<MoyenDePaiement>
+    public class MoyenDePaiementManager : IDataRepository<PeutEquiper>
     {
         readonly BMWDBContext? bmwDBContext;
 
@@ -26,6 +26,15 @@ namespace SAE_API.Models.DataManager
         public async Task<ActionResult<MoyenDePaiement>> GetByIdAsync(int id)
         {
             return await bmwDBContext.MoyensDePaiement.FirstOrDefaultAsync(u => u.IdMoyenDePaiement == id);
+        }
+
+        public async Task<ActionResult<MoyenDePaiement>> GetByIdAsync(int id, int id2)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
         }
         //recherche par nom de moto
         public async Task<ActionResult<MoyenDePaiement>> GetByStringAsync(string nom)

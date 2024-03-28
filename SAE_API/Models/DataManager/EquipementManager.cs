@@ -28,18 +28,25 @@ namespace SAE_API.Models.DataManager
             await bmwDBContext.SaveChangesAsync();
         }
 
-        // recherche toute les moto 
         public async Task<ActionResult<IEnumerable<Equipement>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await bmwDBContext.Equipements.ToListAsync();
+        }
+        //recherche par ID moto
+        public async Task<ActionResult<Equipement>> GetByIdAsync(int id)
+        {
+            return await bmwDBContext.Equipements.FirstOrDefaultAsync(u => u.IdEquipement == id);
         }
 
-        //recherche par ID
-        public async Task<ActionResult<Equipement>> GetByIdAsync(int id)
+        public async Task<ActionResult<Equipement>> GetByIdAsync(int id, int id2)
         {
             throw new NotImplementedException();
         }
 
+        public async Task<ActionResult<Equipement>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom 
         public async Task<ActionResult<Equipement>> GetByStringAsync(String str)
         {
@@ -79,22 +86,7 @@ namespace SAE_API.Models.DataManager
         //{
         //    return await bmwDBContext.Equipements.FirstOrDefaultAsync(u => u.NomEquipement.ToUpper() == str.ToUpper());
         //}
-        public async Task<ActionResult<IEnumerable<Equipement>>> FiltreLesEquipemen(string nom ,string sexe , string taille , int couleur , int idsegament )
-        {
-            return await bmwDBContext.Equipements
-                   .Include(e => e.APourTailleEquipement) // Inclure la relation de l'équipement avec APourTaille
-                       .ThenInclude(apt => apt.TailleEquipementAPourTaille) // Inclure la relation avec TailleEquipement
-                   .Include(e => e.SegementEquipement)
-                   .Include(e => e.TypeEquipementEquipement)
-                   .Include(e => e.CollectionEquipement)
-
-                   .Where(e => e.NomEquipement.ToUpper() == nom.ToUpper())
-                   .Where(e => e.Sexe == sexe)
-                   .Where(e => e.APourTailleEquipement
-                       .Any(apt => apt.TailleEquipementAPourTaille.NomTailleEquipement == taille))
-                   .Where(e => e.SegementEquipement.IdSegement == idsegament )
-                   .ToListAsync();
-        }
+        
         public async Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
         {
             var equipement = await bmwDBContext.Equipements

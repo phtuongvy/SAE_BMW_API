@@ -22,13 +22,22 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Acquerirs.ToListAsync();
         }
-        //recherche par ID moto
+        //recherche par ID 
         public async Task<ActionResult<Acquerir>> GetByIdAsync(int id)
+        { 
+            throw new NotImplementedException();
+        }
+        //recherche par ID 
+        public async Task<ActionResult<Acquerir>> GetByIdAsync(int id, int id2)
         {
-            return await bmwDBContext.Acquerirs.FirstOrDefaultAsync(u => u.IdCb == id);
+            return await bmwDBContext.Acquerirs.FirstOrDefaultAsync(u => u.IdCompteClient == id && u.IdCb == id2);
         }
         //recherche par nom de moto
         public async Task<ActionResult<Acquerir>> GetByStringAsync(string nom)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<Acquerir>> GetByIdAsync(int id, int id2, int id3)
         {
             throw new NotImplementedException();
         }

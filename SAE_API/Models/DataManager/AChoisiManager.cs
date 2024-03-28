@@ -22,10 +22,19 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Achoisis.ToListAsync();
         }
-        //recherche par ID moto
+        //recherche par ID 
         public async Task<ActionResult<AChoisi>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Achoisis.FirstOrDefaultAsync(u => u.IDPack == id);
+             throw new NotImplementedException();
+        }
+        //recherche par ID de Pack et de ID de 
+        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int id2)
+        {
+            return await bmwDBContext.Achoisis.FirstOrDefaultAsync(u => u.IDPack == id && u.IDConfigurationMoto == id2);
+        }
+        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int id2,int id3)
+        {
+            throw new NotImplementedException();
         }
         //recherche par nom de moto
         public async Task<ActionResult<AChoisi>> GetByStringAsync(string nom)
