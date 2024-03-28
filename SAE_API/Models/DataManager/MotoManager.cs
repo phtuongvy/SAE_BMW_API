@@ -62,7 +62,7 @@ namespace SAE_API.Models.DataManager
                     caracteristiquenom = v.CaracteristiqueMotoPourValeur.NomCaracteristiqueMoto,
                     caracteristiquecategorienom = v.CaracteristiqueMotoPourValeur.CategorieCaracteristiqueMotoCaracteristiqueMoto.NomCategorieCaracteristiqueMoto
                 }).ToList(),
-               
+
                 motocoloris = m.PeutContenirMoto.Select(c => new
                 {
                     colorisnom = c.ColorisPeutContenir.NomColoris,
@@ -76,8 +76,18 @@ namespace SAE_API.Models.DataManager
                     packnom = p.PackPeutEquiper.NomPack,
                     packdecription = p.PackPeutEquiper.DescriptionPack,
                     packprix = p.PackPeutEquiper.PrixPack,
+                }),
+
+                motooption = m.PossederMoto.Select(p => new
+                {
+                    idequipement = p.EquipementMotoOptionPosseder.IdEquipementMoto,
+                    nomequipement = p.EquipementMotoOptionPosseder.NomEquipement,
+                    descriptionequipement = p.EquipementMotoOptionPosseder.DescriptionEquipementMoto,
+                    prixequipement = p.EquipementMotoOptionPosseder.PrixEquipementMoto,
+
+                    lienphoto = p.EquipementMotoOptionPosseder.PhotoEquipementMotoOption.LienPhoto,
                 })
-            })
+            }) 
             .FirstOrDefaultAsync();
 
 
