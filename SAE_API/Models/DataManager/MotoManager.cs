@@ -65,6 +65,7 @@ namespace SAE_API.Models.DataManager
 
                 motocoloris = m.PeutContenirMoto.Select(c => new
                 {
+                    colorisid = c.ColorisPeutContenir.IdColoris,
                     colorisnom = c.ColorisPeutContenir.NomColoris,
                     colorisdescription = c.ColorisPeutContenir.DescriptionColoris,
                     colorisprix = c.ColorisPeutContenir.PrixColoris,
@@ -73,6 +74,7 @@ namespace SAE_API.Models.DataManager
 
                 motopacks = m.PeutEquiperMoto.Select(p => new
                 {
+                    packid = p.PackPeutEquiper.PackId,
                     packnom = p.PackPeutEquiper.NomPack,
                     packdecription = p.PackPeutEquiper.DescriptionPack,
                     packprix = p.PackPeutEquiper.PrixPack,

@@ -5,7 +5,7 @@ using SAE_API.Repository;
 
 namespace SAE_API.Models.DataManager
 {
-    public class MoyenDePaiementManager : IDataRepository<PeutEquiper>
+    public class MoyenDePaiementManager : IDataRepository<MoyenDePaiement>
     {
         readonly BMWDBContext? bmwDBContext;
 
@@ -32,7 +32,7 @@ namespace SAE_API.Models.DataManager
         {
             throw new NotImplementedException();
         }
-        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<MoyenDePaiement>> GetByIdAsync(int id, int id2, int id3)
         {
             throw new NotImplementedException();
         }
