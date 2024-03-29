@@ -141,10 +141,13 @@ namespace SAE_API.Models.DataManager
 
         public async Task DeleteAsync(Equipement equipement)
         {
-            bmwDBContext.Equipements.Remove(equipement);
-            await bmwDBContext.SaveChangesAsync();
+            var entity = await bmwDBContext.Equipements.FindAsync(equipement.IdEquipement);
+            if (entity != null)
+            {
+                bmwDBContext.Equipements.Remove(entity);
+                await bmwDBContext.SaveChangesAsync();
+            }
 
-            
         }
     }
     
