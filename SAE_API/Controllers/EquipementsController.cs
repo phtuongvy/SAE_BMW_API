@@ -22,7 +22,7 @@ namespace SAE_API.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetEquipement")]
+        [ActionName("GetEquipementCustom")]
         public async Task<ActionResult<IEnumerable<object>>> GetEquipementCustom()
         {
             return await _equipementsRepository.GetAllAsync1();
@@ -30,7 +30,7 @@ namespace SAE_API.Controllers
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
-        [ActionName("GetEquipementById")]
+        [ActionName("GetEquipementByIdCustom")]
         public async Task<ActionResult<object>> GetEquipementByIdCustom(int id)
         {
 
