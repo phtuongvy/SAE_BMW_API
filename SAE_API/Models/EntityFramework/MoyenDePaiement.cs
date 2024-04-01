@@ -16,7 +16,7 @@ namespace SAE_API.Models.EntityFramework
         public string LibelleMoyenDePaiement { get; set; }
 
         [InverseProperty(nameof(Estimer.MoyenDePaiementEstimer))]
-        public virtual ICollection<Estimer> EstimationMoyenDePaiement { get; set; }
+        public virtual ICollection<Estimer>? EstimationMoyenDePaiement { get; set; }
 
     }
 }

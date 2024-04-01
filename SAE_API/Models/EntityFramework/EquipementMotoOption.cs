@@ -34,19 +34,19 @@ namespace SAE_API.Models.EntityFramework
         public virtual Photo PhotoEquipementMotoOption { get; set; }
 
         [InverseProperty(nameof(AChoisiOption.EquipementMotoChoisiOption))]
-        public virtual ICollection<AChoisiOption> AChoisiOptionsEquipementMoto { get; set; }
+        public virtual ICollection<AChoisiOption>? AChoisiOptionsEquipementMoto { get; set; }
 
         [InverseProperty(nameof(Posseder.EquipementMotoOptionPosseder))]
-        public virtual ICollection<Posseder> PossederEquipementMotoOption { get; set; }
+        public virtual ICollection<Posseder>? PossederEquipementMotoOption { get; set; }
 
         [InverseProperty(nameof(PeutUtiliser.EquipementMotoOptionPeutUtiliser))]
-        public virtual ICollection<PeutUtiliser>  PeutUtiliserEquipementMotoOption { get; set; }
+        public virtual ICollection<PeutUtiliser>?  PeutUtiliserEquipementMotoOption { get; set; }
 
         [InverseProperty(nameof(EquipementOption.EquipementMotoOptionEquipementOption))]
-        public virtual EquipementOption EquipementOptionEquipementMotoOption { get; set; }
+        public virtual EquipementOption? EquipementOptionEquipementMotoOption { get; set; }
 
         [InverseProperty(nameof(EquipementAccessoire.EquipementMotoOptionEquipementAccessoire))]
-        public virtual EquipementAccessoire EquipementAccessoireEquipementMotoOption { get; set; }
+        public virtual EquipementAccessoire? EquipementAccessoireEquipementMotoOption { get; set; }
 
 
     }

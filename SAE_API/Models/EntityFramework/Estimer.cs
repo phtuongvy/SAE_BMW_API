@@ -19,12 +19,12 @@ namespace SAE_API.Models.EntityFramework
         public int IdMoyenDePaiement { get; set; }
 
         [InverseProperty(nameof(CompteClient.EstimerCompteClient))]
-        public virtual CompteClient CompteClientEstimer { get; set; }
+        public virtual CompteClient? CompteClientEstimer { get; set; }
 
         [InverseProperty(nameof(RepriseMoto.EstimerRepriseMoto))]
-        public virtual RepriseMoto RepriseMotoEstimer { get; set; }
+        public virtual RepriseMoto? RepriseMotoEstimer { get; set; }
 
         [InverseProperty(nameof(MoyenDePaiement.EstimationMoyenDePaiement))]
-        public virtual MoyenDePaiement MoyenDePaiementEstimer { get; set; }
+        public virtual MoyenDePaiement? MoyenDePaiementEstimer { get; set; }
     }
 }

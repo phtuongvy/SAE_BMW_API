@@ -16,7 +16,7 @@ namespace SAE_API.Models.EntityFramework
         public string NomCategorieCaracteristiqueMoto { get; set; }
 
         // Relation avec CaracteristiqueMoto
-        public virtual ICollection<CaracteristiqueMoto> CaracteristiquesMotoCategorieCaracteristiqueMoto { get; set; }
+        public virtual ICollection<CaracteristiqueMoto>? CaracteristiquesMotoCategorieCaracteristiqueMoto { get; set; }
 
 
     }

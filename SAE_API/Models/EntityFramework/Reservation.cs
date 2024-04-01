@@ -25,6 +25,6 @@ namespace SAE_API.Models.EntityFramework
 
 
         [InverseProperty(nameof(PriseRendezvous.ReservationPriseRendezvous))]
-        public virtual PriseRendezvous PriseRendezvousReservation { get; set; }
+        public virtual PriseRendezvous? PriseRendezvousReservation { get; set; }
     }
 }

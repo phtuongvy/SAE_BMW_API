@@ -15,9 +15,9 @@ namespace SAE_API.Models.EntityFramework
         public int IdCaracteristiqueMoto { get; set; }
 
         [InverseProperty(nameof(Moto.APourValeurMoto))]
-        public virtual Moto MotoAPourValeur { get; set; }
-        [InverseProperty(nameof(CaracteristiqueMoto.APourValeurCaracteristiqueMoto))]
+        public virtual Moto? MotoAPourValeur { get; set; }
 
-        public virtual CaracteristiqueMoto CaracteristiqueMotoPourValeur { get; set; }
+        [InverseProperty(nameof(CaracteristiqueMoto.APourValeurCaracteristiqueMoto))]
+        public virtual CaracteristiqueMoto? CaracteristiqueMotoPourValeur { get; set; }
     }
 }

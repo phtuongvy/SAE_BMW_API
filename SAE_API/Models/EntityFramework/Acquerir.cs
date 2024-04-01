@@ -18,9 +18,9 @@ namespace SAE_API.Models.EntityFramework
 
         // Propriétés de navigation
         [InverseProperty(nameof(CarteBancaire.AcquisCB))]
-        public virtual CarteBancaire CBAcquis { get; set; }
+        public virtual CarteBancaire? CBAcquis { get; set; }
         [InverseProperty(nameof(CompteClient.AcquisComptes))]
-        public virtual CompteClient ComptesAcquis { get; set; }
+        public virtual CompteClient? ComptesAcquis { get; set; }
 
 
 

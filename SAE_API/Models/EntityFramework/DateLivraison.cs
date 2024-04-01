@@ -15,6 +15,6 @@ namespace SAE_API.Models.EntityFramework
         [Column("dlv_date", TypeName = "date")]
         public DateTime? Date { get; set; }
 
-        public virtual ICollection<RepriseMoto> RepriseMotoDateLivraison { get; set; }
+        public virtual ICollection<RepriseMoto>? RepriseMotoDateLivraison { get; set; }
     }
 }

@@ -22,12 +22,12 @@ namespace SAE_API.Models.EntityFramework
         // Propriétés de navigation
         [ForeignKey("IdEquipement")]
         [InverseProperty(nameof(Equipement.CommanderEquipement))]
-        public virtual Equipement EquipementCommander { get; set; }
+        public virtual Equipement? EquipementCommander { get; set; }
 
 
         [ForeignKey("IdConfigurationMoto")]
         [InverseProperty(nameof(ConfigurationMoto.CommanderConfigurationMoto))]
-        public virtual ConfigurationMoto ConfigurationMotoCommander { get; set; }
+        public virtual ConfigurationMoto? ConfigurationMotoCommander { get; set; }
 
 
     }

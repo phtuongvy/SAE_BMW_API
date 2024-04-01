@@ -16,9 +16,10 @@ namespace SAE_API.Models.EntityFramework
 
         [Column("dsp_quantitestock")]
         public int? QuantiteStock { get; set; }
+
         [InverseProperty(nameof(Stock.DisposerStock))]
-        public virtual Stock StockDisposer { get; set; }
+        public virtual Stock? StockDisposer { get; set; }
         [InverseProperty(nameof(Equipement.DisposerEquipement))]
-        public virtual Equipement EquipementDisposer { get; set; }
+        public virtual Equipement? EquipementDisposer { get; set; }
     }
 }

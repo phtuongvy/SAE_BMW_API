@@ -21,7 +21,7 @@ namespace SAE_API.Models.EntityFramework
         // Propriété de navigation vers ReservationOffre (assumant l'existence d'un modèle ReservationOffre)
         [ForeignKey(nameof(IdReservationOffre))]
         [InverseProperty(nameof(PriseRendezvous.DemanderContactPriseRendezVous))]
-        public virtual PriseRendezvous PriseRendezvousDemanderContact { get; set; }
+        public virtual PriseRendezvous? PriseRendezvousDemanderContact { get; set; }
 
     }
 }

@@ -28,31 +28,31 @@ namespace SAE_API.Models.EntityFramework
 
         // Propriété de navigation pour GammeMoto, si tu as un modèle correspondant
         [InverseProperty(nameof(GammeMoto.MotoGammeMoto))]
-        public virtual GammeMoto GammeMotoMoto { get; set; }
+        public virtual GammeMoto? GammeMotoMoto { get; set; }
 
         [InverseProperty(nameof(APourValeur.MotoAPourValeur))]
-        public virtual ICollection<APourValeur> APourValeurMoto { get; set; }
+        public virtual ICollection<APourValeur>? APourValeurMoto { get; set; }
 
         [InverseProperty(nameof(PeutContenir.MotoPeutContenir))]
-        public virtual ICollection<PeutContenir> PeutContenirMoto { get; set; }
+        public virtual ICollection<PeutContenir>? PeutContenirMoto { get; set; }
 
         [InverseProperty(nameof(PeutEquiper.MotoPeutEquiper))]
-        public virtual ICollection<PeutEquiper> PeutEquiperMoto { get; set; }
+        public virtual ICollection<PeutEquiper>? PeutEquiperMoto { get; set; }
 
         [InverseProperty(nameof(ConfigurationMoto.MotoConfigurationMoto))]
-        public virtual ICollection<ConfigurationMoto> ConfigurationMotoMoto { get; set; }
+        public virtual ICollection<ConfigurationMoto>? ConfigurationMotoMoto { get; set; }
 
         [InverseProperty(nameof(MotoDisponible.MotoMotoDisponible))]
-        public virtual MotoDisponible MotoDisponibleMoto { get; set; }
+        public virtual MotoDisponible? MotoDisponibleMoto { get; set; }
 
         [InverseProperty(nameof(Posseder.MotoPosseder))]
-        public virtual ICollection<Posseder> PossederMoto { get; set; }
+        public virtual ICollection<Posseder>? PossederMoto { get; set; }
 
         [InverseProperty(nameof(Illustrer.MotoIllustrer))]
-        public virtual ICollection<Illustrer> IllustrerMoto { get; set; }
+        public virtual ICollection<Illustrer>? IllustrerMoto { get; set; }
 
         [InverseProperty(nameof(EstDans.MotoEstDans))]
-        public virtual ICollection<EstDans> EstDansMoto { get; set; }
+        public virtual ICollection<EstDans>? EstDansMoto { get; set; }
 
 
 

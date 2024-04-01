@@ -46,13 +46,13 @@ namespace SAE_API.Models.EntityFramework
 
 
         [InverseProperty(nameof(DateLivraison.RepriseMotoDateLivraison))]
-        public virtual DateLivraison DateLivraisonRepriseMoto { get; set; }
+        public virtual DateLivraison? DateLivraisonRepriseMoto { get; set; }
 
         [InverseProperty(nameof(CompteClient.RepriseMotoCompteClient))]
-        public virtual CompteClient CompteClientRepriseMoto { get; set; }
+        public virtual CompteClient? CompteClientRepriseMoto { get; set; }
 
         [InverseProperty(nameof(Estimer.RepriseMotoEstimer))]
-        public virtual Estimer EstimerRepriseMoto { get; set; }
+        public virtual Estimer? EstimerRepriseMoto { get; set; }
 
     }
 }

@@ -16,6 +16,6 @@ namespace SAE_API.Models.EntityFramework
 
         [ForeignKey("IdMoto")]
         [InverseProperty(nameof(Moto.MotoDisponibleMoto))]
-        public virtual Moto MotoMotoDisponible { get; set; }
+        public virtual Moto? MotoMotoDisponible { get; set; }
     }
 }

@@ -29,9 +29,10 @@ namespace SAE_API.Models.EntityFramework
         public decimal? PrixTotal { get; set; }
 
         [InverseProperty(nameof(Effectuer.CommandeEffectuer))]
-        public virtual ICollection<Effectuer> EffectuerCommande { get; set; }
+        public virtual ICollection<Effectuer>? EffectuerCommande { get; set; }
+
         [InverseProperty(nameof(Provenance.CommandeProvenance))]
-        public virtual ICollection<Provenance> ProvenanceCommande { get; set; }
+        public virtual ICollection<Provenance>? ProvenanceCommande { get; set; }
 
     }
 }

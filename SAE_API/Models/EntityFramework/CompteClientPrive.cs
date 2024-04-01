@@ -19,6 +19,6 @@ namespace SAE_API.Models.EntityFramework
 
         // Propriété de navigation vers CompteClient
         [InverseProperty(nameof(CompteClient.CompteClientPriveCompteClient))]
-        public virtual CompteClient CompteClientCompteClientPrive { get; set; }
+        public virtual CompteClient? CompteClientCompteClientPrive { get; set; }
     }
 }

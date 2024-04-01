@@ -14,6 +14,6 @@ namespace SAE_API.Models.EntityFramework
         [Column("seg_nomsegement")]
         [StringLength(50)]
         public string? NomSegement { get; set; }
-        public virtual ICollection<Equipement> EquipementSegement { get; set; }
+        public virtual ICollection<Equipement>? EquipementSegement { get; set; }
     }
 }

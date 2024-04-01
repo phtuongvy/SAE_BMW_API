@@ -16,10 +16,10 @@ namespace SAE_API.Models.EntityFramework
         public string NomCouleurEquipement { get; set; }
 
         [InverseProperty(nameof(APourCouleur.CouleurEquipementAPourCouleur))]
-        public virtual ICollection<APourCouleur> APourCouleurCouleurEquipement { get; set; }
+        public virtual ICollection<APourCouleur>? APourCouleurCouleurEquipement { get; set; }
 
         [InverseProperty(nameof(Presente.CouleurEquipementPresente))]
-        public virtual ICollection<Presente> PresenteCouleurEquipement { get; set; }
+        public virtual ICollection<Presente>? PresenteCouleurEquipement { get; set; }
 
     }
 }

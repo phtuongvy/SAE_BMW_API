@@ -18,16 +18,16 @@ namespace SAE_API.Models.EntityFramework
 
         // Other properties and navigation properties, if needed
         [InverseProperty(nameof(Coloris.PhotoColoris))]
-        public virtual Coloris ColorisPhoto { get; set; }
+        public virtual Coloris? ColorisPhoto { get; set; }
 
         [InverseProperty(nameof(Presente.PhotoPresente))]
-        public virtual ICollection<Presente> PresentePhoto { get; set; }
+        public virtual ICollection<Presente>? PresentePhoto { get; set; }
 
         [InverseProperty(nameof(Illustrer.PhotoIllustrer))]
-        public virtual ICollection<Illustrer> IllustrerPhoto { get; set; }
+        public virtual ICollection<Illustrer>? IllustrerPhoto { get; set; }
 
         [InverseProperty(nameof(EquipementMotoOption.PhotoEquipementMotoOption))]
-        public virtual ICollection<EquipementMotoOption> EquipementMotoOptionPhoto { get; set; }
+        public virtual ICollection<EquipementMotoOption>? EquipementMotoOptionPhoto { get; set; }
 
 
 

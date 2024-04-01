@@ -42,11 +42,11 @@ namespace SAE_API.Models.EntityFramework
 
         [ForeignKey(nameof(IdConcessionnaire))]
         [InverseProperty(nameof(Concessionnaire.AdresseConcessionnaire))]
-        public virtual ICollection<Concessionnaire> ConcessionnairesAdresse { get; set; }
+        public virtual ICollection<Concessionnaire>? ConcessionnairesAdresse { get; set; }
 
         [ForeignKey(nameof(IdCompteClient))]
         [InverseProperty(nameof(CompteClient.AdresseCompteClient))]
-        public virtual CompteClient ClientAdresse { get; set; }
+        public virtual CompteClient? ClientAdresse { get; set; }
 
 
 

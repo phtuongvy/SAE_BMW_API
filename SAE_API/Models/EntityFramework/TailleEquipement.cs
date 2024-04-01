@@ -15,7 +15,7 @@ namespace SAE_API.Models.EntityFramework
         public string? NomTailleEquipement { get; set; }
 
         //[InverseProperty(nameof(APourTaille.TailleEquipementAPourTaille))]
-        public virtual ICollection<APourTaille> APourTailleTailleEquipement { get; set; }
+        public virtual ICollection<APourTaille>? APourTailleTailleEquipement { get; set; }
 
     }
 }

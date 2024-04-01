@@ -15,10 +15,10 @@ namespace SAE_API.Models.EntityFramework
         // Assuming you have or will have the below classes defined
         // and they are related to these keys.
         [InverseProperty(nameof(Moto.PossederMoto))]
-        public Moto MotoPosseder { get; set; }
+        public Moto? MotoPosseder { get; set; }
 
 
         [InverseProperty(nameof(EquipementMotoOption.PossederEquipementMotoOption))]
-        public EquipementMotoOption EquipementMotoOptionPosseder { get; set; }
+        public EquipementMotoOption? EquipementMotoOptionPosseder { get; set; }
     }
 }

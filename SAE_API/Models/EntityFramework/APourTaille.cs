@@ -17,10 +17,10 @@ namespace SAE_API.Models.EntityFramework
 
         [ForeignKey(nameof(IdEquipement))]
         [InverseProperty(nameof(Equipement.APourTailleEquipement))]
-        public virtual Equipement EquipementAPourTaille { get; set; }
+        public virtual Equipement? EquipementAPourTaille { get; set; }
 
         [ForeignKey(nameof(IdTailleEquipement))]
         [InverseProperty(nameof(TailleEquipement.APourTailleTailleEquipement))]
-        public virtual TailleEquipement TailleEquipementAPourTaille { get; set; }
+        public virtual TailleEquipement? TailleEquipementAPourTaille { get; set; }
     }
 }

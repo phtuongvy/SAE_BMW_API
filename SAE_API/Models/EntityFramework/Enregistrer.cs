@@ -18,10 +18,10 @@ namespace SAE_API.Models.EntityFramework
         [StringLength(50)]
         public string NomConfiguration { get; set; }
         [InverseProperty(nameof(ConfigurationMoto.EnregistrerConfigurationMoto))]
-        public virtual ConfigurationMoto ConfigurationMotoEnregistrer { get; set; }
+        public virtual ConfigurationMoto? ConfigurationMotoEnregistrer { get; set; }
 
         [InverseProperty(nameof(CompteClient.EnregistrerCompteClient))]
-        public virtual CompteClient CompteClientEnregistrer { get; set; }
+        public virtual CompteClient? CompteClientEnregistrer { get; set; }
         
 
     }

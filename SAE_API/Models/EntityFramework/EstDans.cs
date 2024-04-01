@@ -23,9 +23,9 @@ namespace SAE_API.Models.EntityFramework
 
         // Navigation properties
         [InverseProperty(nameof(Moto.EstDansMoto))]
-        public virtual Moto MotoEstDans { get; set; }
+        public virtual Moto? MotoEstDans { get; set; }
 
         [InverseProperty(nameof(Stock.EstDansStock))]
-        public virtual Stock StockEstDans { get; set; }
+        public virtual Stock? StockEstDans { get; set; }
     }
 }

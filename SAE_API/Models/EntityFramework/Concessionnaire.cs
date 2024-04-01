@@ -26,25 +26,25 @@ namespace SAE_API.Models.EntityFramework
 
         // Navigation properties
         [InverseProperty(nameof(Adresse.ConcessionnairesAdresse))]
-        public virtual Adresse AdresseConcessionnaire { get; set; }
+        public virtual Adresse? AdresseConcessionnaire { get; set; }
 
 
         [InverseProperty(nameof(Stock.ConcessionnaireStock))]
-        public virtual Stock StockConcessionnaire { get; set; }
+        public virtual Stock? StockConcessionnaire { get; set; }
 
         [InverseProperty(nameof(Favoris.ConcessionnaireFavoris))]
-        public virtual ICollection<Favoris> FavorisConcessionnaire { get; set; }
+        public virtual ICollection<Favoris>? FavorisConcessionnaire { get; set; }
 
 
         [InverseProperty(nameof(Provenance.ConcessionnaireProvenance))]
-        public virtual ICollection<Provenance>  ProvenanceConcessionnaire { get; set; }
+        public virtual ICollection<Provenance>?  ProvenanceConcessionnaire { get; set; }
 
 
         [InverseProperty(nameof(PriseRendezvous.ConcessionnairePriseRendezvous))]
-        public virtual ICollection<PriseRendezvous> PriseRendezvousConcessionnaire { get; set; }
+        public virtual ICollection<PriseRendezvous>? PriseRendezvousConcessionnaire { get; set; }
 
         [InverseProperty(nameof(Detient.ConcessionnaireDetient))]
-        public virtual ICollection<Detient> DetientConcessionnaire { get; set; }
+        public virtual ICollection<Detient>? DetientConcessionnaire { get; set; }
 
     }
 }

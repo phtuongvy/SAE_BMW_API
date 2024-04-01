@@ -13,7 +13,7 @@ namespace SAE_API.Models.EntityFramework
         public int IdEquipementMoto { get; set; }
 
         [InverseProperty(nameof(EquipementMotoOption.EquipementAccessoireEquipementMotoOption))]
-        public virtual EquipementMotoOption EquipementMotoOptionEquipementAccessoire { get; set; }
+        public virtual EquipementMotoOption? EquipementMotoOptionEquipementAccessoire { get; set; }
 
     }
 }

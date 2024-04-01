@@ -23,7 +23,7 @@ namespace SAE_API.Models.EntityFramework
 
         // Propriété de navigation réciproque
         [InverseProperty(nameof(CompteClient.CompteClientProfessionnelCompteClient))]
-        public virtual CompteClient CompteClientCompteClientProfessionnel { get; set; }
+        public virtual CompteClient? CompteClientCompteClientProfessionnel { get; set; }
 
     }
 }

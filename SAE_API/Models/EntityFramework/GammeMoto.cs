@@ -16,7 +16,7 @@ namespace SAE_API.Models.EntityFramework
         public string NomGammeMoto { get; set; }
 
         [InverseProperty(nameof(Moto.GammeMotoMoto))]
-        public virtual ICollection<Moto> MotoGammeMoto { get; set; }
+        public virtual ICollection<Moto>? MotoGammeMoto { get; set; }
 
     }
 }

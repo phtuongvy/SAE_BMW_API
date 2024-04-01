@@ -15,10 +15,10 @@ namespace SAE_API.Models.EntityFramework
         public int IdMoto { get; set; }
 
         [InverseProperty(nameof(Coloris.PeutContenirColoris))]
-        public virtual Coloris ColorisPeutContenir { get; set; }
+        public virtual Coloris? ColorisPeutContenir { get; set; }
 
 
         [InverseProperty(nameof(Moto.PeutContenirMoto))]
-        public virtual Moto MotoPeutContenir { get; set; }
+        public virtual Moto? MotoPeutContenir { get; set; }
     }
 }

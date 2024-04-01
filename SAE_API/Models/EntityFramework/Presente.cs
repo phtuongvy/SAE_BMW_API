@@ -18,13 +18,13 @@ namespace SAE_API.Models.EntityFramework
         // Assuming you have or will have the below classes defined
         // and they are related to these keys.
         [InverseProperty(nameof(Photo.PresentePhoto))]
-        public Photo PhotoPresente { get; set; }
+        public Photo? PhotoPresente { get; set; }
 
         [InverseProperty(nameof(Equipement.PresenteEquipement))]
-        public Equipement EquipementPresente { get; set; }
+        public Equipement? EquipementPresente { get; set; }
 
         [InverseProperty(nameof(CouleurEquipement.PresenteCouleurEquipement))]
-        public CouleurEquipement CouleurEquipementPresente { get; set; }
+        public CouleurEquipement? CouleurEquipementPresente { get; set; }
     }
 }
 

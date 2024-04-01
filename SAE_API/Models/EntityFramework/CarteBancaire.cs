@@ -37,6 +37,6 @@ namespace SAE_API.Models.EntityFramework
         // Navigation properties pour les relations avec d'autres entités si nécessaire
 
         [InverseProperty(nameof(Acquerir.CBAcquis))]
-        public virtual ICollection<Acquerir> AcquisCB { get; set; }
+        public virtual ICollection<Acquerir>? AcquisCB { get; set; }
     }
 }

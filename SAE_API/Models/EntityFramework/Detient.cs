@@ -15,9 +15,9 @@ namespace SAE_API.Models.EntityFramework
         public int IdConcessionnaire { get; set; }
 
         [InverseProperty(nameof(Equipement.DetientEquipement))]
-        public virtual Equipement EquipementDetient { get; set; }
+        public virtual Equipement? EquipementDetient { get; set; }
 
         [InverseProperty(nameof(Concessionnaire.DetientConcessionnaire))]
-        public virtual Concessionnaire ConcessionnaireDetient { get; set; }
+        public virtual Concessionnaire? ConcessionnaireDetient { get; set; }
     }
 }

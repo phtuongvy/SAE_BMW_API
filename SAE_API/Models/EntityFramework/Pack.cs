@@ -30,9 +30,9 @@ namespace SAE_API.Models.EntityFramework
         public virtual ICollection<AChoisi> ChoisiPack { get; set; }
 
         [InverseProperty(nameof(PeutEquiper.PackPeutEquiper))]
-        public virtual ICollection<PeutEquiper> PeutEquiperPack { get; set; }
+        public virtual ICollection<PeutEquiper>? PeutEquiperPack { get; set; }
 
         [InverseProperty(nameof(PeutUtiliser.PackPeutUtiliser))]
-        public virtual ICollection<PeutUtiliser> PeutUtiliserPack { get; set; }
+        public virtual ICollection<PeutUtiliser>? PeutUtiliserPack { get; set; }
     }
 }

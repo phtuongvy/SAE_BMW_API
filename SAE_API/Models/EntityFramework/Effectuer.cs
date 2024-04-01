@@ -15,9 +15,10 @@ namespace SAE_API.Models.EntityFramework
         public int IdCompteClient { get; set; }
 
         [InverseProperty(nameof(Commande.EffectuerCommande))]
-        public virtual Commande CommandeEffectuer { get; set; }
+        public virtual Commande? CommandeEffectuer { get; set; }
+
         [InverseProperty(nameof(CompteClient.EffectuerCompteClient))]
-        public virtual CompteClient CompteClientEffectuer { get; set; }
+        public virtual CompteClient? CompteClientEffectuer { get; set; }
 
         
     }

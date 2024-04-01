@@ -13,6 +13,6 @@ namespace SAE_API.Models.EntityFramework
 
         // Propriété de navigation vers CompteClient
         [InverseProperty(nameof(CompteClient.CompteAdminCompteClient))]
-        public virtual CompteClient CompteClientCompteAdmin { get; set; }
+        public virtual CompteClient? CompteClientCompteAdmin { get; set; }
     }
 }

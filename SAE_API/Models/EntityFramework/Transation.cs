@@ -28,7 +28,7 @@ namespace SAE_API.Models.EntityFramework
         [Required]
         public string TypeDeTransaction { get; set; }
 
-        public virtual CompteClient CompteClientTransation { get; set; }
+        public virtual CompteClient? CompteClientTransation { get; set; }
 
 
 

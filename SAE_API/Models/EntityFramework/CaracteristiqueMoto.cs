@@ -27,10 +27,10 @@ namespace SAE_API.Models.EntityFramework
         // Assurez-vous d'avoir un modèle CategorieCaracteristiqueMoto correspondant
         [ForeignKey(nameof(CategorieCaracteristiqueMoto.IdCategorieCaracteristiqueMoto))]
         [InverseProperty(nameof(CategorieCaracteristiqueMoto.CaracteristiquesMotoCategorieCaracteristiqueMoto))]
-        public virtual CategorieCaracteristiqueMoto CategorieCaracteristiqueMotoCaracteristiqueMoto { get; set; }
+        public virtual CategorieCaracteristiqueMoto? CategorieCaracteristiqueMotoCaracteristiqueMoto { get; set; }
 
         // Collection pour gérer la relation avec APourValeur
         [InverseProperty(nameof(APourValeur.CaracteristiqueMotoPourValeur))]
-        public virtual ICollection<APourValeur> APourValeurCaracteristiqueMoto { get; set; }
+        public virtual ICollection<APourValeur>? APourValeurCaracteristiqueMoto { get; set; }
     }
 }

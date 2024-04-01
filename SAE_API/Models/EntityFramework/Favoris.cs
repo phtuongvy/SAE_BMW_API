@@ -16,9 +16,9 @@ namespace SAE_API.Models.EntityFramework
 
 
         [InverseProperty(nameof(CompteClient.FavorisCompteClient))]
-        public virtual CompteClient CompteClientFavoris { get; set; }
+        public virtual CompteClient? CompteClientFavoris { get; set; }
 
         [InverseProperty(nameof(Concessionnaire.FavorisConcessionnaire))]
-        public virtual Concessionnaire ConcessionnaireFavoris { get; set; }
+        public virtual Concessionnaire? ConcessionnaireFavoris { get; set; }
     }
 }

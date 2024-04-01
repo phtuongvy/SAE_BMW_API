@@ -57,19 +57,19 @@ namespace SAE_API.Models.EntityFramework
         public string? ClientRole { get; set; }
 
         [InverseProperty(nameof(Enregistrer.CompteClientEnregistrer))]
-        public virtual ICollection<Enregistrer> EnregistrerCompteClient { get; set; }
+        public virtual ICollection<Enregistrer>? EnregistrerCompteClient { get; set; }
 
         [InverseProperty(nameof(Effectuer.CompteClientEffectuer))]
-        public virtual ICollection<Effectuer> EffectuerCompteClient { get; set; }
+        public virtual ICollection<Effectuer>? EffectuerCompteClient { get; set; }
 
         [InverseProperty(nameof(Acquerir.ComptesAcquis))]
-        public virtual ICollection<Acquerir> AcquisComptes { get; set; }
+        public virtual ICollection<Acquerir>? AcquisComptes { get; set; }
 
         [InverseProperty(nameof(Favoris.CompteClientFavoris))]
-        public virtual ICollection<Favoris> FavorisCompteClient { get; set; }
+        public virtual ICollection<Favoris>? FavorisCompteClient { get; set; }
 
         [InverseProperty(nameof(Transation.CompteClientTransation))]
-        public virtual ICollection<Transation> TransationCompteClient { get; set; }
+        public virtual ICollection<Transation>? TransationCompteClient { get; set; }
 
         [InverseProperty(nameof(Adresse.ClientAdresse))]
         //public virtual ICollection<Adresse> AdresseCompteClient { get; set; }
@@ -80,13 +80,14 @@ namespace SAE_API.Models.EntityFramework
 
         [InverseProperty(nameof(CompteClientPrive.CompteClientCompteClientPrive))]
         public virtual CompteClientPrive? CompteClientPriveCompteClient { get; set; }
+
         [InverseProperty(nameof(CompteClientProfessionnel.CompteClientCompteClientProfessionnel))]
         public virtual CompteClientProfessionnel? CompteClientProfessionnelCompteClient { get; set; }
         [InverseProperty(nameof(Estimer.CompteClientEstimer))]
-        public virtual ICollection<Estimer> EstimerCompteClient { get; set; }
+        public virtual ICollection<Estimer>? EstimerCompteClient { get; set; }
 
         [InverseProperty(nameof(RepriseMoto.CompteClientRepriseMoto))]
-        public virtual ICollection<RepriseMoto> RepriseMotoCompteClient { get; set; }
+        public virtual ICollection<RepriseMoto>? RepriseMotoCompteClient { get; set; }
     }
 }
 

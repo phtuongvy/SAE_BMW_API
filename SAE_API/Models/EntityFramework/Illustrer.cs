@@ -17,9 +17,9 @@ namespace SAE_API.Models.EntityFramework
 
         // Navigation properties
         [InverseProperty(nameof(Moto.IllustrerMoto))]
-        public virtual Moto MotoIllustrer { get; set; }
+        public virtual Moto? MotoIllustrer { get; set; }
 
         [InverseProperty(nameof(Photo.IllustrerPhoto))]
-        public virtual Photo PhotoIllustrer { get; set; }
+        public virtual Photo? PhotoIllustrer { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace SAE_API.Models.EntityFramework
         public int IdEquipementMoto { get; set; }
 
         [InverseProperty(nameof(Pack.PeutUtiliserPack))]
-        public virtual Pack PackPeutUtiliser { get; set; }
+        public virtual Pack? PackPeutUtiliser { get; set; }
 
 
         [InverseProperty(nameof(EquipementMotoOption.PeutUtiliserEquipementMotoOption))]
-        public virtual EquipementMotoOption EquipementMotoOptionPeutUtiliser { get; set; }
+        public virtual EquipementMotoOption? EquipementMotoOptionPeutUtiliser { get; set; }
     }
 }

@@ -43,9 +43,9 @@ namespace SAE_API.Models.EntityFramework
 
         public Concessionnaire? ConcessionnairePriseRendezvous { get; set; }
         [InverseProperty(nameof(DemanderContact.PriseRendezvousDemanderContact))]
-        public virtual DemanderContact DemanderContactPriseRendezVous { get; set; }
+        public virtual DemanderContact? DemanderContactPriseRendezVous { get; set; }
 
         [InverseProperty(nameof(Reservation.PriseRendezvousReservation))]
-        public virtual Reservation ReservationPriseRendezvous { get; set; }
+        public virtual Reservation? ReservationPriseRendezvous { get; set; }
     }
 }

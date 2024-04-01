@@ -16,9 +16,9 @@ namespace SAE_API.Models.EntityFramework
 
 
         [InverseProperty(nameof(Commande.ProvenanceCommande))]
-        public virtual Commande CommandeProvenance { get; set; }
+        public virtual Commande? CommandeProvenance { get; set; }
 
         [InverseProperty(nameof(Concessionnaire.ProvenanceConcessionnaire))]
-        public virtual Concessionnaire ConcessionnaireProvenance { get; set;}
+        public virtual Concessionnaire? ConcessionnaireProvenance { get; set;}
     }
 }

@@ -19,13 +19,13 @@ namespace SAE_API.Models.EntityFramework
 
 
         [InverseProperty(nameof(Equipement.TypeEquipementEquipement))]
-        public virtual ICollection<Equipement> EquipementTypeEquipement { get; set; }
+        public virtual ICollection<Equipement>? EquipementTypeEquipement { get; set; }
 
         [InverseProperty(nameof(TypeEquipement.TypeEquipements))]
-        public virtual ICollection<TypeEquipement> TypeEquipementTypeEquipement { get; set; }
+        public virtual ICollection<TypeEquipement>? TypeEquipementTypeEquipement { get; set; }
 
         [InverseProperty(nameof(TypeEquipement.TypeEquipementTypeEquipement))]
-        public virtual TypeEquipement TypeEquipements { get; set; }
+        public virtual TypeEquipement? TypeEquipements { get; set; }
 
 
     }

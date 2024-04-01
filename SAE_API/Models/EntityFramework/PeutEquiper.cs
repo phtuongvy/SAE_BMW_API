@@ -13,9 +13,9 @@ namespace SAE_API.Models.EntityFramework
         public int IdMoto { get; set; }
 
         [InverseProperty(nameof(Pack.PeutEquiperPack))]
-        public virtual Pack PackPeutEquiper { get; set; }
+        public virtual Pack? PackPeutEquiper { get; set; }
 
         [InverseProperty(nameof(Moto.PeutEquiperMoto))]
-        public virtual Moto MotoPeutEquiper { get; set; }
+        public virtual Moto? MotoPeutEquiper { get; set; }
     }
 }
