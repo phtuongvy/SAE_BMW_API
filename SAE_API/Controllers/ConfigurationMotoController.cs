@@ -70,7 +70,7 @@ namespace SAE_API.Controllers
                 return BadRequest(ModelState);
             }
             await configurationManager.AddAsync(configurationMoto);
-            return NoContent();
+            return Ok(configurationMoto); // Retourne 200 avec l'objet
         }
 
         // DELETE: api/ConfigurationMoto/5
