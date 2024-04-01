@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IDPack{id}/IDConfigurationMoto{id2}")]
         [ActionName("GetAChoisiById")]
-        public async Task<ActionResult<AChoisi>> GetAChoisiById(int id)
+        public async Task<ActionResult<AChoisi>> GetAChoisiById(int id , int id2)
         {
 
-            var AChoisi = await _AChoisi.GetByIdAsync(id);
+            var AChoisi = await _AChoisi.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (AChoisi == null)
             {

@@ -29,7 +29,7 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("IDPack{id}/IDConfigurationMoto{id2}")]
+        [HttpGet("IDPack{id}/IdEquipementMoto{id2}")]
         [ActionName("GetAChoisiOptionById")]
         public async Task<ActionResult<AChoisiOption>> GetAChoisiOptionById(int id , int id2)
         {
