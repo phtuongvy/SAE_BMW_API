@@ -78,6 +78,8 @@ namespace SAE_API.Models.DataManager
             .Select(m => new
             {
                 configmotoid = m.IdConfigurationMoto,
+                configmotonom = m.MotoConfigurationMoto.NomMoto,
+                configmotodescription = m.MotoConfigurationMoto.DescriptionMoto,
                 configmotoidmoto = m.IdMoto,
                 configmotocolorisnom = m.ColorisConfigurationMoto.NomColoris,
                 configmotoprix = m.PrixTotalConfiguration,
@@ -93,8 +95,6 @@ namespace SAE_API.Models.DataManager
                 {
                     optionid =  c.EquipementMotoChoisiOption.IdEquipementMoto,
                     optionnom = c.EquipementMotoChoisiOption.NomEquipement,
-                    
-
                 }).ToList(),
 
                
