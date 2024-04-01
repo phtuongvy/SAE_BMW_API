@@ -23,7 +23,7 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetEquipement")]
-        public async Task<ActionResult<IEnumerable<object>>> GetEquipement()
+        public async Task<ActionResult<IEnumerable<object>>> GetEquipementCustom()
         {
             return await _equipementsRepository.GetAllAsync1();
         }
@@ -31,10 +31,32 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetEquipementById")]
-        public async Task<ActionResult<object>> GetEquipementById(int id)
+        public async Task<ActionResult<object>> GetEquipementByIdCustom(int id)
         {
 
             var equipement = await _equipementsRepository.GetByIdCustomAsync1(id);
+            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            if (equipement == null)
+            {
+                return NotFound();
+            }
+            return equipement;
+        }
+
+        [HttpGet]
+        [ActionName("GetEquipement")]
+        public async Task<ActionResult<IEnumerable<Equipement>>> GetEquipement()
+        {
+            return await _equipementsRepository.GetAllAsync();
+        }
+
+        // GET: api/Utilisateurs/5
+        [HttpGet("{id}")]
+        [ActionName("GetEquipementById")]
+        public async Task<ActionResult<Equipement>> GetEquipementById(int id)
+        {
+
+            var equipement = await _equipementsRepository.GetByIdAsync(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (equipement == null)
             {
