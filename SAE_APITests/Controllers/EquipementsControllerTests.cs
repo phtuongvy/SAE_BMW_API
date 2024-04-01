@@ -195,27 +195,31 @@ namespace SAE_API.Controllers.Tests
         {
             //// Arrange
 
-            //Equipement equipement = new Equipement
-            //{
-            //    IdEquipement = 1000,
-            //    IdSegment = 1,
-            //    IdCollection = 1,
-            //    IdTypeEquipement = 1,
-            //    NomEquipement = "Casque bleu ",
-            //    DescriptionEquipement = "blabla",
-            //    DetailEquipement = "oui",
-            //    DureeEquipement = "3",
-            //    PrixEquipement = 6762,
-            //    Sexe = "F"
-            //};
+            Equipement equipement = new Equipement
+            {
+                IdSegment = 1,
+                IdCollection = 1,
+                IdTypeEquipement = 1,
+                NomEquipement = "Casque bleu ",
+                DescriptionEquipement = "blabla",
+                DetailEquipement = "oui",
+                DureeEquipement = "3",
+                PrixEquipement = 6762,
+                Sexe = "F"
+            };
+            // Act
+            var actionResult = controller.PostEquipement(equipement).Result;
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<Equipement>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(Equipement), "Pas un Utilisateur");
+            equipement.IdEquipement = ((Equipement)result.Value).IdEquipement;
+            Assert.AreEqual(equipement, (Equipement)result.Value, "Utilisateurs pas identiques");
 
-            //// Act
-            //var res = controller.PostEquipement(equipement).Result;
+            context.Equipements.Remove(equipement);
+            context.SaveChangesAsync();
 
-            //// Arrange
-            //Equipement? equipement_nouveau = context.Equipements.Find(1000);
-            //equipement.IdEquipement = equipement_nouveau.IdEquipement;
-            //Assert.AreEqual(equipement, equipement_nouveau,"Equipements pas identiques ");
         }
 
         /// <summary>
@@ -228,7 +232,6 @@ namespace SAE_API.Controllers.Tests
 
             Equipement equipement = new Equipement
             {
-                IdEquipement = 100,
                 IdSegment = 1,
                 IdCollection = 1,
                 IdTypeEquipement = 1,
@@ -244,12 +247,12 @@ namespace SAE_API.Controllers.Tests
             context.SaveChanges();
 
             // Act
-            Equipement deletedCommande = context.Equipements.FirstOrDefault(u => u.IdEquipement == equipement.IdEquipement);
-            _ = controller.DeleteEquipement(deletedCommande.IdEquipement).Result;
+            Equipement deletedEqui = context.Equipements.FirstOrDefault(u => u.IdEquipement == equipement.IdEquipement);
+            _ = controller.DeleteEquipement(deletedEqui.IdEquipement).Result;
 
             // Arrange
-            Equipement res = context.Equipements.FirstOrDefault(u => u.IdEquipement == equipement.IdEquipement);
-            Assert.IsNull(res, "Commande non supprimé");
+            Equipement res = context.Equipements.FirstOrDefault(u => u.IdEquipement == deletedEqui.IdEquipement);
+            Assert.IsNull(res, "equipement non supprimé");
         }
 
         [TestMethod()]

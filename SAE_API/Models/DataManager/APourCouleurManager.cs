@@ -27,10 +27,18 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.APourCouleurs.FirstOrDefaultAsync(u => u.IdCouleurEquipement == id);
         }
+        public async Task<ActionResult<APourCouleur>> GetByIdAsync(int id, int id2)
+        {
+            return await bmwDBContext.APourCouleurs.FirstOrDefaultAsync(u => u.IdEquipement == id && u.IdCouleurEquipement == id2);
+        }
         //recherche par nom de moto
         public async Task<ActionResult<APourCouleur>> GetByStringAsync(string nom)
         {
            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<APourCouleur>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
         }
         //ajoute une moto 
         public async Task AddAsync(APourCouleur entity)

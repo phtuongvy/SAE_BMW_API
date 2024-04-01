@@ -17,28 +17,47 @@ namespace SAE_API.Controllers.Tests
     [TestClass()]
     public class ConfigurationMotoControllerTests
     {
-        //private ConfigurationMotoController controller;
-        //private BMWDBContext context;
-        //private IDataRepository<ConfigurationMoto> dataRepository;
+
+        private ConfigurationMotoController controller;
+        private BMWDBContext context;
+        private IDataRepository<ConfigurationMoto> dataRepository;
 
 
-        //[TestInitialize]
-        //public void Init()
-        //{
-        //    var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server=localhost;port=5432;Database=RatingFilmsDB; uid=postgres;password=postgres;");
-        //    context = new BMWDBContext(builder.Options);
-        //    dataRepository = new ConfigurationMotoManager(context);
-        //    controller = new ConfigurationMotoController(dataRepository);
-        //}
-        ///// <summary>
-        ///// Test Contrôleur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void ConfigurationMotoControllerTest()
-        //{
+        [TestInitialize]
+        public void Init()
+        {
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+            context = new BMWDBContext(builder.Options);
+            dataRepository = new ConfigurationMotoManager(context);
+            controller = new ConfigurationMotoController(dataRepository);
+        }
+        /// <summary>
+        /// Test Contrôleur 
+        /// </summary>
+        [TestMethod()]
+        public void ConfigurationMotoControllerTest()
+        {
 
-        //}
+        }
 
+
+        [TestMethod()]
+        public void PostConfigMotoTest()
+        {
+           
+            ConfigurationMoto compte = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 21,
+                IdReservationOffre = 21,
+                IdMoto = 1,
+                IdColoris = 3,
+                PrixTotalConfiguration = 100,
+                DateConfiguration = new DateTime(08/03/2003),
+       
+            };      
+            // Act
+            var actionResult = controller.PostConfigMoto(compte).Result;
+        }
         ///// <summary>
         ///// Test GetUtilisateurs 
         ///// </summary>

@@ -25,7 +25,16 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<APourTaille>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.APourTailles.FirstOrDefaultAsync(u => u.IdTailleEquipement == id);
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<APourTaille>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
+        }
+        //recherche par ID moto
+        public async Task<ActionResult<APourTaille>> GetByIdAsync(int id, int id2)
+        {
+            return await bmwDBContext.APourTailles.FirstOrDefaultAsync(u =>u.IdEquipement == id && u.IdTailleEquipement == id2);
         }
         //recherche par nom de moto
         public async Task<ActionResult<APourTaille>> GetByStringAsync(string nom)

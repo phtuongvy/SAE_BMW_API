@@ -27,6 +27,15 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Estimers.FirstOrDefaultAsync(u => u.IdCompteClient == id);
         }
+
+        public async Task<ActionResult<Estimer>> GetByIdAsync(int id , int id2)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ActionResult<Estimer>> GetByIdAsync(int id, int id2, int id3)
+        {
+            throw new NotImplementedException();
+        }
         //recherche par nom de moto
         public async Task<ActionResult<Estimer>> GetByStringAsync(string nom)
         {

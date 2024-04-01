@@ -57,12 +57,12 @@
 //        [TestMethod()]
 //        public void GetAChoisiOptionTest()
 //        {
-//            //// Arrange
-//            //List<CarteBancaire> expected = context.CartesBancaires.ToList();
-//            //// Act
-//            //var res = controller.GetAChoisiOptions().Result;
-//            //// Assert
-//            //CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
+//            // Arrange
+//            List<CarteBancaire> expected = context.CartesBancaires.ToList();
+//            // Act
+//            var res = controller.GetAChoisiOptions().Result;
+//            // Assert
+//            CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
 //        }
 
 //        /// <summary>
@@ -72,12 +72,12 @@
 //        [TestMethod()]
 //        public void GetCarteBancaireByIdTest()
 //        {
-//            //// Arrange
-//            //AChoisiOption expected = context.AChoisiOptions.Find(1);
-//            //// Act
-//            //var res = controller.GetAChoisiOptionById(1).Result;
-//            //// Assert
-//            //Assert.AreEqual(expected, res.Value);
+//            // Arrange
+//            AChoisiOption expected = context.AChoisiOptions.Find(1);
+//            // Act
+//            var res = controller.GetAChoisiOptionById(1).Result;
+//            // Assert
+//            Assert.AreEqual(expected, res.Value);
 //        }
 
 //        [TestMethod]
@@ -87,7 +87,7 @@
 
 //            var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
 
-            
+          
 
 
 //            AChoisiOption option = new AChoisiOption
@@ -112,45 +112,45 @@
 //        [TestMethod()]
 //        public void PutAChoisiOptionTest()
 //        {
+//            //Arrange
+//            AChoisiOption optionAtester = context.AChoisiOptions.Find(1);
+
+//            // Act
+//            var res = controller.PutAChoisiOption(1, optionAtester);
+
 //            // Arrange
-//            //AChoisiOption optionAtester = context.AChoisiOptions.Find(1);
-
-//            //// Act
-//            //var res = controller.PutAChoisiOption(1, optionAtester);
-
-//            //// Arrange
-//            //AChoisiOption nouvelleoption = context.AChoisiOptions.Find(1);
-//            //Assert.AreEqual(optionAtester, nouvelleoption);
+//            AChoisiOption nouvelleoption = context.AChoisiOptions.Find(1);
+//            Assert.AreEqual(optionAtester, nouvelleoption);
 //        }
 
 //        [TestMethod]
 //        public void PutAChoisiOptionTestAvecMoq()
 //        {
 
-//            //// Arrange
-//            //AChoisiOption optionToUpdate = new AChoisiOption
-//            //{
-//            //    IdConfigurationMoto = 200,
-//            //    IdEquipementMoto = 100,
-//            //};
-//            //AChoisiOption updatedOption = new AChoisiOption
-//            //{
-//            //    IdConfigurationMoto = 100,
-//            //    IdEquipementMoto = 100,
-//            //};
+//            // Arrange
+//            AChoisiOption optionToUpdate = new AChoisiOption
+//            {
+//                IdConfigurationMoto = 200,
+//                IdEquipementMoto = 100,
+//            };
+//            AChoisiOption updatedOption = new AChoisiOption
+//            {
+//                IdConfigurationMoto = 100,
+//                IdEquipementMoto = 100,
+//            };
 
-//            //var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
-//            //mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-//            //mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+//            var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
+//            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
+//            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
 
 
-//            //var controller = new AChoisiOptionController(mockRepository.Object);
+//            var controller = new AChoisiOptionController(mockRepository.Object);
 
-//            //// Act
-//            //var result = controller.PutAChoisiOption(200, updatedOption).Result;
+//            // Act
+//            var result = controller.PutAChoisiOption(200, updatedOption).Result;
 
-//            //// Assert
-//            //Assert.IsInstanceOfType(result, typeof(NoContentResult), "La réponse n'est pas du type attendu NoContentResult");
+//            // Assert
+//            Assert.IsInstanceOfType(result, typeof(NoContentResult), "La réponse n'est pas du type attendu NoContentResult");
 //        }
 
 //        /// <summary>
@@ -160,28 +160,28 @@
 //        [TestMethod()]
 //        public void PostAChoisiOptionTest()
 //        {
-//            //// Arrange
+//            // Arrange
 
-//            //AChoisiOption option = new AChoisiOption
-//            //{
-//            //    IdConfigurationMoto = 1000,
-//            //    IdEquipementMoto = 1000,
-//            //};
+//            AChoisiOption option = new AChoisiOption
+//            {
+//                IdConfigurationMoto = 1000,
+//                IdEquipementMoto = 1000,
+//            };
 
-//            //// Act
-//            //var result = controller.PostAChoisiOption(option).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+//            // Act
+//            var result = controller.PostAChoisiOption(option).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
 
-//            //// Assert
-//            //// On récupère l'utilisateur créé directement dans la BD grace à son mail unique
-//            //AChoisiOption? optionRecupere = context.AChoisiOptions
-//            //    .Where(u => u.IdConfigurationMoto == option.IdConfigurationMoto && u.IdEquipementMoto == option.IdEquipementMoto)
-//            //    .FirstOrDefault();
+//            // Assert
+//            // On récupère l'utilisateur créé directement dans la BD grace à son mail unique
+//            AChoisiOption? optionRecupere = context.AChoisiOptions
+//                .Where(u => u.IdConfigurationMoto == option.IdConfigurationMoto && u.IdEquipementMoto == option.IdEquipementMoto)
+//                .FirstOrDefault();
 
-//            //// On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
-//            //// Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
-//            //option.IdConfigurationMoto = optionRecupere.IdConfigurationMoto;
-//            //option.IdEquipementMoto = optionRecupere.IdEquipementMoto;
-//            //Assert.AreEqual(optionRecupere, option, "Utilisateurs pas identiques");
+//            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+//            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+//            option.IdConfigurationMoto = optionRecupere.IdConfigurationMoto;
+//            option.IdEquipementMoto = optionRecupere.IdEquipementMoto;
+//            Assert.AreEqual(optionRecupere, option, "Utilisateurs pas identiques");
 //        }
 
 //        [TestMethod]
@@ -220,22 +220,22 @@
 //        [TestMethod()]
 //        public void DeleteAChoisiOptionTest()
 //        {
-//            //// Arrange
-//            //AChoisiOption option = new AChoisiOption
-//            //{
-//            //    IdConfigurationMoto = 1000,
-//            //    IdEquipementMoto = 1000,
-//            //};
-//            //context.AChoisiOptions.Add(option);
-//            //context.SaveChanges();
+//            // Arrange
+//            AChoisiOption option = new AChoisiOption
+//            {
+//                IdConfigurationMoto = 1000,
+//                IdEquipementMoto = 1000,
+//            };
+//            context.AChoisiOptions.Add(option);
+//            context.SaveChanges();
 
-//            //// Act
-//            //AChoisiOption optionCarte = context.AChoisiOptions.FirstOrDefault(u => u.IdEquipementMoto == option.IdEquipementMoto && u.IdConfigurationMoto == option.IdConfigurationMoto);
-//            //_ = controller.DeleteAChoisiOption(optionCarte.IdConfigurationMoto).Result;
+//            // Act
+//            AChoisiOption optionCarte = context.AChoisiOptions.FirstOrDefault(u => u.IdEquipementMoto == option.IdEquipementMoto && u.IdConfigurationMoto == option.IdConfigurationMoto);
+//            _ = controller.DeleteAChoisiOption(optionCarte.IdConfigurationMoto).Result;
 
-//            //// Arrange
-//            //AChoisiOption res = context.AChoisiOptions.FirstOrDefault(u => u.IdConfigurationMoto == option.IdConfigurationMoto && u.IdEquipementMoto == option.IdEquipementMoto);
-//            //Assert.IsNull(res, "utilisateur non supprimé");
+//            // Arrange
+//            AChoisiOption res = context.AChoisiOptions.FirstOrDefault(u => u.IdConfigurationMoto == option.IdConfigurationMoto && u.IdEquipementMoto == option.IdEquipementMoto);
+//            Assert.IsNull(res, "utilisateur non supprimé");
 //        }
 
 
@@ -243,19 +243,19 @@
 //        public void DeleteAChoisiOptionTest_AvecMoq()
 //        {
 
-//            //// Arrange
-//            //AChoisiOption option = new AChoisiOption
-//            //{
-//            //    IdConfigurationMoto = 1000,
-//            //    IdEquipementMoto = 1000,
-//            //};
-//            //var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
-//            //mockRepository.Setup(x => x.GetByIdAsync(1).Result).Returns(option);
-//            //var userController = new AChoisiOptionController(mockRepository.Object);
-//            //// Act
-//            //var actionResult = userController.DeleteAChoisiOption(1000).Result;
-//            //// Assert
-//            //Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
+//            // Arrange
+//            AChoisiOption option = new AChoisiOption
+//            {
+//                IdConfigurationMoto = 1000,
+//                IdEquipementMoto = 1000,
+//            };
+//            var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
+//            mockRepository.Setup(x => x.GetByIdAsync(1).Result).Returns(option);
+//            var userController = new AChoisiOptionController(mockRepository.Object);
+//            // Act
+//            var actionResult = userController.DeleteAChoisiOption(1000).Result;
+//            // Assert
+//            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
 //        }
 //    }
 //}

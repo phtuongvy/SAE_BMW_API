@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IDPack{id}/IdEquipementMoto{id2}")]
         [ActionName("GetAChoisiOptionById")]
-        public async Task<ActionResult<AChoisiOption>> GetAChoisiOptionById(int id)
+        public async Task<ActionResult<AChoisiOption>> GetAChoisiOptionById(int id , int id2)
         {
 
-            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id);
+            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (AChoisiOption == null)
             {
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/{id2}")]
         [ActionName("DeleteAChoisiOption")]
-        public async Task<IActionResult> DeleteAChoisiOption(int id)
+        public async Task<IActionResult> DeleteAChoisiOption(int id, int id2)
         {
-            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id);
+            var AChoisiOption = await _AChoisiOption.GetByIdAsync(id, id2);
             if (AChoisiOption == null)
             {
                 return NotFound();
