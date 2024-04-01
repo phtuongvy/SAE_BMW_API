@@ -16,9 +16,9 @@ namespace SAE_API.Models.EntityFramework
 
         // Navigation properties
         [InverseProperty(nameof(ConfigurationMoto.AChoisiOptionsConfigurationMoto))]
-        public virtual ConfigurationMoto ConfigurationMotoChoisiOption { get; set; }
+        public virtual ConfigurationMoto? ConfigurationMotoChoisiOption { get; set; }
         [InverseProperty(nameof(EquipementMotoOption.AChoisiOptionsEquipementMoto))]
-        public virtual EquipementMotoOption EquipementMotoChoisiOption { get; set; }
+        public virtual EquipementMotoOption? EquipementMotoChoisiOption { get; set; }
 
         
 

@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdMoto{id}/IdStock{id2}")]
         [ActionName("GetEstDansById")]
-        public async Task<ActionResult<EstDans>> GetEstDansById(int id)
+        public async Task<ActionResult<EstDans>> GetEstDansById(int id , int id2)
         {
 
-            var estDans = await _estDans.GetByIdAsync(id);
+            var estDans = await _estDans.GetByIdAsync(id , id2 );
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (estDans == null)
             {

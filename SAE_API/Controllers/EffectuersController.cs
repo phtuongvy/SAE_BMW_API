@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -29,12 +30,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdCompteClient{id}/IdCommande{id2}")]
         [ActionName("GetEffectuerById")]
-        public async Task<ActionResult<Effectuer>> GetEffectuerById(int id)
+        public async Task<ActionResult<Effectuer>> GetEffectuerById(int id , int id2)
         {
 
-            var effectuers = await _effectuers.GetByIdAsync(id);
+            var effectuers = await _effectuers.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (effectuers == null)
             {

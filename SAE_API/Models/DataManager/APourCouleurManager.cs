@@ -25,7 +25,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<APourCouleur>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.APourCouleurs.FirstOrDefaultAsync(u => u.IdCouleurEquipement == id);
+           throw new NotImplementedException();
         }
         public async Task<ActionResult<APourCouleur>> GetByIdAsync(int id, int id2)
         {

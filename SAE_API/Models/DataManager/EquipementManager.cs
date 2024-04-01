@@ -17,9 +17,6 @@ namespace SAE_API.Models.DataManager
             bmwDBContext = context;
         }
 
-        
-
-       
 
         public async Task<ActionResult<IEnumerable<Equipement>>> GetAllAsync()
         {
@@ -33,7 +30,7 @@ namespace SAE_API.Models.DataManager
 
         public async Task<ActionResult<Equipement>> GetByIdAsync(int id, int id2)
         {
-            return await bmwDBContext.Equipements.FirstOrDefaultAsync(u => u.IdEquipement == id);
+            throw new NotImplementedException();
         }
 
         public async Task<ActionResult<Equipement>> GetByIdAsync(int id, int id2, int id3)

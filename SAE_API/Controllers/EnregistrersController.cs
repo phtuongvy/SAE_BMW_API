@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdConfigurationMoto{id}/IdCompteClient{id2}")]
         [ActionName("GetEnregistrerById")]
-        public async Task<ActionResult<Enregistrer>> GetEnregistrerById(int id)
+        public async Task<ActionResult<Enregistrer>> GetEnregistrerById(int id , int id2)
         {
 
-            var Enregistrer = await _Enregistrer.GetByIdAsync(id);
+            var Enregistrer = await _Enregistrer.GetByIdAsync(id, id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (Enregistrer == null)
             {

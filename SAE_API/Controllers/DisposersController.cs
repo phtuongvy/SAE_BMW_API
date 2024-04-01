@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdEquipement{id}/IdStock{id2}")]
         [ActionName("GetDisposerById")]
-        public async Task<ActionResult<Disposer>> GetDisposerById(int id)
+        public async Task<ActionResult<Disposer>> GetDisposerById(int id , int id2)
         {
 
-            var Disposer = await _Disposer.GetByIdAsync(id);
+            var Disposer = await _Disposer.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (Disposer == null)
             {

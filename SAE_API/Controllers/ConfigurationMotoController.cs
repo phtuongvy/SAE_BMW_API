@@ -70,7 +70,7 @@ namespace SAE_API.Controllers
                 return BadRequest(ModelState);
             }
             await configurationManager.AddAsync(configurationMoto);
-            return CreatedAtAction("GetById", new { id = configurationMoto.IdConfigurationMoto }, configurationMoto); // GetById : nom de l’action
+            return NoContent();
         }
 
         // DELETE: api/ConfigurationMoto/5

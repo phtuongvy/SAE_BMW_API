@@ -17,8 +17,9 @@ namespace SAE_API.Models.EntityFramework
 
         // Navigation properties
         [InverseProperty(nameof(Pack.ChoisiPack))]
-        public virtual Pack PackChoisi { get; set; }
+        public virtual Pack? PackChoisi { get; set; }
+
         [InverseProperty(nameof(ConfigurationMoto.AChoisiConfigurationMoto))]
-        public virtual ConfigurationMoto ConfigurationMotoChoisi { get; set; }
+        public virtual ConfigurationMoto? ConfigurationMotoChoisi { get; set; }
     }
 }

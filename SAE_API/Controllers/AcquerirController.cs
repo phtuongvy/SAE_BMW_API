@@ -29,7 +29,7 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdCompteClient{id}/IdCb{id2}")]
         [ActionName("GetAcquerirById")]
         public async Task<ActionResult<Acquerir>> GetAcquerirById(int id)
         {

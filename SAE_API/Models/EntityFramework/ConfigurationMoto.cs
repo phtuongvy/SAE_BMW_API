@@ -37,22 +37,23 @@ namespace SAE_API.Models.EntityFramework
         // Propriétés de navigation
         [ForeignKey("IdMoto")]
         [InverseProperty(nameof(Moto.ConfigurationMotoMoto))]
-        public virtual Moto MotoConfigurationMoto { get; set; }
+        public virtual Moto? MotoConfigurationMoto { get; set; }
 
         [ForeignKey("IdColoris")]
         [InverseProperty(nameof(Coloris.ConfigurationsMotoColoris))]
-        public virtual Coloris ColorisConfigurationMoto { get; set; }
+        public virtual Coloris? ColorisConfigurationMoto { get; set; }
 
         [InverseProperty(nameof(Enregistrer.ConfigurationMotoEnregistrer))]
-        public virtual ICollection<Enregistrer> EnregistrerConfigurationMoto { get; set; }
+        public virtual ICollection<Enregistrer>? EnregistrerConfigurationMoto { get; set; }
 
         [InverseProperty(nameof(AChoisi.ConfigurationMotoChoisi))]
-        public virtual ICollection<AChoisi> AChoisiConfigurationMoto { get; set; }
+        public virtual ICollection<AChoisi>? AChoisiConfigurationMoto { get; set; }
+
         [InverseProperty(nameof(AChoisiOption.ConfigurationMotoChoisiOption))]
-        public virtual ICollection<AChoisiOption> AChoisiOptionsConfigurationMoto { get; set; }
+        public virtual ICollection<AChoisiOption>? AChoisiOptionsConfigurationMoto { get; set; }
 
         [InverseProperty(nameof(Commander.ConfigurationMotoCommander))]
-        public virtual Commander CommanderConfigurationMoto { get; set; }
+        public virtual Commander? CommanderConfigurationMoto { get; set; }
 
     }
 }

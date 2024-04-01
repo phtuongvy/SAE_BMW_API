@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdEquipement{id}/IdConcessionnaire{id2}")]
         [ActionName("GetDetientById")]
-        public async Task<ActionResult<Detient>> GetDetientById(int id)
+        public async Task<ActionResult<Detient>> GetDetientById(int id ,int id2)
         {
 
-            var Detient = await _Detient.GetByIdAsync(id);
+            var Detient = await _Detient.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (Detient == null)
             {

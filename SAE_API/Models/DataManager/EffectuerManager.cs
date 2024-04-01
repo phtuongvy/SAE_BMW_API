@@ -26,7 +26,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<Effectuer>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Effectuers.FirstOrDefaultAsync(u => u.IdCompteClient == id);
+            throw new NotImplementedException();
         }
 
         public async Task<ActionResult<Effectuer>> GetByIdAsync(int id , int id2)

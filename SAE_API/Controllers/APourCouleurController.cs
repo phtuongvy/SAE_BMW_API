@@ -10,7 +10,7 @@ using SAE_API.Repository;
 
 namespace SAE_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class APourCouleurController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdEquipement{id}/IdCouleurEquipement{id2}")]
         [ActionName("GetAPourCouleurById")]
         public async Task<ActionResult<APourCouleur>> GetAPourCouleurById(int id)
         {

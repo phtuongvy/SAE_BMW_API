@@ -29,7 +29,7 @@ namespace SAE_API.Models.DataManager
         }
         public async Task<ActionResult<CategorieCaracteristiqueMoto>> GetByIdAsync(int id, int id2)
         {
-            return await bmwDBContext.CategorieCaracteristiqueMotos.FirstOrDefaultAsync(u => u.IdCategorieCaracteristiqueMoto == id);
+            throw new NotImplementedException();
         }
         public async Task<ActionResult<CategorieCaracteristiqueMoto>> GetByIdAsync(int id, int id2, int id3)
         {

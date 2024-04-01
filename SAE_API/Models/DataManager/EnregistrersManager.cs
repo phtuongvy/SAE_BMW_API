@@ -25,7 +25,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<Enregistrer>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Enregistrers.FirstOrDefaultAsync(u => u.IdConfigurationMoto == id);
+            throw new NotImplementedException();
         }
         public async Task<ActionResult<Enregistrer>> GetByIdAsync(int id , int id2)
         {

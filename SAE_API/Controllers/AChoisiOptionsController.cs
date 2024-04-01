@@ -77,7 +77,7 @@ namespace SAE_API.Controllers
                 return BadRequest(ModelState);
             }
             await _AChoisiOption.AddAsync(AChoisiOption);
-            return CreatedAtAction("GetAChoisiOptionById", new { id = AChoisiOption.IdConfigurationMoto }, AChoisiOption); // GetById : nom de l’action
+            return NoContent();
         }
 
         // DELETE: api/Utilisateurs/5
