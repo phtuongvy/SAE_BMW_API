@@ -71,9 +71,39 @@ namespace SAE_API.Models.DataManager
             await bmwDbContext.SaveChangesAsync();
 
         }
-        public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
+        public async Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
         {
-            throw new NotImplementedException();
+            var moto = await bmwDbContext.ConfigurationMotos
+            .Where(m => m.IdConfigurationMoto == id)
+            .Select(m => new
+            {
+                configmotoid = m.IdConfigurationMoto,
+                configmotoidmoto = m.IdMoto,
+                configmotocolorisnom = m.ColorisConfigurationMoto.NomColoris,
+                configmotoprix = m.PrixTotalConfiguration,
+
+                configmotopacks = m.AChoisiConfigurationMoto.Select(p => new
+                {
+                    packid = p.PackChoisi.PackId,
+                    packnom = p.PackChoisi.NomPack,
+                    
+                }).ToList(),
+
+                configmotooptions = m.AChoisiOptionsConfigurationMoto.Select(c => new
+                {
+                    optionid =  c.EquipementMotoChoisiOption.IdEquipementMoto,
+                    optionnom = c.EquipementMotoChoisiOption.NomEquipement,
+                    
+
+                }).ToList(),
+
+               
+               
+            })
+            .FirstOrDefaultAsync();
+
+
+            return new ActionResult<object>(moto);
         }
         public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
         {

@@ -27,9 +27,9 @@ namespace SAE_API.Controllers
         // GET: api/ConfigurationMoto/5
         [HttpGet("{id}")]
         [ActionName("GetConfigMotoById")]
-        public async Task<ActionResult<ConfigurationMoto>> GetConfigMotoById(int id)
+        public async Task<ActionResult<object>> GetConfigMotoById(int id)
         {
-            var configurationMoto = configurationManager.GetByIdAsync(id);
+            var configurationMoto = configurationManager.GetByIdCustomAsync1(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (configurationMoto == null)
             {
