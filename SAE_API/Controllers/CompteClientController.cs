@@ -30,10 +30,10 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetUtilisateurById")]
-        public async Task<ActionResult<CompteClient>> GetUtilisateurById(int id)
+        public async Task<ActionResult<Object>> GetUtilisateurById(int id)
         {
 
-            var compteClient = await dataRepository.GetByIdAsync(id);
+            var compteClient = await dataRepository.GetByIdCustomAsync1(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (compteClient == null)
             {
