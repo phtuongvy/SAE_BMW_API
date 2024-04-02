@@ -25,12 +25,12 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<Provenance>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.Provenances.FirstOrDefaultAsync(u => u.IdConcessionnaire == id);
+            throw new NotImplementedException();
         }
 
         public async Task<ActionResult<Provenance>> GetByIdAsync(int id , int id2)
         {
-            return await bmwDBContext.Provenances.FirstOrDefaultAsync(u => u.IdCommande == id && u.IdCommande == id2);
+            return await bmwDBContext.Provenances.FirstOrDefaultAsync(u => u.IdCommande == id && u.IdConcessionnaire == id2);
         }
         public async Task<ActionResult<Provenance>> GetByIdAsync(int id, int id2, int id3)
         {

@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdCommande{id}/IdConcessionnaire{id2}")]
         [ActionName("GetProvenanceById")]
-        public async Task<ActionResult<Provenance>> GetProvenanceById(int id)
+        public async Task<ActionResult<Provenance>> GetProvenanceById(int id, int id2)
         {
 
-            var provenance = await _provenance.GetByIdAsync(id);
+            var provenance = await _provenance.GetByIdAsync(id, id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (provenance == null)
             {
@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCommande{id}/IdConcessionnaire{id2}")]
         [ActionName("PutProvenance")]
-        public async Task<IActionResult> PutProvenance(int id, Provenance provenance)
+        public async Task<IActionResult> PutProvenance(int id, int id2,Provenance provenance)
         {
             if (id != provenance.IdConcessionnaire)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _provenance.GetByIdAsync(id);
+            var userToUpdate = await _provenance.GetByIdAsync(id , id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdCommande{id}/IdConcessionnaire{id2}")]
         [ActionName("DeleteProvenance")]
-        public async Task<IActionResult> DeleteProvenance(int id)
+        public async Task<IActionResult> DeleteProvenance(int id , int id2)
         {
-            var provenance = await _provenance.GetByIdAsync(id);
+            var provenance = await _provenance.GetByIdAsync(id, id2);
             if (provenance == null)
             {
                 return NotFound();

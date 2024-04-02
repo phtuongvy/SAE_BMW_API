@@ -26,14 +26,11 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/PeutEquipers/5
-        [HttpGet]
-        [Route("[action]/{id}")]
+        [HttpGet("IdPack{id}/IdMoto{id2}")]
         [ActionName("GetById")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PeutEquiper>> GetPeutEquiperById(int id)
+        public async Task<ActionResult<PeutEquiper>> GetPeutEquiperById(int id, int id2)
         {
-            var peutEquiper = peutEquiperManager.GetByIdAsync(id);
+            var peutEquiper = peutEquiperManager.GetByIdAsync(id, id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (peutEquiper == null)
             {
@@ -44,17 +41,17 @@ namespace SAE_API.Controllers
 
         // PUT: api/PeutEquipers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdPack{id}/IdMoto{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutPeutEquiper(int id, PeutEquiper peutEquiper)
+        public async Task<IActionResult> PutPeutEquiper(int id,int id2, PeutEquiper peutEquiper)
         {
             if (id != peutEquiper.IdMoto)
             {
                 return BadRequest();
             }
-            var peutEquiperToUpdate = await peutEquiperManager.GetByIdAsync(id);
+            var peutEquiperToUpdate = await peutEquiperManager.GetByIdAsync(id, id2);
             if (peutEquiperToUpdate == null)
             {
                 return NotFound();
@@ -80,12 +77,12 @@ namespace SAE_API.Controllers
             return CreatedAtAction("GetById", new { id = peutEquiper.IdMoto }, peutEquiper); // GetById : nom de l’action
         }
         // DELETE: api/PeutEquipers/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdPack{id}/IdMoto{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePeutEquiper(int id)
+        public async Task<IActionResult> DeletePeutEquiper(int id, int id2)
         {
-            var peutEquiper = await peutEquiperManager.GetByIdAsync(id);
+            var peutEquiper = await peutEquiperManager.GetByIdAsync(id, id2);
             if (peutEquiper == null)
             {
                 return NotFound();

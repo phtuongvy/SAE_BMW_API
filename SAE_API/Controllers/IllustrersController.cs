@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdMoto{id}/IdPhoto{id2}")]
         [ActionName("GetIllustrerById")]
-        public async Task<ActionResult<Illustrer>> GetIllustrerById(int id)
+        public async Task<ActionResult<Illustrer>> GetIllustrerById(int id , int id2)
         {
 
-            var illustrer = await _illustrer.GetByIdAsync(id);
+            var illustrer = await _illustrer.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (illustrer == null)
             {
@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdMoto{id}/IdPhoto{id2}")]
         [ActionName("PutIllustrer")]
-        public async Task<IActionResult> PutIllustrer(int id, Illustrer illustrer)
+        public async Task<IActionResult> PutIllustrer(int id, int id2,Illustrer illustrer)
         {
             if (id != illustrer.IdPhoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _illustrer.GetByIdAsync(id);
+            var userToUpdate = await _illustrer.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,12 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        
+        [HttpDelete("IdMoto{id}/IdPhoto{id2}")]
         [ActionName("DeleteIllustrer")]
-        public async Task<IActionResult> DeleteIllustrer(int id)
+        public async Task<IActionResult> DeleteIllustrer(int id, int id2)
         {
-            var illustrer = await _illustrer.GetByIdAsync(id);
+            var illustrer = await _illustrer.GetByIdAsync(id,id2);
             if (illustrer == null)
             {
                 return NotFound();

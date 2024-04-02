@@ -29,12 +29,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdColoris{id}/IdMoto{id2}")]
         [ActionName("GetPeutContenirById")]
-        public async Task<ActionResult<PeutContenir>> GetPeutContenirById(int id)
+        public async Task<ActionResult<PeutContenir>> GetPeutContenirById(int id, int id2)
         {
 
-            var peutContenir = await _peutContenir.GetByIdAsync(id);
+            var peutContenir = await _peutContenir.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (peutContenir == null)
             {
@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdColoris{id}/IdMoto{id2}")]
         [ActionName("PutPeutContenir")]
-        public async Task<IActionResult> PutPeutContenir(int id, PeutContenir peutContenir)
+        public async Task<IActionResult> PutPeutContenir(int id,int id2, PeutContenir peutContenir)
         {
             if (id != peutContenir.IdColoris)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _peutContenir.GetByIdAsync(id);
+            var userToUpdate = await _peutContenir.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdColoris{id}/IdMoto{id2}")]
         [ActionName("DeletePeutContenir")]
-        public async Task<IActionResult> DeletePeutContenir(int id)
+        public async Task<IActionResult> DeletePeutContenir(int id, int id2)
         {
-            var peutContenir = await _peutContenir.GetByIdAsync(id);
+            var peutContenir = await _peutContenir.GetByIdAsync(id, id2);
             if (peutContenir == null)
             {
                 return NotFound();

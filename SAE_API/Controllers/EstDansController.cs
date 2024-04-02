@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdMoto{id}/IdStock{id2}")]
         [ActionName("PutEstDans")]
-        public async Task<IActionResult> PutEstDans(int id, EstDans estDans)
+        public async Task<IActionResult> PutEstDans(int id,int id2, EstDans estDans)
         {
             if (id != estDans.IdMoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _estDans.GetByIdAsync(id);
+            var userToUpdate = await _estDans.GetByIdAsync(id,id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdMoto{id}/IdStock{id2}")]
         [ActionName("DeleteEstDans")]
-        public async Task<IActionResult> DeleteEstDans(int id)
+        public async Task<IActionResult> DeleteEstDans(int id, int id2)
         {
-            var estDans = await _estDans.GetByIdAsync(id);
+            var estDans = await _estDans.GetByIdAsync(id, id2);
             if (estDans == null)
             {
                 return NotFound();

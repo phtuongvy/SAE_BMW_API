@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdConfigurationMoto{id}/IdCompteClient{id2}")]
         [ActionName("PutEnregistrer")]
-        public async Task<IActionResult> PutEnregistrer(int id, Enregistrer Enregistrer)
+        public async Task<IActionResult> PutEnregistrer(int id, int id2, Enregistrer Enregistrer)
         {
             if (id != Enregistrer.IdCompteClient)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _Enregistrer.GetByIdAsync(id);
+            var userToUpdate = await _Enregistrer.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdConfigurationMoto{id}/IdCompteClient{id2}")]
         [ActionName("DeleteEnregistrer")]
-        public async Task<IActionResult> DeleteEnregistrer(int id)
+        public async Task<IActionResult> DeleteEnregistrer(int id, int id2)
         {
-            var Enregistrer = await _Enregistrer.GetByIdAsync(id);
+            var Enregistrer = await _Enregistrer.GetByIdAsync(id,id2);
             if (Enregistrer == null)
             {
                 return NotFound();

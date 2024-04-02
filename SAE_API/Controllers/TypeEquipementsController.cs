@@ -26,14 +26,11 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/TypeEquipements/5
-        [HttpGet]
-        [Route("[action]/{id}")]
-        [ActionName("GetById")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TypeEquipement>> GetTypeEquipementById(int id)
+        [HttpGet("IdTypeEquipement{id}/IdSurTypeEquipement{id2}")]
+        [ActionName("GetTypeEquipementById")]
+        public async Task<ActionResult<TypeEquipement>> GetTypeEquipementById(int id , int id2)
         {
-            var typeEquipement = typeEquipementManager.GetByIdAsync(id);
+            var typeEquipement = typeEquipementManager.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (typeEquipement == null)
             {
@@ -44,17 +41,17 @@ namespace SAE_API.Controllers
 
         // PUT: api/TypeEquipements/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdTypeEquipement{id}/IdSurTypeEquipement{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutTypeEquipement(int id, TypeEquipement typeEquipement)
+        public async Task<IActionResult> PutTypeEquipement(int id,int id2 ,TypeEquipement typeEquipement)
         {
             if (id != typeEquipement.IdTypeEquipement)
             {
                 return BadRequest();
             }
-            var typeEquipementToUpdate = await typeEquipementManager.GetByIdAsync(id);
+            var typeEquipementToUpdate = await typeEquipementManager.GetByIdAsync(id, id2);
             if (typeEquipementToUpdate == null)
             {
                 return NotFound();
@@ -80,12 +77,12 @@ namespace SAE_API.Controllers
             return CreatedAtAction("GetById", new { id = typeEquipement.IdTypeEquipement }, typeEquipement); // GetById : nom de l’action
         }
         // DELETE: api/TypeEquipements/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdTypeEquipement{id}/IdSurTypeEquipement{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteTypeEquipement(int id)
+        public async Task<IActionResult> DeleteTypeEquipement(int id , int id2)
         {
-            var typeEquipement = await typeEquipementManager.GetByIdAsync(id);
+            var typeEquipement = await typeEquipementManager.GetByIdAsync(id , id2);
             if (typeEquipement == null)
             {
                 return NotFound();
