@@ -17,8 +17,7 @@ namespace SAE_API.Controllers
 
         public CompteClientController(IDataRepository<CompteClient> dataRepo)
         {
-            //_context = context;
-            dataRepository = dataRepo;
+            this.dataRepository = dataRepo;
         }
 
         [HttpGet]
