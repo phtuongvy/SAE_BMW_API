@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SAE_API.Models;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
@@ -21,18 +22,18 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetUtilisateurs")]
-        public async Task<ActionResult<IEnumerable<CompteClient>>> GetUtilisateurs()
+        public async Task<ActionResult<IEnumerable<Object>>> GetUtilisateurs()
         {
-            return await dataRepository.GetAllAsync();
+            return await dataRepository.GetAllAsync1();
         }
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetUtilisateurById")]
-        public async Task<ActionResult<CompteClient>> GetUtilisateurById(int id)
+        public async Task<ActionResult<Object>> GetUtilisateurById(int id)
         {
 
-            var compteClient = await dataRepository.GetByIdAsync(id);
+            var compteClient = await dataRepository.GetByIdCustomAsync1(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (compteClient == null)
             {
@@ -87,10 +88,11 @@ namespace SAE_API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var hashedPassword = ComputeSha256Hash(compteClient.Password);
             compteClient.Password = hashedPassword;
             await dataRepository.AddAsync(compteClient);
-            return CreatedAtAction("GetUtilisateurById", new { id = compteClient.IdCompteClient }, compteClient); // GetById : nom de l’action
+            return Ok(compteClient);
         }
 
         // DELETE: api/Utilisateurs/5

@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IDPack{id}/IdEquipementMoto{id2}")]
         [ActionName("PutAChoisiOption")]
-        public async Task<IActionResult> PutAChoisiOption(int id, AChoisiOption AChoisiOption)
+        public async Task<IActionResult> PutAChoisiOption(int id, int id2, AChoisiOption AChoisiOption)
         {
             if (id != AChoisiOption.IdConfigurationMoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _AChoisiOption.GetByIdAsync(id);
+            var userToUpdate = await _AChoisiOption.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();

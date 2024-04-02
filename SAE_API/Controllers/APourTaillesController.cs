@@ -31,11 +31,9 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("IdEquipement{id}/IdTailleEquipement{id2}")]
         [ActionName("GetAPourTaillesById")]
-        public async Task<ActionResult<APourTaille>> GetAPourTaillesById(int id)
+        public async Task<ActionResult<APourTaille>> GetAPourTaillesById(int id, int id2)
         {
-
-            var aPourTailles = await _aPourTailles.GetByIdAsync(id);
-            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            var aPourTailles = await _aPourTailles.GetByIdAsync(id, id2 );
             if (aPourTailles == null)
             {
                 return NotFound();

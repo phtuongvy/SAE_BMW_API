@@ -17,9 +17,10 @@ namespace SAE_API.Models.DataManager
             bmwDBContext = context;
         }
 
-        public Task AddAsync(CompteClient entity)
+        public async Task AddAsync(CompteClient entity)
         {
-            throw new NotImplementedException();
+            await bmwDBContext.CompteClients.AddAsync(entity);
+            await bmwDBContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(CompteClient entity)
@@ -81,13 +82,163 @@ namespace SAE_API.Models.DataManager
 
             await bmwDBContext.SaveChangesAsync();
         }
-        public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
+        public async Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
         {
-            throw new NotImplementedException();
+            var user = await bmwDBContext.CompteClients
+            .Where(u => u.IdCompteClient == id)
+            .Select(u => new
+            {
+                idcompteclient = u.IdCompteClient,
+                nomclient = u.NomClient,
+                prenomClient = u.PrenomClient,
+                civiliteClient = u.CiviliteClient,
+                numeroClient = u.NumeroClient,
+                email  = u.Email,
+                datenaissanceClient = u.DatenaissanceClient,
+                password = u.Password,
+                clientRole = u.ClientRole,
+
+                idadresse = u.AdresseCompteClient.IdAdresse,
+                numero = u.AdresseCompteClient.Numero,
+                rueClient = u.AdresseCompteClient.RueClient,
+                codePostal = u.AdresseCompteClient.CodePostal,
+                ville = u.AdresseCompteClient.Ville,
+                pays = u.AdresseCompteClient.Pays,
+                typeAdresse = u.AdresseCompteClient.TypeAdresse,
+
+                configmoto = u.EnregistrerCompteClient.Select(e => new
+                {
+                    e.IdConfigurationMoto,
+                    e.NomConfiguration,
+                    e.ConfigurationMotoEnregistrer.PrixTotalConfiguration,
+                    e.ConfigurationMotoEnregistrer.DateConfiguration,
+                }).ToList(),
+
+                moto = u .EnregistrerCompteClient.Select(e=> new
+                {
+                    e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.MotoId,
+                    e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.NomMoto,
+                    e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.DescriptionMoto,
+                    e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.GammeMotoMoto,
+                }),
+
+                pack = u.EnregistrerCompteClient.Select(e => new
+                {
+                    equipementoption = e.ConfigurationMotoEnregistrer.AChoisiConfigurationMoto.Select(m => new
+                    {
+                        m.PackChoisi.PackId,
+                        m.PackChoisi.NomPack,
+                        m.PackChoisi.DescriptionPack,
+                        m.PackChoisi.PrixPack,
+                    }),
+                }).ToList(),
+
+                option = u.EnregistrerCompteClient.Select(e => new
+                {
+                    equipementoption = e.ConfigurationMotoEnregistrer.AChoisiOptionsConfigurationMoto.Select(m => new
+                    {
+                        m.EquipementMotoChoisiOption.IdEquipementMoto,
+                        m.EquipementMotoChoisiOption.NomEquipement,
+                        m.EquipementMotoChoisiOption.PrixEquipementMoto,
+                        m.EquipementMotoChoisiOption.DescriptionEquipementMoto,
+                        m.EquipementMotoChoisiOption.EquipementOrigine,
+                        m.EquipementMotoChoisiOption.PhotoEquipementMotoOption.LienPhoto,
+                    
+                    }),
+                }).ToList(),
+
+                colorie = u.EnregistrerCompteClient.Select(e => new
+                {
+                    e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.IdPhoto,
+                    e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.NomColoris,
+                    e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.PrixColoris,
+                    e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.TypeColoris,
+                    e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.PhotoColoris.LienPhoto,
+                }).ToList(),
+   
+            })
+            .FirstOrDefaultAsync();
+
+
+            return new ActionResult<object>(user);
         }
-        public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
+        public async Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
         {
-            throw new NotImplementedException();
+            var users = await bmwDBContext.CompteClients
+               .Select(u => new
+               {
+                   idcompteclient = u.IdCompteClient,
+                   nomclient = u.NomClient,
+                   prenomClient = u.PrenomClient,
+                   civiliteClient = u.CiviliteClient, // Assurez-vous que la relation est correctement configurée
+                   numeroClient = u.NumeroClient,
+                   email = u.Email,
+                   datenaissanceClient = u.DatenaissanceClient,
+                   password = u.Password,
+                   clientRole = u.ClientRole,
+
+                   idadresse = u.AdresseCompteClient.IdAdresse,
+                   numero = u.AdresseCompteClient.Numero,
+                   rueClient = u.AdresseCompteClient.RueClient,
+                   codePostal = u.AdresseCompteClient.CodePostal,
+                   ville = u.AdresseCompteClient.Ville,
+                   pays = u.AdresseCompteClient.Pays,
+                   typeAdresse = u.AdresseCompteClient.TypeAdresse,
+
+                   configmoto = u.EnregistrerCompteClient.Select(e => new
+                   {
+                       e.IdConfigurationMoto,
+                       e.NomConfiguration,
+                       e.ConfigurationMotoEnregistrer.PrixTotalConfiguration,
+                       e.ConfigurationMotoEnregistrer.DateConfiguration,
+                   }).ToList(),
+
+                   moto = u.EnregistrerCompteClient.Select(e => new
+                   {
+                       e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.MotoId,
+                       e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.NomMoto,
+                       e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.DescriptionMoto,
+                       e.ConfigurationMotoEnregistrer.MotoConfigurationMoto.GammeMotoMoto,
+                   }),
+
+                   pack = u.EnregistrerCompteClient.Select(e => new
+                   {
+                       equipementoption = e.ConfigurationMotoEnregistrer.AChoisiConfigurationMoto.Select(m => new
+                       {
+                           m.PackChoisi.PackId,
+                           m.PackChoisi.NomPack,
+                           m.PackChoisi.DescriptionPack,
+                           m.PackChoisi.PrixPack,
+                       }),
+                   }).ToList(),
+
+                   option = u.EnregistrerCompteClient.Select(e => new
+                   {
+                       equipementoption = e.ConfigurationMotoEnregistrer.AChoisiOptionsConfigurationMoto.Select(m => new
+                       {
+                           m.EquipementMotoChoisiOption.IdEquipementMoto,
+                           m.EquipementMotoChoisiOption.NomEquipement,
+                           m.EquipementMotoChoisiOption.PrixEquipementMoto,
+                           m.EquipementMotoChoisiOption.DescriptionEquipementMoto,
+                           m.EquipementMotoChoisiOption.EquipementOrigine,
+                           m.EquipementMotoChoisiOption.PhotoEquipementMotoOption.LienPhoto,
+
+                       }),
+                   }).ToList(),
+
+                   colorie = u.EnregistrerCompteClient.Select(e => new
+                   {
+                       e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.IdPhoto,
+                       e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.NomColoris,
+                       e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.PrixColoris,
+                       e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.TypeColoris,
+                       e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.PhotoColoris.LienPhoto,
+                   }).ToList(),
+
+               })
+               .ToListAsync();
+
+            return users;
         }
     }
 }

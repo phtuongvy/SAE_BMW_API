@@ -10,7 +10,7 @@ using SAE_API.Repository;
 
 namespace SAE_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class GammeMotosController : ControllerBase
     {
@@ -47,7 +47,6 @@ namespace SAE_API.Controllers
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [ActionName("PutGammeMoto")]
         public async Task<IActionResult> PutGammeMoto(int id, GammeMoto gammeMoto)
         {
             if (id != gammeMoto.IdGammeMoto)
