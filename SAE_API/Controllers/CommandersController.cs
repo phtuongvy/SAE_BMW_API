@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCommande{id}/IdEquipement{id2}/IdConfigurationMoto{id3}")]
         [ActionName("PutCommander")]
-        public async Task<IActionResult> PutCommander(int id, Commander Commander)
+        public async Task<IActionResult> PutCommander(int id,int id2, int id3, Commander Commander)
         {
             if (id != Commander.IdConfigurationMoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _Commander.GetByIdAsync(id);
+            var userToUpdate = await _Commander.GetByIdAsync(id, id2,id3);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdCommande{id}/IdEquipement{id2}/IdConfigurationMoto{id3}")]
         [ActionName("DeleteCommander")]
-        public async Task<IActionResult> DeleteCommander(int id)
+        public async Task<IActionResult> DeleteCommander(int id, int id2 , int id3)
         {
-            var Commander = await _Commander.GetByIdAsync(id);
+            var Commander = await _Commander.GetByIdAsync(id, id2, id3);
             if (Commander == null)
             {
                 return NotFound();

@@ -44,15 +44,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCaracteristiqueMoto{id}/IdMoto{id2}")]
         [ActionName("PutAPourTailles")]
-        public async Task<IActionResult> PutAPourTailles(int id, APourTaille aPourTailles)
+        public async Task<IActionResult> PutAPourTailles(int id,int id2, APourTaille aPourTailles)
         {
             if (id != aPourTailles.IdTailleEquipement)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _aPourTailles.GetByIdAsync(id);
+            var userToUpdate = await _aPourTailles.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -79,11 +79,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdEquipement{id}/IdTailleEquipement{id2}")]
         [ActionName("DeleteAPourTailles")]
-        public async Task<IActionResult> DeleteAPourTailles(int id)
+        public async Task<IActionResult> DeleteAPourTailles(int id, int id2)
         {
-            var aPourTailles = await _aPourTailles.GetByIdAsync(id);
+            var aPourTailles = await _aPourTailles.GetByIdAsync(id, id2);
             if (aPourTailles == null)
             {
                 return NotFound();

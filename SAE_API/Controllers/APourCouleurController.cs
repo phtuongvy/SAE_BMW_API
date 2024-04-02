@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdEquipement{id}/IdCouleurEquipement{id2}")]
         [ActionName("PutAPourCouleur")]
-        public async Task<IActionResult> PutAPourCouleur(int id, APourCouleur aPourCouleur)
+        public async Task<IActionResult> PutAPourCouleur(int id,int id2, APourCouleur aPourCouleur)
         {
             if (id != aPourCouleur.IdCouleurEquipement)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _aPourCouleur.GetByIdAsync(id);
+            var userToUpdate = await _aPourCouleur.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdEquipement{id}/IdCouleurEquipement{id2}")]
         [ActionName("DeleteAPourCouleur")]
-        public async Task<IActionResult> DeleteAPourCouleur(int id)
+        public async Task<IActionResult> DeleteAPourCouleur(int id, int id2)
         {
-            var aPourCouleur = await _aPourCouleur.GetByIdAsync(id);
+            var aPourCouleur = await _aPourCouleur.GetByIdAsync(id, id2);
             if (aPourCouleur == null)
             {
                 return NotFound();
