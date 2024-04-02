@@ -47,15 +47,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCompteClient{id}/IdCommande{id2}")]
         [ActionName("PutEffectuer")]
-        public async Task<IActionResult> PutEffectuer(int id, Effectuer effectuers)
+        public async Task<IActionResult> PutEffectuer(int id,int id2, Effectuer effectuers)
         {
             if (id != effectuers.IdCompteClient)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _effectuers.GetByIdAsync(id);
+            var userToUpdate = await _effectuers.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -82,11 +82,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdCompteClient{id}/IdCommande{id2}")]
         [ActionName("DeleteEffectuer")]
-        public async Task<IActionResult> DeleteEffectuer(int id)
+        public async Task<IActionResult> DeleteEffectuer(int id, int id2)
         {
-            var effectuers = await _effectuers.GetByIdAsync(id);
+            var effectuers = await _effectuers.GetByIdAsync(id, id2);
             if (effectuers == null)
             {
                 return NotFound();

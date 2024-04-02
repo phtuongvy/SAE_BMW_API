@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdEquipement{id}/IdConcessionnaire{id2}")]
         [ActionName("PutDetient")]
-        public async Task<IActionResult> PutDetient(int id, Detient Detient)
+        public async Task<IActionResult> PutDetient(int id, int id2, Detient Detient)
         {
             if (id != Detient.IdConcessionnaire)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _Detient.GetByIdAsync(id);
+            var userToUpdate = await _Detient.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();

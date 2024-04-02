@@ -98,13 +98,13 @@ namespace SAE_API.Models.DataManager
                 password = u.Password,
                 clientRole = u.ClientRole,
 
-                idadresse = u.AdresseCompteClient.IdAdresse,
-                numero = u.AdresseCompteClient.Numero,
-                rueClient = u.AdresseCompteClient.RueClient,
-                codePostal = u.AdresseCompteClient.CodePostal,
-                ville = u.AdresseCompteClient.Ville,
-                pays = u.AdresseCompteClient.Pays,
-                typeAdresse = u.AdresseCompteClient.TypeAdresse,
+                idadresse = u.AdresseCompteClient != null ? u.AdresseCompteClient.IdAdresse : 0,
+                numero = u.AdresseCompteClient != null ? u.AdresseCompteClient.Numero : 0,
+                rueClient = u.AdresseCompteClient != null ? u.AdresseCompteClient.RueClient : "",
+                codePostal = u.AdresseCompteClient != null ? u.AdresseCompteClient.CodePostal : "",
+                ville = u.AdresseCompteClient != null ? u.AdresseCompteClient.Ville : "",
+                pays = u.AdresseCompteClient != null ? u.AdresseCompteClient.Pays : "",
+                typeAdresse = u.AdresseCompteClient != null ? u.AdresseCompteClient.TypeAdresse : "",
 
                 configmoto = u.EnregistrerCompteClient.Select(e => new
                 {
@@ -170,20 +170,21 @@ namespace SAE_API.Models.DataManager
                    idcompteclient = u.IdCompteClient,
                    nomclient = u.NomClient,
                    prenomClient = u.PrenomClient,
-                   civiliteClient = u.CiviliteClient, // Assurez-vous que la relation est correctement configurée
+                   civiliteClient = u.CiviliteClient,
                    numeroClient = u.NumeroClient,
                    email = u.Email,
                    datenaissanceClient = u.DatenaissanceClient,
                    password = u.Password,
                    clientRole = u.ClientRole,
 
-                   idadresse = u.AdresseCompteClient.IdAdresse,
-                   numero = u.AdresseCompteClient.Numero,
-                   rueClient = u.AdresseCompteClient.RueClient,
-                   codePostal = u.AdresseCompteClient.CodePostal,
-                   ville = u.AdresseCompteClient.Ville,
-                   pays = u.AdresseCompteClient.Pays,
-                   typeAdresse = u.AdresseCompteClient.TypeAdresse,
+
+                   idadresse = u.AdresseCompteClient != null ? u.AdresseCompteClient.IdAdresse : 0,
+                   numero = u.AdresseCompteClient != null ? u.AdresseCompteClient.Numero : 0,
+                   rueClient = u.AdresseCompteClient != null ? u.AdresseCompteClient.RueClient : "",
+                   codePostal = u.AdresseCompteClient != null ? u.AdresseCompteClient.CodePostal : "",
+                   ville = u.AdresseCompteClient != null ? u.AdresseCompteClient.Ville : "",
+                   pays = u.AdresseCompteClient != null ? u.AdresseCompteClient.Pays : "",
+                   typeAdresse = u.AdresseCompteClient != null ? u.AdresseCompteClient.TypeAdresse : "",
 
                    configmoto = u.EnregistrerCompteClient.Select(e => new
                    {
@@ -234,6 +235,14 @@ namespace SAE_API.Models.DataManager
                        e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.TypeColoris,
                        e.ConfigurationMotoEnregistrer.ColorisConfigurationMoto.PhotoColoris.LienPhoto,
                    }).ToList(),
+
+
+
+
+
+
+
+
 
                })
                .ToListAsync();

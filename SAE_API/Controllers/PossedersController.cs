@@ -26,11 +26,8 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Posseders/5
-        [HttpGet]
-        [Route("[action]/{id}")]
-        [ActionName("GetById")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("IdEquipementMoto{id}/IdMoto{id2}")]
+        [ActionName("GetPossederById")]
         public async Task<ActionResult<Posseder>> GetPossederById(int id)
         {
             var posseder = possederManager.GetByIdAsync(id);
@@ -44,17 +41,17 @@ namespace SAE_API.Controllers
 
         // PUT: api/Posseders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdEquipementMoto{id}/IdMoto{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutPosseder(int id, Posseder posseder)
+        public async Task<IActionResult> PutPosseder(int id, int id2, Posseder posseder)
         {
             if (id != posseder.IdMoto)
             {
                 return BadRequest();
             }
-            var possederToUpdate = await possederManager.GetByIdAsync(id);
+            var possederToUpdate = await possederManager.GetByIdAsync(id, id2);
             if (possederToUpdate == null)
             {
                 return NotFound();
@@ -80,12 +77,12 @@ namespace SAE_API.Controllers
             return CreatedAtAction("GetById", new { id = posseder.IdMoto }, posseder); // GetById : nom de l’action
         }
         // DELETE: api/Posseders/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdEquipementMoto{id}/IdMoto{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePosseder(int id)
+        public async Task<IActionResult> DeletePosseder(int id , int id2)
         {
-            var posseder = await possederManager.GetByIdAsync(id);
+            var posseder = await possederManager.GetByIdAsync(id , id2);
             if (posseder == null)
             {
                 return NotFound();

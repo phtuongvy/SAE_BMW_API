@@ -26,14 +26,12 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Estimers/5
-        [HttpGet]
-        [Route("[action]/{id}")]
-        [ActionName("GetById")]
+        [HttpGet("IdCompteClient{id}/IdMoyenDePaiement{id2}/IdEstimationMoto{id3}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Estimer>> GetEstimerById(int id)
+        public async Task<ActionResult<Estimer>> GetEstimerById(int id, int id2 , int id3)
         {
-            var estimer = estimerManager.GetByIdAsync(id);
+            var estimer = estimerManager.GetByIdAsync(id , id2 , id3);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (estimer == null)
             {
@@ -44,17 +42,17 @@ namespace SAE_API.Controllers
 
         // PUT: api/Estimers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCompteClient{id}/IdMoyenDePaiement{id2}/IdEstimationMoto{id3}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutEstimer(int id, Estimer estimer)
+        public async Task<IActionResult> PutEstimer(int id, int id2, int id3, Estimer estimer)
         {
             if (id != estimer.IdCompteClient)
             {
                 return BadRequest();
             }
-            var estimerToUpdate = await estimerManager.GetByIdAsync(id);
+            var estimerToUpdate = await estimerManager.GetByIdAsync(id, id2 , id3);
             if (estimerToUpdate == null)
             {
                 return NotFound();
@@ -80,12 +78,12 @@ namespace SAE_API.Controllers
             return CreatedAtAction("GetById", new { id = estimer.IdCompteClient }, estimer); // GetById : nom de l’action
         }
         // DELETE: api/Estimers/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdCompteClient{id}/IdMoyenDePaiement{id2}/IdEstimationMoto{id3}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteEstimer(int id)
+        public async Task<IActionResult> DeleteEstimer(int id, int id2, int id3)
         {
-            var estimer = await estimerManager.GetByIdAsync(id);
+            var estimer = await estimerManager.GetByIdAsync(id, id2 , id3);
             if (estimer == null)
             {
                 return NotFound();

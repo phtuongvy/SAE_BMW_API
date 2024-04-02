@@ -29,13 +29,13 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
+        [HttpGet("IdEquipementMoto{id}/IdPack{id2}")]
         [ActionName("GetPeutUtiliserById")]
-        public async Task<ActionResult<PeutUtiliser>> GetPeutUtiliserById(int id)
+        public async Task<ActionResult<PeutUtiliser>> GetPeutUtiliserById(int id, int id2)
         {
 
-            var peutUtiliser = await _peutUtiliser.GetByIdAsync(id);
-            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            var peutUtiliser = await _peutUtiliser.GetByIdAsync(id , id2);
+
             if (peutUtiliser == null)
             {
                 return NotFound();
@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdEquipementMoto{id}/IdPack{id2}")]
         [ActionName("PutPeutUtiliser")]
-        public async Task<IActionResult> PutPeutUtiliser(int id, PeutUtiliser peutUtiliser)
+        public async Task<IActionResult> PutPeutUtiliser(int id, int id2, PeutUtiliser peutUtiliser)
         {
             if (id != peutUtiliser.IdPack)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _peutUtiliser.GetByIdAsync(id);
+            var userToUpdate = await _peutUtiliser.GetByIdAsync(id, id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdEquipementMoto{id}/IdPack{id2}")]
         [ActionName("DeletePeutUtiliser")]
-        public async Task<IActionResult> DeletePeutUtiliser(int id)
+        public async Task<IActionResult> DeletePeutUtiliser(int id, int id2)
         {
-            var peutUtiliser = await _peutUtiliser.GetByIdAsync(id);
+            var peutUtiliser = await _peutUtiliser.GetByIdAsync(id, id2);
             if (peutUtiliser == null)
             {
                 return NotFound();
