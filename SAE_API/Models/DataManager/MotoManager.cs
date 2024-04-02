@@ -34,6 +34,8 @@ namespace SAE_API.Models.DataManager
                     motoprix = m.PrixMoto,
                     motogamme = m.GammeMotoMoto.NomGammeMoto, // Assurez-vous que la relation est correctement configurée
                     motophotos = m.IllustrerMoto.Select(i => i.PhotoIllustrer.LienPhoto).ToList(),
+
+                    
                 })
                 .ToListAsync();
 
