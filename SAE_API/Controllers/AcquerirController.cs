@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCompteClient{id}/IdCb{id2}")]
         [ActionName("PutAcquerir")]
-        public async Task<IActionResult> PutAcquerir(int id, Acquerir acquerir)
+        public async Task<IActionResult> PutAcquerir(int id, int id2, Acquerir acquerir)
         {
             if (id != acquerir.IdCb)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _acquerir.GetByIdAsync(id);
+            var userToUpdate = await _acquerir.GetByIdAsync(id , id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -83,9 +83,9 @@ namespace SAE_API.Controllers
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
         [ActionName("DeleteAcquerir")]
-        public async Task<IActionResult> DeleteAcquerir(int id)
+        public async Task<IActionResult> DeleteAcquerir(int id , int id2)
         {
-            var acquerir = await _acquerir.GetByIdAsync(id);
+            var acquerir = await _acquerir.GetByIdAsync(id, id2);
             if (acquerir == null)
             {
                 return NotFound();

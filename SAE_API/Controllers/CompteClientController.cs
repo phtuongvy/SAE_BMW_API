@@ -23,9 +23,9 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetUtilisateurs")]
-        public async Task<ActionResult<IEnumerable<CompteClient>>> GetUtilisateurs()
+        public async Task<ActionResult<IEnumerable<Object>>> GetUtilisateurs()
         {
-            return await dataRepository.GetAllAsync();
+            return await dataRepository.GetAllAsync1();
         }
 
         // GET: api/Utilisateurs/5

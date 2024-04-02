@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IDPack{id}/IDConfigurationMoto{id2}")]
         [ActionName("PutAChoisi")]
-        public async Task<IActionResult> PutAChoisi(int id, AChoisi AChoisi)
+        public async Task<IActionResult> PutAChoisi(int id, int id2, AChoisi AChoisi)
         {
             if (id != AChoisi.IDPack)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _AChoisi.GetByIdAsync(id);
+            var userToUpdate = await _AChoisi.GetByIdAsync(id , id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IDPack{id}/IDConfigurationMoto{id2}")]
         [ActionName("DeleteAChoisi")]
-        public async Task<IActionResult> DeleteAChoisi(int id)
+        public async Task<IActionResult> DeleteAChoisi(int id , int id2)
         {
-            var AChoisi = await _AChoisi.GetByIdAsync(id);
+            var AChoisi = await _AChoisi.GetByIdAsync(id , id2);
             if (AChoisi == null)
             {
                 return NotFound();
