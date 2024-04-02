@@ -31,10 +31,10 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("IdCompteClient{id}/IdCb{id2}")]
         [ActionName("GetAcquerirById")]
-        public async Task<ActionResult<Acquerir>> GetAcquerirById(int id)
+        public async Task<ActionResult<Acquerir>> GetAcquerirById(int id , int id2)
         {
 
-            var acquerir = await _acquerir.GetByIdAsync(id);
+            var acquerir = await _acquerir.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (acquerir == null)
             {

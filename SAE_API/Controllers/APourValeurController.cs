@@ -31,10 +31,10 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("IdCaracteristiqueMoto{id}/IdMoto{id2}")]
         [ActionName("GetAPourValeurById")]
-        public async Task<ActionResult<APourValeur>> GetAPourValeurById(int id)
+        public async Task<ActionResult<APourValeur>> GetAPourValeurById(int id , int id2)
         {
 
-            var aPourValeur = await _aPourValeur.GetByIdAsync(id);
+            var aPourValeur = await _aPourValeur.GetByIdAsync(id , id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (aPourValeur == null)
             {

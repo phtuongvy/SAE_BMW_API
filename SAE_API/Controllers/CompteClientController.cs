@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SAE_API.Models;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
@@ -88,10 +89,11 @@ namespace SAE_API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var hashedPassword = ComputeSha256Hash(compteClient.Password);
             compteClient.Password = hashedPassword;
             await dataRepository.AddAsync(compteClient);
-            return CreatedAtAction("GetUtilisateurById", new { id = compteClient.IdCompteClient }, compteClient); // GetById : nom de l’action
+            return Ok(compteClient);
         }
 
         // DELETE: api/Utilisateurs/5

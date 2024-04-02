@@ -17,9 +17,10 @@ namespace SAE_API.Models.DataManager
             bmwDBContext = context;
         }
 
-        public Task AddAsync(CompteClient entity)
+        public async Task AddAsync(CompteClient entity)
         {
-            throw new NotImplementedException();
+            await bmwDBContext.CompteClients.AddAsync(entity);
+            await bmwDBContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(CompteClient entity)
