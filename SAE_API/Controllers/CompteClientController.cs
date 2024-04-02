@@ -22,7 +22,14 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetUtilisateurs")]
-        public async Task<ActionResult<IEnumerable<Object>>> GetUtilisateurs()
+        public async Task<ActionResult<IEnumerable<CompteClient>>> GetUtilisateurs()
+        {
+            return await dataRepository.GetAllAsync();
+        }
+
+        [HttpGet]
+        [ActionName("GetUtilisateursCustom")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetUtilisateursCustom()
         {
             return await dataRepository.GetAllAsync1();
         }
@@ -30,7 +37,22 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetUtilisateurById")]
-        public async Task<ActionResult<Object>> GetUtilisateurById(int id)
+        public async Task<ActionResult<CompteClient>> GetUtilisateurById(int id)
+        {
+
+            var compteClient = await dataRepository.GetByIdAsync(id);
+            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            if (compteClient == null)
+            {
+                return NotFound();
+            }
+            return compteClient;
+        }
+
+        // GET: api/Utilisateurs/5
+        [HttpGet("{id}")]
+        [ActionName("GetUtilisateurByIdCustom")]
+        public async Task<ActionResult<Object>> GetUtilisateurByIdCustom(int id)
         {
 
             var compteClient = await dataRepository.GetByIdCustomAsync1(id);

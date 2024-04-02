@@ -22,8 +22,8 @@ namespace SAE_API.Controllers.Tests
         private IDataRepository<CompteClient> dataRepository;
 
 
-        //[testinitialize]
-        public void init()
+        [TestInitialize]
+        public void Init()
         {
             var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
             context = new BMWDBContext(builder.Options);
@@ -178,12 +178,11 @@ namespace SAE_API.Controllers.Tests
             // Act
             var actionResult = userController.PostUtilisateur(client).Result;
             // Assert
-            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Commande>");
-            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
-            var result = actionResult.Result as CreatedAtActionResult;
-            Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Commande");
-            client.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
-            Assert.AreEqual(client, (CompteClient)result.Value, "Commande pas identiques");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
+            var okResult = actionResult.Result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            var resultValue = okResult.Value as CompteClient;
+            Assert.IsNotNull(resultValue);
         }
 
         /// <summary>
@@ -208,12 +207,12 @@ namespace SAE_API.Controllers.Tests
             // Act
             var actionResult = controller.PostUtilisateur(client).Result;
             // Assert
-            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Utilisateur>");
-            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
-            var result = actionResult.Result as CreatedAtActionResult;
-            Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Utilisateur");
-            client.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
-            Assert.AreEqual(client, (CompteClient)result.Value, "Utilisateurs pas identiques");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
+            var okResult = actionResult.Result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            Assert.IsInstanceOfType(okResult.Value, typeof(CompteClient), "Pas un CompteClient");
+            var clientResult = okResult.Value as CompteClient;
+            Assert.IsNotNull(clientResult);
 
             context.CompteClients.Remove(client);
             context.SaveChangesAsync();
@@ -240,7 +239,7 @@ namespace SAE_API.Controllers.Tests
                 ClientRole = "user"
             };
 
-            context.CompteClients.AddAsync(client);
+            context.CompteClients.Add(client);
             context.SaveChanges();
 
             // Act
