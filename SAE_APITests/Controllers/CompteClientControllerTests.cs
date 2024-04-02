@@ -17,269 +17,266 @@ namespace SAE_API.Controllers.Tests
     [TestClass()]
     public class CompteClientControllerTests
     {
-        //private CompteClientController controller;
-        //private BMWDBContext context;
-        //private IDataRepository<CompteClient> dataRepository;
+        private CompteClientController controller;
+        private BMWDBContext context;
+        private IDataRepository<CompteClient> dataRepository;
 
 
-        //[TestInitialize]
-        //public void Init()
-        //{
-        //    var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
-        //    context = new BMWDBContext(builder.Options);
-        //    dataRepository = new CompteClientManager(context);
-        //    controller = new CompteClientController(dataRepository);
-        //}
-        ///// <summary>
-        ///// Test Contrôleur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void CompteClientControllerTest()
-        //{
-
-        //}
-
-        ///// <summary>
-        ///// Test GetUtilisateurs 
-        ///// </summary>
-        //[TestMethod()]
-        //public void GetUtilisateursTest()
-        //{
-        //    // Arrange
-        //    List<CompteClient> expected = context.CompteClients.ToList();
-        //    // Act
-        //    var res = controller.GetUtilisateurs().Result;
-        //    // Assert
-        //    CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
-        //}
-
-        ///// <summary>
-        ///// Test GetUtilisateurById 
-        ///// </summary>
-        //[TestMethod()]
-        //public void GetUtilisateurByIdTest()
-        //{
-        //    // Arrange
-        //    CompteClient expected = context.CompteClients.Find(1);
-        //    // Act
-        //    var res = controller.GetUtilisateurById(1).Result;
-        //    // Assert
-        //    Assert.AreEqual(expected, res.Value);
-        //}
-
-        //[TestMethod()]
-        //public void GetUtilisateurByIdTest_AvecMoq()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-
-        //    ICollection<Acquerir> AcquisC = new List<Acquerir>
-        //    {
-        //        new Acquerir { /* initialisez les propriétés de l'objet ici */ },
-        //        new Acquerir { /* un autre objet Acquerir */ }
-        //    };
-
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient catre = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
-        //    // Act
-
-        //    mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(catre);
-        //    var userController = new CompteClientController(mockRepository.Object);
-
-        //    var actionResult = userController.GetUtilisateurById(100).Result;
-        //    // Assert
-        //    Assert.IsNotNull(actionResult);
-        //    Assert.IsNotNull(actionResult.Value);
-        //    Assert.AreEqual(catre, actionResult.Value as CompteClient);
-        //}
-
-        ///// <summary>
-        ///// Test GetUtilisateurByName 
-        ///// </summary>
-
-        //[TestMethod()]
-        //public void GetUtilisateurByNameTest()
-        //{
-        //    //// Arrange
-        //    //CompteClient expected = context.CompteClients.Find(1);
-        //    //// Act
-        //    //var res = controller.GetUtilisateurByName(expected.NomClient).Result;
-
-        //    //Assert.AreEqual(expected, res.Value);
-        //}
+        //[testinitialize]
+        public void init()
+        {
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+            context = new BMWDBContext(builder.Options);
+            dataRepository = new CompteClientManager(context);
+            controller = new CompteClientController(dataRepository);
+        }
 
 
-        ///// <summary>
-        ///// Test PutUtilisateur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void PutUtilisateurTest()
-        //{
+        /// <summary>
+        /// Test Contrôleur 
+        /// </summary>
 
-        //    // Arrange
-        //    Random rnd = new Random();
-        //    int chiffre = rnd.Next(1, 1000000000);
-        //    CompteClient compte = context.CompteClients.Find(1);
+        [TestMethod()]
+        public void CompteClientControllerTest()
+        {
 
-        //    // Act
-        //    var res = controller.PutUtilisateur(1, compte);
+        }
 
-        //    // Arrange
-        //    CompteClient compteClient = context.CompteClients.Find(1);
-        //    Assert.AreEqual(compte, compteClient);
-        //}
+        /// <summary>
+        /// Test GetUtilisateursTest 
+        /// </summary>
+        [TestMethod()]
+        public void GetUtilisateursTest()
+        {
+            // Arrange
+            List<CompteClient> client = context.CompteClients.ToList();
+            // Act
+            var res = controller.GetUtilisateurs().Result;
+            // Assert
+            CollectionAssert.AreEqual(client, res.Value.ToList(), "Les listes ne sont pas identiques");
+        }
 
-        //[TestMethod]
-        //public void PutUtilisateurTest_AvecMoq()
-        //{
-        //    //// Arrange
-        //    //byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
+        /// <summary>
+        /// Test GetUtilisateurByIdTest 
+        /// </summary>
+        [TestMethod()]
+        public void GetUtilisateurByIdTest()
+        {
+            // Arrange
+            CompteClient client = context.CompteClients.Find(1);
+            // Act
+            var res = controller.GetUtilisateurById(1).Result;
+            // Assert
+            Assert.AreEqual(client, res.Value);
+        }
 
-        //    //CompteClient compte = new CompteClient
-        //    //{
-        //    //    IdCompteClient = 100,
-        //    //    NomClient = "Lamy",
-        //    //    PrenomClient = "Evan",
-        //    //    CiviliteClient = "M",
-        //    //    NumeroClient = "06 92 0920912",
-        //    //    Email = "Evan.lamy@gmail.com",
-        //    //    DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //    //    Password = byteArray,
-        //    //    ClientRole = "Client"
-        //    //};
+        [TestMethod()]
+        public void GetUtilisateurByIdTest_AvecMoq()
+        {
+            // Arrange
+            var fakeId = 100;
+            var mockRepository = new Mock<IDataRepository<CompteClient>>();
+            var userController = new CompteClientController(mockRepository.Object);
 
-        //    //CompteClient compte2 = new CompteClient
-        //    //{
-        //    //    IdCompteClient = 101,
-        //    //    NomClient = "Ricardo",
-        //    //    PrenomClient = "NUNES",
-        //    //    CiviliteClient = "M",
-        //    //    NumeroClient = "06 92 32 32 43",
-        //    //    Email = "ricardonunesemilio@gmail.com",
-        //    //    DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //    //    Password = byteArray,
-        //    //    ClientRole = "Client"
-        //    //};
+            CompteClient client = new CompteClient
+            {
+                IdCompteClient = fakeId,
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010,02,18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
+            // Act
 
-        //    //var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    //mockRepository.Setup(x => x.GetByIdAsync(101).Result).Returns(compte2);
-        //    //var userController = new CompteClientController(mockRepository.Object);
+            mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(client);
+            var actionResult = userController.GetUtilisateurById(100).Result;
+            // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNotNull(actionResult.Value);
+            Assert.AreEqual(client, actionResult.Value as CompteClient);
+        }
 
-        //    //// Act
-        //    //var actionResult = userController.PutUtilisateur(2, compte).Result;
+        /// <summary>
+        /// Test PutUtilisateurTest 
+        /// </summary>
+        [TestMethod()]
+        public void PutUtilisateurTest()
+        {
+            // Arrange
+            CompteClient client = context.CompteClients.Find(1);
 
-        //    //// Assert
-        //    //Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult");
-        //}
+            // Act
+            var res = controller.PutUtilisateur(1, client);
 
-        ///// <summary>
-        ///// Test PostUtilisateur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void PostUtilisateurTest()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    var userController = new CompteClientController(mockRepository.Object);
+            // Arrange
+            CompteClient client_nouveau = context.CompteClients.Find(1);
+            Assert.AreEqual(client, client_nouveau);
+        }
 
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
+        [TestMethod]
+        public void PutUtilisateurTest_AvecMoq()
+        {
+            // Arrange
+            var fakeId = 100;
+            var equipementToUpdate = new CompteClient
+            {
+                IdCompteClient = fakeId,
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010, 02, 18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
 
-        //    // Act
-        //    var actionResult = userController.PostUtilisateur(compte).Result;
-        //    // Assert
-        //    Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Commande>");
-        //    Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+            var mockRepository = new Mock<IDataRepository<CompteClient>>();
+            mockRepository.Setup(x => x.GetByIdAsync(fakeId))
+                .ReturnsAsync(equipementToUpdate); // Simule la récupération de l'équipement existant
+            mockRepository.Setup(x => x.UpdateAsync(equipementToUpdate, equipementToUpdate)).Returns(Task.CompletedTask);
 
-        //    var result = actionResult.Result as CreatedAtActionResult;
-        //    Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Commande");
+            var controller = new CompteClientController(mockRepository.Object);
 
-        //    compte.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
-        //    Assert.AreEqual(compte, (CompteClient)result.Value, "Commande pas identiques");
-        //}
+            // Act
+            var actionResult = controller.PutUtilisateur(fakeId, equipementToUpdate).Result;
 
-        ///// <summary>
-        ///// Test DeleteUtilisateu 
-        ///// </summary>
-        //[TestMethod()]
-        //public void DeleteUtilisateurTest()
-        //{
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult)); // On s'attend à ce qu'aucun contenu ne soit retourné pour une mise à jour réussie
+            mockRepository.Verify(); // Vérifie que toutes les configurations vérifiables sur le mock ont bien été appelées
+        }
 
 
-        //    context.CompteClients.Add(compte);
-        //    context.SaveChanges();
+        /// <summary>
+        /// Test PostUtilisateurTest 
+        /// </summary>
+        [TestMethod()]
+        public void PostUtilisateurTestAvecMoq()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<CompteClient>>();
+            var userController = new CompteClientController(mockRepository.Object);
+            var fakeId = 100;
+            // Arrange
+            CompteClient client = new CompteClient
+            {
+                IdCompteClient = fakeId,
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010, 02, 18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
 
-        //    // Act
-        //    CompteClient deletedCarte = context.CompteClients.FirstOrDefault(u => u.IdCompteClient == compte.IdCompteClient);
-        //    _ = controller.DeleteUtilisateur(deletedCarte.IdCompteClient).Result;
+            // Act
+            var actionResult = userController.PostUtilisateur(client).Result;
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Commande>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Commande");
+            client.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
+            Assert.AreEqual(client, (CompteClient)result.Value, "Commande pas identiques");
+        }
 
-        //    // Arrange
-        //    CompteClient res = context.CompteClients.FirstOrDefault(u => u.IdCompteClient == compte.IdCompteClient);
-        //    Assert.IsNull(res, "utilisateur non supprimé");
-        //}
+        /// <summary>
+        /// Test PostUtilisateurTest 
+        /// </summary>
+        [TestMethod]
+        public void PostUtilisateurTest()
+        {
+            //// Arrange
 
-        //[TestMethod()]
-        //public void DeleteUtilisateurTest_Moq()
-        //{
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    var userController = new CompteClientController(mockRepository.Object);
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
+            CompteClient client = new CompteClient
+            {
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010,02,18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
+            // Act
+            var actionResult = controller.PostUtilisateur(client).Result;
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Utilisateur");
+            client.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
+            Assert.AreEqual(client, (CompteClient)result.Value, "Utilisateurs pas identiques");
 
-        //    // Act
-        //    mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(compte);
-        //    var actionResult = userController.DeleteUtilisateur(compte.IdCompteClient).Result;
-        //    // Assert
-        //    Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
-        //}
+            context.CompteClients.Remove(client);
+            context.SaveChangesAsync();
+
+        }
+
+        /// <summary>
+        /// Test DeleteUtilisateurTest 
+        /// </summary>
+        [TestMethod()]
+        public void DeleteUtilisateurTest()
+        {
+            // Arrange
+
+            CompteClient client = new CompteClient
+            {
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010, 02, 18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
+
+            context.CompteClients.AddAsync(client);
+            context.SaveChanges();
+
+            // Act
+            CompteClient deletedClient = context.CompteClients.FirstOrDefault(u => u.IdCompteClient == client.IdCompteClient);
+            _ = controller.DeleteUtilisateur(deletedClient.IdCompteClient).Result;
+
+            // Arrange
+            CompteClient res = context.CompteClients.FirstOrDefault(u => u.IdCompteClient == deletedClient.IdCompteClient);
+            Assert.IsNull(res, "equipement non supprimé");
+        }
+
+        [TestMethod()]
+        public void DeleteUtilisateurTest_MOq()
+        {
+            var mockRepository = new Mock<IDataRepository<CompteClient>>();
+             var userController = new CompteClientController(mockRepository.Object);
+            var fakeId = 100;
+            // Arrange
+            CompteClient client = new CompteClient
+            {
+                IdCompteClient = fakeId,
+                NomClient = "test",
+                PrenomClient = "test",
+                CiviliteClient = "H",
+                NumeroClient = "0651243978",
+                Email = "254.test@etu.univ",
+                DatenaissanceClient = new DateTime(2010, 02, 18),
+                Password = "testmotdepasse123!",
+                ClientRole = "user"
+            };
+
+            // Act
+            mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(client);
+            var actionResult = userController.DeleteUtilisateur(client.IdCompteClient).Result;
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
+        }
     }
 }
