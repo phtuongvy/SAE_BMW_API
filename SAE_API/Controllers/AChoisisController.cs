@@ -50,7 +50,7 @@ namespace SAE_API.Controllers
         [ActionName("PutAChoisi")]
         public async Task<IActionResult> PutAChoisi(int id, int id2, AChoisi AChoisi)
         {
-            if (id != AChoisi.IDPack)
+            if (id != AChoisi.IDPack && id2 != AChoisi.IDConfigurationMoto)
             {
                 return BadRequest();
             }

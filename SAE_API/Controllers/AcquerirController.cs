@@ -50,7 +50,7 @@ namespace SAE_API.Controllers
         [ActionName("PutAcquerir")]
         public async Task<IActionResult> PutAcquerir(int id, int id2, Acquerir acquerir)
         {
-            if (id != acquerir.IdCb)
+            if (id != acquerir.IdCompteClient && id2 != acquerir.IdCb)
             {
                 return BadRequest();
             }
@@ -77,7 +77,7 @@ namespace SAE_API.Controllers
                 return BadRequest(ModelState);
             }
             await _acquerir.AddAsync(acquerir);
-            return CreatedAtAction("GetAcquerirById", new { id = acquerir.IdCb }, acquerir); // GetById : nom de l’action
+            return CreatedAtAction("GetAcquerirById", new { id = acquerir.IdCompteClient , id2 = acquerir.IdCb }, acquerir); // GetById : nom de l’action
         }
 
         // DELETE: api/Utilisateurs/5
