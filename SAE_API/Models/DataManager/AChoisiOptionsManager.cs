@@ -30,7 +30,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID 
         public async Task<ActionResult<AChoisiOption>> GetByIdAsync(int id, int id2)
         {
-            return await bmwDBContext.AChoisiOptions.FirstOrDefaultAsync(u => u.IdEquipementMoto == id && u.IdConfigurationMoto == id2);
+            return await bmwDBContext.AChoisiOptions.FirstOrDefaultAsync(u => u.IdConfigurationMoto == id && u.IdEquipementMoto == id2);
         }
 
         public async Task<ActionResult<AChoisiOption>> GetByIdAsync(int id, int id2, int id3)

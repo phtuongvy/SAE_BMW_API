@@ -29,7 +29,7 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("IDPack{id}/IdEquipementMoto{id2}")]
+        [HttpGet("IDConfiguaration{id}/IdEquipementMoto{id2}")]
         [ActionName("GetAChoisiOptionById")]
         public async Task<ActionResult<AChoisiOption>> GetAChoisiOptionById(int id , int id2)
         {
@@ -46,11 +46,11 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("IDPack{id}/IdEquipementMoto{id2}")]
+        [HttpPut("IDConfiguaration{id}/IdEquipementMoto{id2}")]
         [ActionName("PutAChoisiOption")]
         public async Task<IActionResult> PutAChoisiOption(int id, int id2, AChoisiOption AChoisiOption)
         {
-            if (id != AChoisiOption.IdConfigurationMoto)
+            if (id != AChoisiOption.IdConfigurationMoto && id2 != AChoisiOption.IdEquipementMoto)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace SAE_API.Controllers
             else
             {
                 await _AChoisiOption.UpdateAsync(userToUpdate.Value, AChoisiOption);
-                return NoContent();
+                return CreatedAtAction("GetAChoisiOptions", new { id = AChoisiOption.IdConfigurationMoto, AChoisiOption.IdEquipementMoto }, AChoisiOption);
             }
         }
 
@@ -77,7 +77,7 @@ namespace SAE_API.Controllers
                 return BadRequest(ModelState);
             }
             await _AChoisiOption.AddAsync(AChoisiOption);
-            return NoContent();
+            return CreatedAtAction("GetAChoisiOptions", new { id = AChoisiOption.IdConfigurationMoto, AChoisiOption.IdEquipementMoto }, AChoisiOption); 
         }
 
         // DELETE: api/Utilisateurs/5
