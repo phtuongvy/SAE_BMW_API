@@ -15,7 +15,7 @@ namespace SAE_API.Controllers
     public class APourTaillesController : ControllerBase
     {
         private readonly IDataRepository<APourTaille> _aPourTailles;
-
+        
         public APourTaillesController(IDataRepository<APourTaille> aPourTaillesRepository)
         {
             this._aPourTailles = aPourTaillesRepository;
@@ -23,7 +23,7 @@ namespace SAE_API.Controllers
 
         [HttpGet]
         [ActionName("GetAPourTailless")]
-        public async Task<ActionResult<IEnumerable<APourTaille>>> GetAPourTailless()
+        public async Task<ActionResult<IEnumerable<APourTaille>>> GetAPourTailles()
         {
             return await _aPourTailles.GetAllAsync();
         }
