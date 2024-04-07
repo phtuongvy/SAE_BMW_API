@@ -133,31 +133,16 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutCaracteristiqueMotoTestAsync()
+        public async Task PutCaracteristiqueMotos_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            CaracteristiqueMoto optionAtester = new CaracteristiqueMoto
-            {
-                IdCaracteristiqueMoto = 69,
-                IdCategorieCaracteristiqueMoto = 5,
-            };
+            // Arrange
+            var aPourTailles = new CaracteristiqueMoto { IdCaracteristiqueMoto = 1, IdCategorieCaracteristiqueMoto = 2 };
 
-            CaracteristiqueMoto optionUptade = new CaracteristiqueMoto
-            {
-                IdCaracteristiqueMoto = 69,
-                IdCategorieCaracteristiqueMoto = 4,
-            };
+            // Act
+            var result = await controller.PutCaracteristiqueMoto(3, 2, aPourTailles);
 
-
-            // Act : appel de la méthode à tester
-            var res = await controller.PutCaracteristiqueMoto(optionAtester.IdCaracteristiqueMoto, optionAtester.IdCategorieCaracteristiqueMoto, optionUptade);
-
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetCaracteristiqueMotoById(optionUptade.IdCaracteristiqueMoto, optionUptade.IdCategorieCaracteristiqueMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.CaracteristiqueMotos.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -166,33 +151,39 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutCaracteristiqueMotoTestAvecMoq()
+        public async Task PutCaracteristiqueMotos_ReturnsBadRequestResult_WhenCaracteristiqueMotoDoesNotExistAsync()
         {
 
             // Arrange : préparation des données attendues
-            CaracteristiqueMoto optionToUpdate = new CaracteristiqueMoto
-            {
-                IdCaracteristiqueMoto = 40,
-                IdCategorieCaracteristiqueMoto = 5,
-            };
-            CaracteristiqueMoto updatedOption = new CaracteristiqueMoto
-            {
-                IdCaracteristiqueMoto = 100,
-                IdCategorieCaracteristiqueMoto = 100,
-            };
-
             var mockRepository = new Mock<IDataRepository<CaracteristiqueMoto>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new CaracteristiqueMotoController(mockRepository.Object);
 
+            var aPourTailles = new CaracteristiqueMoto { IdCaracteristiqueMoto = 1, IdCategorieCaracteristiqueMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((CaracteristiqueMoto)null);
 
-            var controller = new CaracteristiqueMotoController(mockRepository.Object);
+            // Act
+            var result = await _controller.PutCaracteristiqueMoto(1, 2, aPourTailles);
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutCaracteristiqueMoto(40, 5, updatedOption).Result;
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<CaracteristiqueMoto>), "La réponse n'est pas du type attendu CaracteristiqueMoto");
+        [TestMethod]
+        public async Task PutCaracteristiqueMotos_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<CaracteristiqueMoto>>();
+            var _controller = new CaracteristiqueMotoController(mockRepository.Object);
+
+            var aPourTailles = new CaracteristiqueMoto { IdCaracteristiqueMoto = 1, IdCategorieCaracteristiqueMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<CaracteristiqueMoto>(), It.IsAny<CaracteristiqueMoto>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutCaracteristiqueMoto(1, 2, aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 

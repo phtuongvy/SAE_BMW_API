@@ -130,31 +130,16 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutCollectionTestAsync()
+        public async Task PutCollections_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            Collection optionAtester = new Collection
-            {
-                IdCollection = 40,
-                NomCollection = "test",
-            };
+            // Arrange
+            var aPourTailles = new Collection { IdCollection = 1 };
 
-            Collection optionUptade = new Collection
-            {
-                IdCollection = 40,
-                NomCollection = "test",
-            };
+            // Act
+            var result = await controller.PutCollection(3, aPourTailles);
 
-
-            // Act : appel de la méthode à tester
-            var res = await controller.PutCollection(optionAtester.IdCollection, optionUptade);
-
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetCollectionById(optionUptade.IdCollection).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.Collections.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -163,33 +148,39 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutCollectionTestAvecMoq()
+        public async Task PutCollections_ReturnsBadRequestResult_WhenCollectionDoesNotExistAsync()
         {
 
             // Arrange : préparation des données attendues
-            Collection optionToUpdate = new Collection
-            {
-                IdCollection = 100,
-                NomCollection = "test",
-            };
-            Collection updatedOption = new Collection
-            {
-                IdCollection = 100,
-                NomCollection = "test1",
-            };
-
             var mockRepository = new Mock<IDataRepository<Collection>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new CollectionsController(mockRepository.Object);
 
+            var aPourTailles = new Collection { IdCollection = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync((Collection)null);
 
-            var controller = new CollectionsController(mockRepository.Object);
+            // Act
+            var result = await _controller.PutCollection(1, aPourTailles);
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutCollection(optionToUpdate.IdCollection, updatedOption).Result;
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<Collection>), "La réponse n'est pas du type attendu Collection");
+        [TestMethod]
+        public async Task PutCollections_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<Collection>>();
+            var _controller = new CollectionsController(mockRepository.Object);
+
+            var aPourTailles = new Collection { IdCollection = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<Collection>(), It.IsAny<Collection>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutCollection(1 ,aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 

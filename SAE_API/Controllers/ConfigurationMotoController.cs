@@ -56,7 +56,7 @@ namespace SAE_API.Controllers
             else
             {
                 await configurationManager.UpdateAsync(configToUpdate.Value, configurationMoto);
-                return NoContent();
+                return CreatedAtAction("GetConcessionnaireById", new { id = configurationMoto.IdConfigurationMoto }, configurationMoto); // GetById : nom de l’action
             }
         }
 

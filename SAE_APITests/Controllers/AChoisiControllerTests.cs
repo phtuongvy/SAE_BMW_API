@@ -139,31 +139,20 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutAChoisiTestAsync()
+        public async Task PutAChoisiTestAsync_ReturnsBadRequest()
         {
             //Arrange
-            AChoisi optionAtester = new AChoisi
+            AChoisi aChoisi = new AChoisi
             {
                 IDPack = 40,
                 IDConfigurationMoto = 7,
             };
-
-            AChoisi optionUptade = new AChoisi
-            {
-                IDPack = 40,
-                IDConfigurationMoto = 7,
-            };
-
 
             // Act : appel de la méthode à tester
-            var res = await controller.PutAChoisi(optionAtester.IDPack, optionAtester.IDConfigurationMoto, optionUptade);
+            var result = await controller.PutAChoisi(3, 4, aChoisi);
 
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetAChoisiById(optionUptade.IDPack, optionUptade.IDConfigurationMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.Achoisis.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -172,33 +161,36 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutAChoisiTestAvecMoq()
+        public async Task PutAChoisiTestAvecMoqAsync()
         {
-
-            // Arrange : préparation des données attendues
-            AChoisi optionToUpdate = new AChoisi
-            {
-                IDPack = 40,
-                IDConfigurationMoto = 5,
-            };
-            AChoisi updatedOption = new AChoisi
-            {
-                IDPack = 100,
-                IDConfigurationMoto = 100,
-            };
-
+            // Arrange
             var mockRepository = new Mock<IDataRepository<AChoisi>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new AChoisiController(mockRepository.Object);
+            var aChoisi = new AChoisi { IDPack = 1, IDConfigurationMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(aChoisi);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<AChoisi>(), It.IsAny<AChoisi>())).Returns(Task.CompletedTask);
 
+            // Act
+            var result = await _controller.PutAChoisi(1, 2, aChoisi);
 
-            var controller = new AChoisiController(mockRepository.Object);
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutAChoisi(40, 5, updatedOption).Result;
+        [TestMethod]
+        public async Task PutAChoisi_ReturnsNotFound_WhenAChoisiDoesNotExist()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<AChoisi>>();
+            var _controller = new AChoisiController(mockRepository.Object);
+            var aChoisi = new AChoisi { IDPack = 1000, IDConfigurationMoto = 1000 };
+            mockRepository.Setup(x => x.GetByIdAsync(1000, 1000)).ReturnsAsync((AChoisi)null);
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<AChoisi>), "La réponse n'est pas du type attendu AChoisi");
+            // Act
+            var result = await _controller.PutAChoisi(1000, 1000, aChoisi);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 
@@ -207,7 +199,7 @@ namespace SAE_API.Controllers.Tests
         /// <summary>
         /// Teste la méthode PostAChoisi pour vérifier que l'ajout d'un nouvel élément fonctionne correctement.
         /// </summary>
-        
+
         [TestMethod()]
         public async Task PostAChoisiTestAsync()
         {

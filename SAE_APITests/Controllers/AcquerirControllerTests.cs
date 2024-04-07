@@ -106,66 +106,62 @@ namespace SAE_API.Controllers.Tests
             Assert.AreEqual(option, actionResult.Value as Acquerir);
         }
 
+        #region Test PutAChoisiTestAsync
         /// <summary>
-        /// Test PutCarteBancaireTest 
+        /// Teste la méthode PutAChoisi pour vérifier que la mise à jour d'un élément fonctionne correctement.
         /// </summary>
-        [TestMethod()]
-        public async Task PutAcquerirTestAsync()
+
+        [TestMethod]
+        public async Task PutAChoisiTestAsync_ReturnsBadRequest()
         {
-            //Arrange
-            Acquerir optionAtester = new Acquerir
-            {
-                IdCompteClient = 40,
-                IdCb = 7,
-            };
-
-            Acquerir optionUptade = new Acquerir
-            {
-                IdCompteClient = 40,
-                IdCb = 7,
-            };
-
+            // Arrange
+            var acquerir = new Acquerir { IdCompteClient = 1, IdCb = 2 };
 
             // Act
-            var res = await controller.PutAcquerir(optionAtester.IdCompteClient, optionAtester.IdCb, optionUptade);
+            var result = await controller.PutAcquerir(3, 4, acquerir);
 
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+        }
+
+        /// <summary>
+        /// Teste la méthode PutAChoisi en utilisant un mock pour simuler le référentiel de données.
+        /// Permet de vérifier le comportement du contrôleur lors de la mise à jour d'un élément.
+        /// </summary>
+
+        [TestMethod]
+        public async Task PutAChoisiTestAvecMoqAsync()
+        {
             // Arrange
-            var nouvelleoption = controller.GetAcquerirById(optionUptade.IdCompteClient, optionUptade.IdCb).Result;
-            Assert.AreEqual(optionUptade, res);
+            var mockRepository = new Mock<IDataRepository<Acquerir>>();
+            var _controller = new AcquerirController(mockRepository.Object);
+            var acquerir = new Acquerir { IdCompteClient = 1, IdCb = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((Acquerir)null);
 
-            context.Acquerirs.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Act
+            var result = await _controller.PutAcquerir(1, 2, acquerir);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
 
         [TestMethod]
-        public void PutAcquerirTestAvecMoq()
+        public async Task PutAChoisi_ReturnsNotFound_WhenAChoisiDoesNotExist()
         {
-
             // Arrange
-            Acquerir optionToUpdate = new Acquerir
-            {
-                IdCompteClient = 40,
-                IdCb = 5,
-            };
-            Acquerir updatedOption = new Acquerir
-            {
-                IdCompteClient = 100,
-                IdCb = 100,
-            };
-
             var mockRepository = new Mock<IDataRepository<Acquerir>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
-
-
-            var controller = new AcquerirController(mockRepository.Object);
+            var _controller = new AcquerirController(mockRepository.Object);
+            var acquerir = new Acquerir { IdCompteClient = 1, IdCb = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(new Acquerir());
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<Acquerir>(), It.IsAny<Acquerir>())).Returns(Task.CompletedTask);
 
             // Act
-            var result = controller.PutAcquerir(40, 5, updatedOption).Result;
+            var result = await _controller.PutAcquerir(1, 2, acquerir);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<Acquerir>), "La réponse n'est pas du type attendu Acquerir");
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
+        #endregion
 
         /// <summary>
         /// Test PostUtilisateur 

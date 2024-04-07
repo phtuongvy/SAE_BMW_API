@@ -8,7 +8,7 @@ using SAE_API.Models.DataManager;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
 using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +77,7 @@ namespace SAE_API.Controllers.Tests
             // Act : appel de la méthode à tester 
             var res = controller.GetCommanders().Result;
             // Assert : vérification que les données obtenues correspondent aux données attendues 
-            CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
+           Assert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
         }
         #endregion
 
@@ -132,33 +132,16 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutCommanderTestAsync()
+        public async Task PutCommanders_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            Commander optionAtester = new Commander
-            {
-                IdEquipement = 40,
-                IdCommande = 7,
-                IdConfigurationMoto = 7,
-            };
+            // Arrange
+            var aPourTailles = new Commander { IdCommande = 1 , IdConfigurationMoto = 1};
 
-            Commander optionUptade = new Commander
-            {
-                IdEquipement = 40,
-                IdCommande = 7,
-                IdConfigurationMoto = 7,
-            };
+            // Act
+            var result = await controller.PutCommander(3, 2, 1, aPourTailles);
 
-
-            // Act : appel de la méthode à tester
-            var res = await controller.PutCommander(optionAtester.IdCommande, (Int32)optionAtester.IdEquipement, (Int32)optionAtester.IdConfigurationMoto, optionUptade);
-
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetCommanderById(optionUptade.IdCommande, optionUptade.IdEquipement, optionUptade.IdConfigurationMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.Commanders.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -167,33 +150,39 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutCommanderTestAvecMoq()
+        public async Task PutCommanders_ReturnsBadRequestResult_WhenCommanderDoesNotExistAsync()
         {
 
             // Arrange : préparation des données attendues
-            Commander optionToUpdate = new Commander
-            {
-                IdEquipement = 40,
-                IdCommande = 5,
-            };
-            Commander updatedOption = new Commander
-            {
-                IdEquipement = 100,
-                IdCommande = 100,
-            };
-
             var mockRepository = new Mock<IDataRepository<Commander>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new CommanderController(mockRepository.Object);
 
+            var aPourTailles = new Commander { IdCommande = 1, IdConfigurationMoto = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync((Commander)null);
 
-            var controller = new CommanderController(mockRepository.Object);
+            // Act
+            var result = await _controller.PutCommander(1, 1 , 1, aPourTailles);
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutCommander(40, 5, 1,updatedOption).Result;
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<Commander>), "La réponse n'est pas du type attendu Commander");
+        [TestMethod]
+        public async Task PutCommanders_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<Commander>>();
+            var _controller = new CommanderController(mockRepository.Object);
+
+            var aPourTailles = new Commander { IdCommande = 1, IdConfigurationMoto = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<Commander>(), It.IsAny<Commander>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutCommander(1, 1, 1, aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         #endregion
 

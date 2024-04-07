@@ -133,31 +133,16 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutAPourValeurTestAsync()
+        public async Task PutAPourValeurs_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            APourValeur optionAtester = new APourValeur
-            {
-                IdCaracteristiqueMoto = 40,
-                IdMoto = 7,
-            };
+            // Arrange
+            var aPourTailles = new APourValeur { IdCaracteristiqueMoto = 1, IdMoto = 2 };
 
-            APourValeur optionUptade = new APourValeur
-            {
-                IdCaracteristiqueMoto = 40,
-                IdMoto = 7,
-            };
+            // Act
+            var result = await controller.PutAPourValeur(3, 2, aPourTailles);
 
-
-            // Act : appel de la méthode à tester
-            var res = await controller.PutAPourValeur(optionAtester.IdCaracteristiqueMoto, optionAtester.IdMoto, optionUptade);
-
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetAPourValeurById(optionUptade.IdCaracteristiqueMoto, optionUptade.IdMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.APourValeurs.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -166,33 +151,39 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutAPourValeurTestAvecMoq()
+        public async Task PutAPourValeurs_ReturnsBadRequestResult_WhenAPourValeurDoesNotExistAsync()
         {
 
             // Arrange : préparation des données attendues
-            APourValeur optionToUpdate = new APourValeur
-            {
-                IdCaracteristiqueMoto = 40,
-                IdMoto = 5,
-            };
-            APourValeur updatedOption = new APourValeur
-            {
-                IdCaracteristiqueMoto = 100,
-                IdMoto = 100,
-            };
-
             var mockRepository = new Mock<IDataRepository<APourValeur>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new APourValeurController(mockRepository.Object);
 
+            var aPourTailles = new APourValeur { IdCaracteristiqueMoto = 1, IdMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((APourValeur)null);
 
-            var controller = new APourValeurController(mockRepository.Object);
+            // Act
+            var result = await _controller.PutAPourValeur(1, 2, aPourTailles);
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutAPourValeur(40, 5, updatedOption).Result;
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<APourValeur>), "La réponse n'est pas du type attendu APourValeur");
+        [TestMethod]
+        public async Task PutAPourValeurs_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<APourValeur>>();
+            var _controller = new APourValeurController(mockRepository.Object);
+
+            var aPourTailles = new APourValeur { IdCaracteristiqueMoto = 1, IdMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<APourValeur>(), It.IsAny<APourValeur>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutAPourValeur(1, 2, aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 

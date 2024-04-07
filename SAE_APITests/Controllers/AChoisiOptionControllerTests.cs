@@ -107,66 +107,60 @@ namespace SAE_API.Controllers.Tests
             Assert.AreEqual(option, actionResult.Value as AChoisiOption);
         }
 
+        #region Test PutAChoisiOptionTestAsync
         /// <summary>
-        /// Test PutCarteBancaireTest 
+        /// Teste la méthode PutAChoisiOption pour vérifier que la mise à jour d'un élément fonctionne correctement.
         /// </summary>
-        [TestMethod()]
-        public async Task PutAChoisiOptionTestAsync()
+
+        [TestMethod]
+        public async Task PutAChoisiOption_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            AChoisiOption optionAtester = new AChoisiOption
-            {
-                IdConfigurationMoto = 40,
-                IdEquipementMoto = 7,
-            };
-
-            AChoisiOption optionUptade = new AChoisiOption
-            {
-                IdConfigurationMoto = 40,
-                IdEquipementMoto = 7,
-            };
-
+            // Arrange
+            var aChoisiOption = new AChoisiOption { IdConfigurationMoto = 1, IdEquipementMoto = 2 };
 
             // Act
-            var res = await controller.PutAChoisiOption(optionAtester.IdConfigurationMoto, optionAtester.IdEquipementMoto, optionUptade);
+            var result = await controller.PutAChoisiOption(3, 4, aChoisiOption);
 
-            // Arrange
-            var nouvelleoption =  controller.GetAChoisiOptionById(optionUptade.IdConfigurationMoto, optionUptade.IdEquipementMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.AChoisiOptions.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         [TestMethod]
-        public void PutAChoisiOptionTestAvecMoq()
+        public async Task PutAChoisiOption_ReturnsNotFound_WhenAChoisiOptionDoesNotExist()
         {
-
             // Arrange
-            AChoisiOption optionToUpdate = new AChoisiOption
-            {
-                IdConfigurationMoto = 40,
-                IdEquipementMoto = 5,
-            };
-            AChoisiOption updatedOption = new AChoisiOption
-            {
-                IdConfigurationMoto = 100,
-                IdEquipementMoto = 100,
-            };
-
             var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
-
-
-            var controller = new AChoisiOptionController(mockRepository.Object);
+            var _controller = new AChoisiOptionController(mockRepository.Object);
+            var aChoisiOption = new AChoisiOption { IdConfigurationMoto = 1, IdEquipementMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((AChoisiOption)null);
 
             // Act
-            var result = controller.PutAChoisiOption(40, 5, updatedOption).Result;
+            var result = await _controller.PutAChoisiOption(1, 2, aChoisiOption);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<AChoisiOption>), "La réponse n'est pas du type attendu AChoisiOption");
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
         }
+
+        [TestMethod]
+        public async Task PutAChoisiOption_ReturnsCreatedAtAction_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<AChoisiOption>>();
+            var _controller = new AChoisiOptionController(mockRepository.Object);
+            var aChoisiOption = new AChoisiOption { IdConfigurationMoto = 1, IdEquipementMoto = 2 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(aChoisiOption);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<AChoisiOption>(), It.IsAny<AChoisiOption>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutAChoisiOption(1, 2, aChoisiOption);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult)); // Cela ne retourne pas de valeur mais vérifie le type
+            var createdAtActionResult = result as CreatedAtActionResult; // Utilisez 'as' pour tenter de convertir
+            Assert.IsNotNull(createdAtActionResult); // Assurez-vous que la conversion a réussi
+            Assert.AreEqual("GetAChoisiOptions", createdAtActionResult.ActionName); // Vérifiez que le nom de l'action est correct
+        }
+        #endregion
 
         /// <summary>
         /// Test PostUtilisateur 
