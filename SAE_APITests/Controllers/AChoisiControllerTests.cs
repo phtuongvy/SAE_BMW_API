@@ -138,6 +138,7 @@ namespace SAE_API.Controllers.Tests
         /// Teste la méthode PutAChoisi pour vérifier que la mise à jour d'un élément fonctionne correctement.
         /// </summary>
 
+        [TestMethod]
         public async Task PutAChoisiTestAsync()
         {
             //Arrange
