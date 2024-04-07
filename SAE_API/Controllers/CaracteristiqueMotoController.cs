@@ -46,15 +46,15 @@ namespace SAE_API.Controllers
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("IdCaracteristiqueMoto{id}/IdCategorieCaracteristiqueMoto{id2}")]
         [ActionName("PutCaracteristiqueMoto")]
-        public async Task<IActionResult> PutCaracteristiqueMoto(int id, CaracteristiqueMoto caracteristiqueMoto)
+        public async Task<IActionResult> PutCaracteristiqueMoto(int id, int id2, CaracteristiqueMoto caracteristiqueMoto)
         {
             if (id != caracteristiqueMoto.IdCaracteristiqueMoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _caracteristiqueMoto.GetByIdAsync(id);
+            var userToUpdate = await _caracteristiqueMoto.GetByIdAsync(id ,id2);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -81,11 +81,11 @@ namespace SAE_API.Controllers
         }
 
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
+        [HttpDelete("IdCaracteristiqueMoto{id}/IdCategorieCaracteristiqueMoto{id2}")]
         [ActionName("DeleteCaracteristiqueMoto")]
-        public async Task<IActionResult> DeleteCaracteristiqueMoto(int id)
+        public async Task<IActionResult> DeleteCaracteristiqueMoto(int id, int id2)
         {
-            var caracteristiqueMoto = await _caracteristiqueMoto.GetByIdAsync(id);
+            var caracteristiqueMoto = await _caracteristiqueMoto.GetByIdAsync(id, id2);
             if (caracteristiqueMoto == null)
             {
                 return NotFound();

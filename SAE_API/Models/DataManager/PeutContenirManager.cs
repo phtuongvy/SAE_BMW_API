@@ -32,7 +32,7 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.PeutContenirs.FirstOrDefaultAsync(u => u.IdColoris == id && u.IdMoto == id2 );
         }
-        public async Task<ActionResult<PeutContenir>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<PeutContenir>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

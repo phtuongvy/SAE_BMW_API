@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -14,54 +13,54 @@ namespace SAE_API.Controllers
     [ApiController]
     public class ColorisController : ControllerBase
     {
-        private readonly IDataRepository<Collection> _collection;
+        private readonly IDataRepository<Coloris> _coloris;
 
-        public ColorisController(IDataRepository<Collection> collectionRepository)
+        public ColorisController(IDataRepository<Coloris> colorisRepository)
         {
-            this._collection = collectionRepository;
+            this._coloris = colorisRepository;
         }
 
         [HttpGet]
-        [ActionName("GetCollections")]
-        public async Task<ActionResult<IEnumerable<Collection>>> GetCollections()
+        [ActionName("GetColoriss")]
+        public async Task<ActionResult<IEnumerable<Coloris>>> GetColoriss()
         {
-            return await _collection.GetAllAsync();
+            return await _coloris.GetAllAsync();
         }
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
-        [ActionName("GetCollectionById")]
-        public async Task<ActionResult<Collection>> GetCollectionById(int id)
+        [ActionName("GetColorisById")]
+        public async Task<ActionResult<Coloris>> GetColorisById(int id)
         {
 
-            var collection = await _collection.GetByIdAsync(id);
+            var coloris = await _coloris.GetByIdAsync(id);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
-            if (collection == null)
+            if (coloris == null)
             {
                 return NotFound();
             }
-            return collection;
+            return coloris;
         }
 
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [ActionName("PutCollection")]
-        public async Task<IActionResult> PutCollection(int id, Collection collection)
+        [ActionName("PutColoris")]
+        public async Task<IActionResult> PutColoris(int id, Coloris coloris)
         {
-            if (id != collection.IdCollection)
+            if (id != coloris.IdColoris)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _collection.GetByIdAsync(id);
+            var userToUpdate = await _coloris.GetByIdAsync(id);
             if (userToUpdate == null)
             {
                 return NotFound();
             }
             else
             {
-                await _collection.UpdateAsync(userToUpdate.Value, collection);
+                await _coloris.UpdateAsync(userToUpdate.Value, coloris);
                 return NoContent();
             }
         }
@@ -69,28 +68,28 @@ namespace SAE_API.Controllers
         // POST: api/Utilisateurs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [ActionName("PostCollection")]
-        public async Task<ActionResult<Collection>> PostCollection(Collection collection)
+        [ActionName("PostColoris")]
+        public async Task<ActionResult<Coloris>> PostColoris(Coloris coloris)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _collection.AddAsync(collection);
-            return CreatedAtAction("GetCollectionById", new { id = collection.IdCollection }, collection); // GetById : nom de l’action
+            await _coloris.AddAsync(coloris);
+            return CreatedAtAction("GetColorisById", new { id = coloris.IdColoris }, coloris); // GetById : nom de l’action
         }
 
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
-        [ActionName("DeleteCollection")]
-        public async Task<IActionResult> DeleteCollection(int id)
+        [ActionName("DeleteColoris")]
+        public async Task<IActionResult> DeleteColoris(int id)
         {
-            var collection = await _collection.GetByIdAsync(id);
-            if (collection == null)
+            var coloris = await _coloris.GetByIdAsync(id);
+            if (coloris == null)
             {
                 return NotFound();
             }
-            await _collection.DeleteAsync(collection.Value);
+            await _coloris.DeleteAsync(coloris.Value);
             return NoContent();
         }
 

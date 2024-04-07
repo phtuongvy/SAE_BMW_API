@@ -108,7 +108,7 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Motos.FirstOrDefaultAsync(u => u.NomMoto.ToUpper() == nom.ToUpper());
         }
-        public async Task<ActionResult<Moto>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<Moto>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

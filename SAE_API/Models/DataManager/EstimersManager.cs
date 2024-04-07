@@ -32,7 +32,7 @@ namespace SAE_API.Models.DataManager
         {
             throw new NotImplementedException();
         }
-        public async Task<ActionResult<Estimer>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<Estimer>> GetByIdAsync(int id, int? id2, int? id3)
         {
             return await bmwDBContext.Estimers.FirstOrDefaultAsync(u => u.IdCompteClient == id && u.IdMoyenDePaiement == id2 && u.IdEstimationMoto == id3);
         }

@@ -31,7 +31,7 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.EstDanss.FirstOrDefaultAsync(u => u.IdMoto == id && u.IdStock == id2);
         }
-        public async Task<ActionResult<EstDans>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<EstDans>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

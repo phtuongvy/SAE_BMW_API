@@ -31,7 +31,7 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("IdCommande{id}/IdEquipement{id2}/IdConfigurationMoto{id3}")]
         [ActionName("GetCommanderById")]
-        public async Task<ActionResult<Commander>> GetCommanderById(int id , int id2 , int id3)
+        public async Task<ActionResult<Commander>> GetCommanderById(int id , int? id2 , int? id3)
         {
 
             var Commander = await _Commander.GetByIdAsync(id , id2 , id3);

@@ -75,8 +75,8 @@ namespace SAE_API.Controllers
 
         // DELETE: api/ConfigurationMoto/5
         [HttpDelete("{id}")]
-        [ActionName("DeleteCommande")]
-        public async Task<IActionResult> DeleteCommande(int id)
+        [ActionName("DeleteConfigMoto")]
+        public async Task<IActionResult> DeleteConfigMoto(int id)
         {
             var configurationMoto = await configurationManager.GetByIdAsync(id);
             if (configurationMoto == null)

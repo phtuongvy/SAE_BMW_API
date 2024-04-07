@@ -36,7 +36,7 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.CartesBancaires.FirstOrDefaultAsync(u => u.NomCarte.ToUpper() == nom.ToUpper());
         }
-        public async Task<ActionResult<CarteBancaire>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<CarteBancaire>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

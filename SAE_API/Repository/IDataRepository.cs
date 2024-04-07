@@ -10,7 +10,7 @@ namespace SAE_API.Repository
 
         Task<ActionResult<TEntity>> GetByIdAsync(int id);
         Task<ActionResult<TEntity>> GetByIdAsync(int id, int id2);
-        Task<ActionResult<TEntity>> GetByIdAsync(int id, int id2 , int id3);
+        Task<ActionResult<TEntity>> GetByIdAsync(int id, int? id2 , int? id3);
 
         Task<ActionResult<TEntity>> GetByStringAsync(string str);
         Task AddAsync(TEntity entity);

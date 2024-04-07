@@ -32,7 +32,7 @@ namespace SAE_API.Models.DataManager
         {
             throw new NotImplementedException();
         }
-        public async Task<ActionResult<Adresse>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<Adresse>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

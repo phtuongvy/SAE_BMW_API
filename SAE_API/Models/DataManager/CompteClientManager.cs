@@ -49,7 +49,7 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.CompteClients.FirstOrDefaultAsync(u => u.Email.ToUpper() == str.ToUpper());
         }
-        public async Task<ActionResult<CompteClient>> GetByIdAsync(int id, int id2, int id3)
+        public async Task<ActionResult<CompteClient>> GetByIdAsync(int id, int? id2, int? id3)
         {
             throw new NotImplementedException();
         }

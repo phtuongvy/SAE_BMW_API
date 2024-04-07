@@ -7,7 +7,7 @@ using SAE_API.Models.DataManager;
 using SAE_API.Models.EntityFramework;
 using SAE_API.Repository;
 using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,287 +18,318 @@ namespace SAE_API.Controllers.Tests
     public class ConfigurationMotoControllerTests
     {
 
+        #region Private Fields
+        // Déclaration des variables nécessaires pour les tests
         private ConfigurationMotoController controller;
         private BMWDBContext context;
         private IDataRepository<ConfigurationMoto> dataRepository;
+        #endregion
 
+        #region Test Initialization
 
+        /// <summary>
+        /// Méthode d'initialisation exécutée avant chaque test pour configurer l'environnement de test.
+        /// Initialise le contexte de base de données, le référentiel de données et le contrôleur ConfigurationMoto.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
+            // Configuration de la base de données pour les tests avec DbContextOptionsBuilder
             var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
             context = new BMWDBContext(builder.Options);
+            // Création du gestionnaire de données et du contrôleur à tester
             dataRepository = new ConfigurationMotoManager(context);
             controller = new ConfigurationMotoController(dataRepository);
         }
+        #endregion
+
+        #region Test Controller
         /// <summary>
-        /// Test Contrôleur 
+        /// Teste l'instanciation du contrôleur ConfigurationMotoController pour s'assurer qu'elle n'est pas null.
         /// </summary>
         [TestMethod()]
         public void ConfigurationMotoControllerTest()
         {
+            // Arrange : préparation des données attendues
+            var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+            context = new BMWDBContext(builder.Options);
+            dataRepository = new ConfigurationMotoManager(context);
+
+            // Act : appel de la méthode à tester
+            var option = new ConfigurationMotoController(dataRepository);
+
+            // Assert : vérification que les données obtenues correspondent aux données attendues : vérification que les données obtenues correspondent aux données attendues
+            Assert.IsNotNull(option, "L'instance de MaClasse ne devrait pas être null.");
 
         }
+        #endregion
 
+        #region Test GetConfigMotosTest
+
+        /// <summary>
+        /// Teste la méthode GetConfigMotoss pour vérifier qu'elle retourne la liste correcte des éléments ConfigurationMoto.
+        /// </summary>
+        [TestMethod()]
+        public void GetConfigMotosTest()
+        {
+            // Arrange : préparation des données attendues : préparation des données attendues
+            List<ConfigurationMoto> expected = context.ConfigurationMotos.ToList();
+            // Act : appel de la méthode à tester 
+            var res = controller.GetConfigMotos().Result;
+            // Assert : vérification que les données obtenues correspondent aux données attendues 
+           Assert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
+        }
+        #endregion
+
+        #region Test GetConfigMotoByIdTest
+
+        /// <summary>
+        /// Teste la méthode GetConfigMotoById pour vérifier qu'elle retourne l'élément correct basé sur l'ID fourni.
+        /// </summary>
+        [TestMethod()]
+        public void GetConfigMotoByIdTest()
+        {
+            // Arrange : préparation des données attendues
+            ConfigurationMoto expected = context.ConfigurationMotos.Find(2);
+            // Act : appel de la méthode à tester
+            var res = controller.GetConfigMotoById(expected.IdConfigurationMoto).Result;
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            Assert.AreEqual(expected, res.Value);
+        }
+
+        /// <summary>
+        /// Teste la méthode GetConfigMotoById en utilisant un mock pour le référentiel de données.
+        /// Permet de tester le contrôleur de manière isolée.
+        /// </summary>
+        [TestMethod]
+        public void GetConfigMotoByIdTest_AvecMoq()
+        {
+            // Arrange : préparation des données attendues
+            var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
+
+            ConfigurationMoto option = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 1,
+                IdColoris = 1, 
+                IdMoto = 1 , 
+                IdReservationOffre = 1, 
+             
+            };
+
+            // Act : appel de la méthode à tester
+            mockRepository.Setup(x => x.GetByIdAsync(option.IdConfigurationMoto).Result).Returns(option);
+            var userController = new ConfigurationMotoController(mockRepository.Object);
+            var actionResult = userController.GetConfigMotoById(option.IdConfigurationMoto).Result;
+
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            Assert.IsNotNull(actionResult);
+            Assert.IsNotNull(actionResult.Value);
+            Assert.AreEqual(option, actionResult.Value as ConfigurationMoto);
+        }
+        #endregion
+
+        #region Test PutConfigurationMotoTestAsync
+        /// <summary>
+        /// Teste la méthode PutConfigurationMoto pour vérifier que la mise à jour d'un élément fonctionne correctement.
+        /// </summary>
+
+        [TestMethod]
+        public async Task PutConfigurationMotoTestAsync()
+        {
+            //Arrange
+            ConfigurationMoto optionAtester = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 40,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+
+            };
+
+            ConfigurationMoto optionUptade = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 40,
+                IdColoris = 1,
+                IdMoto = 2,
+                IdReservationOffre = 1,
+
+            };
+
+
+            // Act : appel de la méthode à tester
+            var res = await controller.PutConfigMoto(optionAtester.IdConfigurationMoto, optionUptade);
+
+            // Arrange : préparation des données attendues
+            var nouvelleoption = controller.GetConfigMotoById(optionUptade.IdConfigurationMoto).Result;
+            Assert.AreEqual(optionUptade, res);
+
+            context.ConfigurationMotos.Remove(optionUptade);
+            await context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Teste la méthode PutConfigurationMoto en utilisant un mock pour simuler le référentiel de données.
+        /// Permet de vérifier le comportement du contrôleur lors de la mise à jour d'un élément.
+        /// </summary>
+
+        [TestMethod]
+        public void PutConfigurationMotoTestAvecMoq()
+        {
+
+            // Arrange : préparation des données attendues
+            ConfigurationMoto optionToUpdate = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 100,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+            };
+            ConfigurationMoto updatedOption = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 100,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+            };
+
+            var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
+            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
+            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+
+
+            var controller = new ConfigurationMotoController(mockRepository.Object);
+
+            // Act : appel de la méthode à tester
+            var result = controller.PutConfigMoto(optionToUpdate.IdConfigurationMoto, updatedOption).Result;
+
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            Assert.IsInstanceOfType(result, typeof(ActionResult<ConfigurationMoto>), "La réponse n'est pas du type attendu ConfigurationMoto");
+        }
+        #endregion
+
+        #region Test PostConfigurationMotoTestAsync
+
+        /// <summary>
+        /// Teste la méthode PostConfigurationMoto pour vérifier que l'ajout d'un nouvel élément fonctionne correctement.
+        /// </summary>
 
         [TestMethod()]
-        public void PostConfigMotoTest()
+        public async Task PostConfigurationMotoTestAsync()
         {
-           
-            ConfigurationMoto compte = new ConfigurationMoto
+            // Arrange : préparation des données attendues
+            ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 21,
-                IdReservationOffre = 21,
+                IdConfigurationMoto = 1000,
+                IdColoris = 1,
                 IdMoto = 1,
-                IdColoris = 3,
-                PrixTotalConfiguration = 100,
-                DateConfiguration = new DateTime(08/03/2003),
-       
-            };      
-            // Act
-            var actionResult = controller.PostConfigMoto(compte).Result;
+                IdReservationOffre = 1,
+            };
+
+            // Act : appel de la méthode à tester
+            var result = controller.PostConfigMoto(option).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            ConfigurationMoto? optionRecupere = context.ConfigurationMotos
+                .Where(u => u.IdConfigurationMoto == option.IdConfigurationMoto)
+                .FirstOrDefault();
+
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            option.IdConfigurationMoto = optionRecupere.IdConfigurationMoto;
+            Assert.AreEqual(optionRecupere, option, "Utilisateurs pas identiques");
+
+            context.ConfigurationMotos.Remove(option);
+            await context.SaveChangesAsync();
         }
-        ///// <summary>
-        ///// Test GetUtilisateurs 
-        ///// </summary>
-        //[TestMethod()]
-        //public void GetConfigMotosTest()
-        //{
-        //    // Arrange
-        //    List<CompteClient> expected = context.CompteClients.ToList();
-        //    // Act
-        //    var res = controller.GetUtilisateurs().Result;
-        //    // Assert
-        //    CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
-        //}
 
-        ///// <summary>
-        ///// Test GetUtilisateurById 
-        ///// </summary>
-        //[TestMethod()]
-        //public void GetUtilisateurByIdTest()
-        //{
-        //    // Arrange
-        //    CompteClient expected = context.CompteClients.Find(1);
-        //    // Act
-        //    var res = controller.GetUtilisateurById(1).Result;
-        //    // Assert
-        //    Assert.AreEqual(expected, res.Value);
-        //}
-
-        //[TestMethod()]
-        //public void GetUtilisateurByIdTest_AvecMoq()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-
-        //    ICollection<Acquerir> AcquisC = new List<Acquerir>
-        //    {
-        //        new Acquerir { /* initialisez les propriétés de l'objet ici */ },
-        //        new Acquerir { /* un autre objet Acquerir */ }
-        //    };
-
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient catre = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
-        //    // Act
-
-        //    mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(catre);
-        //    var userController = new CompteClientController(mockRepository.Object);
-
-        //    var actionResult = userController.GetUtilisateurById(100).Result;
-        //    // Assert
-        //    Assert.IsNotNull(actionResult);
-        //    Assert.IsNotNull(actionResult.Value);
-        //    Assert.AreEqual(catre, actionResult.Value as CompteClient);
-        //}
-
-        ///// <summary>
-        ///// Test GetUtilisateurByName 
-        ///// </summary>
-
-        //[TestMethod()]
-        //public void GetUtilisateurByNameTest()
-        //{
-        //    // Arrange
-        //    CompteClient expected = context.CompteClients.Find(1);
-        //    // Act
-        //    var res = controller.GetUtilisateurByName(expected.NomClient).Result;
-
-        //    Assert.AreEqual(expected, res.Value);
-        //}
+        /// <summary>
+        /// Teste la méthode PostConfigurationMoto en utilisant un mock pour simuler le référentiel de données.
+        /// Permet de vérifier le comportement du contrôleur lors de l'ajout d'un nouvel élément.
+        /// </summary>
+        [TestMethod]
+        public void PostConfigurationMotoTest_Mok()
+        {
+            // Arrange : préparation des données attendues
+            var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
+            var userController = new ConfigurationMotoController(mockRepository.Object);
 
 
-        ///// <summary>
-        ///// Test PutUtilisateur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void PutUtilisateurTest()
-        //{
 
-        //    // Arrange
-        //    Random rnd = new Random();
-        //    int chiffre = rnd.Next(1, 1000000000);
-        //    CompteClient compte = context.CompteClients.Find(1);
+            // Arrange : préparation des données attendues
+            ConfigurationMoto option = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 1000,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+            };
 
-        //    // Act
-        //    var res = controller.PutUtilisateur(1, compte);
+            // Act : appel de la méthode à tester
+            var actionResult = userController.PostConfigMoto(option).Result;
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<ConfigurationMoto>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
 
-        //    // Arrange
-        //    CompteClient compteClient = context.CompteClients.Find(1);
-        //    Assert.AreEqual(compte, compteClient);
-        //}
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(ConfigurationMoto), "Pas un Utilisateur");
 
-        //[TestMethod]
-        //public void PutUtilisateurTest_AvecMoq()
-        //{
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
+            option.IdConfigurationMoto = ((ConfigurationMoto)result.Value).IdConfigurationMoto;
+            Assert.AreEqual(option, (ConfigurationMoto)result.Value, "Utilisateurs pas identiques");
+        }
+        #endregion
 
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "Evan.lamy@gmail.com",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
+        #region Test DeleteConfigurationMotoTest
+        /// <summary>
+        /// Teste la méthode DeleteConfigurationMoto pour vérifier que la suppression d'un élément fonctionne correctement.
+        /// </summary>
 
-        //    CompteClient compte2 = new CompteClient
-        //    {
-        //        IdCompteClient = 101,
-        //        NomClient = "Ricardo",
-        //        PrenomClient = "NUNES",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 32 32 43",
-        //        Email = "ricardonunesemilio@gmail.com",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
+        [TestMethod()]
+        public void DeleteConfigurationMotoTest()
+        {
+            // Arrange : préparation des données attendues
+            ConfigurationMoto option = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 1000,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+            };
+            context.ConfigurationMotos.Add(option);
+            context.SaveChanges();
 
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    mockRepository.Setup(x => x.GetByIdAsync(101).Result).Returns(compte2);
-        //    var userController = new CompteClientController(mockRepository.Object);
+            // Act : appel de la méthode à tester
+            ConfigurationMoto option1 = context.ConfigurationMotos.FirstOrDefault(u => u.IdConfigurationMoto == option.IdConfigurationMoto);
+            _ = controller.DeleteConfigMoto(option.IdConfigurationMoto).Result;
 
-        //    // Act
-        //    var actionResult = userController.PutUtilisateur(2, compte).Result;
+            // Arrange : préparation des données attendues
+            ConfigurationMoto res = context.ConfigurationMotos.FirstOrDefault(u => u.IdConfigurationMoto == option.IdConfigurationMoto);
+            Assert.IsNull(res, "utilisateur non supprimé");
+        }
 
-        //    // Assert
-        //    Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult");
-        //}
+        /// <summary>
+        /// Teste la méthode DeleteConfigurationMoto en utilisant un mock pour simuler le référentiel de données.
+        /// Permet de vérifier le comportement du contrôleur lors de la suppression d'un élément.
+        /// </summary>
+        [TestMethod]
+        public void DeleteConfigurationMotoTest_AvecMoq()
+        {
 
-        ///// <summary>
-        ///// Test PostUtilisateur 
-        ///// </summary>
-        //[TestMethod()]
-        //public void PostUtilisateurTest()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    var userController = new CompteClientController(mockRepository.Object);
-
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
-
-        //    // Act
-        //    var actionResult = userController.PostUtilisateur(compte).Result;
-        //    // Assert
-        //    Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClient>), "Pas un ActionResult<Commande>");
-        //    Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
-
-        //    var result = actionResult.Result as CreatedAtActionResult;
-        //    Assert.IsInstanceOfType(result.Value, typeof(CompteClient), "Pas un Commande");
-
-        //    compte.IdCompteClient = ((CompteClient)result.Value).IdCompteClient;
-        //    Assert.AreEqual(compte, (CompteClient)result.Value, "Commande pas identiques");
-        //}
-
-        ///// <summary>
-        ///// Test DeleteUtilisateu 
-        ///// </summary>
-        //[TestMethod()]
-        //public void DeleteUtilisateurTest()
-        //{
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
-
-
-        //    context.CompteClients.Add(compte);
-        //    context.SaveChanges();
-
-        //    // Act
-        //    CompteClient deletedCarte = context.CompteClients.FirstOrDefault(u => u.IdCompteClient == compte.IdCompteClient);
-        //    _ = controller.DeleteUtilisateur(deletedCarte.IdCompteClient).Result;
-
-        //    // Arrange
-        //    CarteBancaire res = context.CartesBancaires.FirstOrDefault(u => u.IdCb == compte.IdCompteClient);
-        //    Assert.IsNull(res, "utilisateur non supprimé");
-        //}
-
-        //[TestMethod()]
-        //public void DeleteUtilisateurTest_Moq()
-        //{
-        //    var mockRepository = new Mock<IDataRepository<CompteClient>>();
-        //    var userController = new CompteClientController(mockRepository.Object);
-        //    // Arrange
-        //    byte[] byteArray = { 0x0A, 0x0B, 0x0C, 0x0D };
-        //    CompteClient compte = new CompteClient
-        //    {
-        //        IdCompteClient = 100,
-        //        NomClient = "Lamy",
-        //        PrenomClient = "Evan",
-        //        CiviliteClient = "M",
-        //        NumeroClient = "06 92 0920912",
-        //        Email = "ricardonunesemilio",
-        //        DatenaissanceClient = new DateTime(15 / 11 / 2004),
-        //        Password = byteArray,
-        //        ClientRole = "Client"
-        //    };
-
-        //    // Act
-        //    mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(compte);
-        //    var actionResult = userController.DeleteUtilisateur(compte.IdCompteClient).Result;
-        //    // Assert
-        //    Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
-        //}
+            // Arrange : préparation des données attendues
+            ConfigurationMoto option = new ConfigurationMoto
+            {
+                IdConfigurationMoto = 1,
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+            };
+            var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
+            mockRepository.Setup(x => x.GetByIdAsync(option.IdConfigurationMoto).Result).Returns(option);
+            var userController = new ConfigurationMotoController(mockRepository.Object);
+            // Act : appel de la méthode à tester
+            var actionResult = userController.DeleteConfigMoto(option.IdConfigurationMoto).Result;
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
+        }
+        #endregion
     }
 }
