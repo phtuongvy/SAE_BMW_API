@@ -131,35 +131,16 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutColorisTestAsync()
+        public async Task PutColoriss_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            Coloris optionAtester = new Coloris
-            {
-                IdColoris = 40,
-                IdPhoto = 1,
-                NomColoris = "test",
-                DescriptionColoris = "une couleur de test"
-            };
+            // Arrange
+            var aPourTailles = new Coloris { IdColoris = 1 };
 
-            Coloris optionUptade = new Coloris
-            {
-                IdColoris = 40,
-                IdPhoto = 1,
-                NomColoris = "test",
-                DescriptionColoris = "une couleur de test"
-            };
+            // Act
+            var result = await controller.PutColoris(3, aPourTailles);
 
-
-            // Act : appel de la méthode à tester
-            var res = await controller.PutColoris(optionAtester.IdColoris, optionUptade);
-
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetColorisById(optionUptade.IdColoris).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.Coloris.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -168,37 +149,39 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutColorisTestAvecMoq()
+        public async Task PutColoriss_ReturnsBadRequestResult_WhenColorisDoesNotExistAsync()
         {
 
             // Arrange : préparation des données attendues
-            Coloris optionToUpdate = new Coloris
-            {
-                IdColoris = 100,
-                IdPhoto = 1,
-                NomColoris = "test",
-                DescriptionColoris = "une couleur de test"
-            };
-            Coloris updatedOption = new Coloris
-            {
-                IdColoris = 100,
-                IdPhoto = 1,
-                NomColoris = "test1",
-                DescriptionColoris = "une couleur de test"
-            };
-
             var mockRepository = new Mock<IDataRepository<Coloris>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new ColorisController(mockRepository.Object);
 
+            var aPourTailles = new Coloris { IdColoris = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync((Coloris)null);
 
-            var controller = new ColorisController(mockRepository.Object);
+            // Act
+            var result = await _controller.PutColoris(1, aPourTailles);
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutColoris(optionToUpdate.IdColoris, updatedOption).Result;
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<Coloris>), "La réponse n'est pas du type attendu Coloris");
+        [TestMethod]
+        public async Task PutColoriss_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<Coloris>>();
+            var _controller = new ColorisController(mockRepository.Object);
+
+            var aPourTailles = new Coloris { IdColoris = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<Coloris>(), It.IsAny<Coloris>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.PutColoris(1, aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 

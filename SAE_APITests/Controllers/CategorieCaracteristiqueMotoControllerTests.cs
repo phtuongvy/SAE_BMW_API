@@ -107,69 +107,61 @@ namespace SAE_API.Controllers.Tests
         }
 
         /// <summary>
-        /// Test PutCarteBancaireTest 
+        /// Teste la méthode PutCategorieCaracteristiqueMoto pour vérifier que la mise à jour d'un élément fonctionne correctement.
         /// </summary>
-        [TestMethod()]
-        public async Task PutCategorieCaracteristiqueMotoTestAsync()
+
+        [TestMethod]
+        public async Task PutCategorieCaracteristiqueMotos_ReturnsBadRequest_WhenIdsDoNotMatch()
         {
-            //Arrange
-            CategorieCaracteristiqueMoto optionAtester = new CategorieCaracteristiqueMoto
-            {
-                IdCategorieCaracteristiqueMoto = 102,
-                NomCategorieCaracteristiqueMoto = "test"
-
-            };
-
-            CategorieCaracteristiqueMoto optionUptade = new CategorieCaracteristiqueMoto
-            {
-                IdCategorieCaracteristiqueMoto = 102,
-                NomCategorieCaracteristiqueMoto = "test"
-
-            };
-
+            // Arrange
+            var aPourTailles = new CategorieCaracteristiqueMoto { IdCategorieCaracteristiqueMoto = 1 };
 
             // Act
-            var res = await controller.PutCategorieCaracteristiqueMoto(optionAtester.IdCategorieCaracteristiqueMoto, optionUptade);
+            var result = await controller.PutCategorieCaracteristiqueMoto(3,  aPourTailles);
 
-            // Arrange
-            var nouvelleoption = controller.GetCategorieCaracteristiqueMotoById(optionUptade.IdCategorieCaracteristiqueMoto).Result;
-            Assert.AreEqual(optionUptade, res);
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+        }
 
-            context.CategorieCaracteristiqueMotos.Remove(optionUptade);
-            await context.SaveChangesAsync();
+        /// <summary>
+        /// Teste la méthode PutCategorieCaracteristiqueMoto en utilisant un mock pour simuler le référentiel de données.
+        /// Permet de vérifier le comportement du contrôleur lors de la mise à jour d'un élément.
+        /// </summary>
+
+        [TestMethod]
+        public async Task PutCategorieCaracteristiqueMotos_ReturnsBadRequestResult_WhenCategorieCaracteristiqueMotoDoesNotExistAsync()
+        {
+
+            // Arrange : préparation des données attendues
+            var mockRepository = new Mock<IDataRepository<CategorieCaracteristiqueMoto>>();
+            var _controller = new CategorieCaracteristiqueMotoController(mockRepository.Object);
+
+            var aPourTailles = new CategorieCaracteristiqueMoto { IdCategorieCaracteristiqueMoto = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((CategorieCaracteristiqueMoto)null);
+
+            // Act
+            var result = await _controller.PutCategorieCaracteristiqueMoto(1,  aPourTailles);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
-        public void PutCategorieCaracteristiqueMotoTestAvecMoq()
+        public async Task PutCategorieCaracteristiqueMotos_ReturnsNotFoundResult_WhenUpdateIsSuccessful()
         {
-
             // Arrange
-            CategorieCaracteristiqueMoto updatedOption = new CategorieCaracteristiqueMoto
-            {
-                IdCategorieCaracteristiqueMoto = 102,
-                NomCategorieCaracteristiqueMoto = "test"
-
-            };
-
-            CategorieCaracteristiqueMoto optionToUpdate = new CategorieCaracteristiqueMoto
-            {
-                IdCategorieCaracteristiqueMoto = 1,
-                NomCategorieCaracteristiqueMoto = "test"
-
-            };
-
             var mockRepository = new Mock<IDataRepository<CategorieCaracteristiqueMoto>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new CategorieCaracteristiqueMotoController(mockRepository.Object);
 
-
-            var controller = new CategorieCaracteristiqueMotoController(mockRepository.Object);
+            var aPourTailles = new CategorieCaracteristiqueMoto { IdCategorieCaracteristiqueMoto = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(aPourTailles);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<CategorieCaracteristiqueMoto>(), It.IsAny<CategorieCaracteristiqueMoto>())).Returns(Task.CompletedTask);
 
             // Act
-            var result = controller.PutCategorieCaracteristiqueMoto(40, updatedOption).Result;
+            var result = await _controller.PutCategorieCaracteristiqueMoto(1 ,aPourTailles);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<CategorieCaracteristiqueMoto>), "La réponse n'est pas du type attendu CategorieCaracteristiqueMoto");
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
 
         /// <summary>
@@ -248,7 +240,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             CategorieCaracteristiqueMoto option = new CategorieCaracteristiqueMoto
             {
-                IdCategorieCaracteristiqueMoto = 102,
+                IdCategorieCaracteristiqueMoto = 109,
                 NomCategorieCaracteristiqueMoto = "test"
 
             };

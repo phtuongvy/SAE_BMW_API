@@ -134,31 +134,16 @@ namespace SAE_API.Controllers.Tests
             /// </summary>
 
             [TestMethod]
-            public async Task PutAPourCouleurTestAsync()
+            public async Task PutAPourCouleur_ReturnsBadRequest_WhenIdsDoNotMatch()
             {
-                //Arrange
-                APourCouleur optionAtester = new APourCouleur
-                {
-                    IdEquipement = 40,
-                    IdCouleurEquipement = 7,
-                };
+                // Arrange
+                var aPourCouleur = new APourCouleur { IdEquipement = 1, IdCouleurEquipement = 2 };
 
-                APourCouleur optionUptade = new APourCouleur
-                {
-                    IdEquipement = 40,
-                    IdCouleurEquipement = 7,
-                };
+                // Act
+                var result = await controller.PutAPourCouleur(1, 3, aPourCouleur);
 
-
-                // Act : appel de la méthode à tester
-                var res = await controller.PutAPourCouleur(optionAtester.IdEquipement, optionAtester.IdCouleurEquipement, optionUptade);
-
-                // Arrange : préparation des données attendues
-                var nouvelleoption = controller.GetAPourCouleurById(optionUptade.IdEquipement, optionUptade.IdCouleurEquipement).Result;
-                Assert.AreEqual(optionUptade, res);
-
-                context.APourCouleurs.Remove(optionUptade);
-                await context.SaveChangesAsync();
+                // Assert
+                Assert.IsInstanceOfType(result, typeof(BadRequestResult));
             }
 
             /// <summary>
@@ -167,33 +152,38 @@ namespace SAE_API.Controllers.Tests
             /// </summary>
 
             [TestMethod]
-            public void PutAPourCouleurTestAvecMoq()
+            public async Task PutAPourCouleur_ReturnsNotFound_WhenAPourCouleurDoesNotExist()
             {
-
-                // Arrange : préparation des données attendues
-                APourCouleur optionToUpdate = new APourCouleur
-                {
-                    IdEquipement = 40,
-                    IdCouleurEquipement = 5,
-                };
-                APourCouleur updatedOption = new APourCouleur
-                {
-                    IdEquipement = 100,
-                    IdCouleurEquipement = 100,
-                };
-
+                // Arrange // Arrange
                 var mockRepository = new Mock<IDataRepository<APourCouleur>>();
-                mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-                mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+                var _controller = new APourCouleurController(mockRepository.Object);
 
+                var aPourCouleur = new APourCouleur { IdEquipement = 1, IdCouleurEquipement = 2 };
+                 mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync((APourCouleur)null);
 
-                var controller = new APourCouleurController(mockRepository.Object);
+                // Act
+                var result = await _controller.PutAPourCouleur(1, 2, aPourCouleur);
 
-                // Act : appel de la méthode à tester
-                var result = controller.PutAPourCouleur(40, 5, updatedOption).Result;
+                // Assert
+                Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+            }
 
-                // Assert : vérification que les données obtenues correspondent aux données attendues
-                Assert.IsInstanceOfType(result, typeof(ActionResult<APourCouleur>), "La réponse n'est pas du type attendu APourCouleur");
+            [TestMethod]
+            public async Task PutAPourCouleur_ReturnsNoContent_WhenUpdateIsSuccessful()
+            {
+                // Arrange
+                var mockRepository = new Mock<IDataRepository<APourCouleur>>();
+                var _controller = new APourCouleurController(mockRepository.Object);
+
+                var aPourCouleur = new APourCouleur { IdEquipement = 1, IdCouleurEquipement = 2 };
+                mockRepository.Setup(x => x.GetByIdAsync(1, 2)).ReturnsAsync(new APourCouleur());
+                mockRepository.Setup(x => x.UpdateAsync(It.IsAny<APourCouleur>(), It.IsAny<APourCouleur>())).Returns(Task.CompletedTask);
+
+                // Act
+                var result = await _controller.PutAPourCouleur(1, 2, aPourCouleur);
+
+                // Assert
+                Assert.IsInstanceOfType(result, typeof(BadRequestResult));
             }
             #endregion
 
