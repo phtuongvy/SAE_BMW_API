@@ -25,7 +25,7 @@ namespace SAE_API.Models.DataManager
         //recherche par ID moto
         public async Task<ActionResult<RepriseMoto>> GetByIdAsync(int id)
         {
-            return await bmwDBContext.RepriseMotos.FirstOrDefaultAsync(u => u.IdCompteClient == id);
+            return await bmwDBContext.RepriseMotos.FirstOrDefaultAsync(u => u.IdEstimationMoto == id);
         }
         public async Task<ActionResult<RepriseMoto>> GetByIdAsync(int id , int id2)
         {
@@ -33,7 +33,7 @@ namespace SAE_API.Models.DataManager
         }
         public async Task<ActionResult<RepriseMoto>> GetByIdAsync(int id, int? id2, int? id3)
         {
-            throw new NotImplementedException();
+            return await bmwDBContext.RepriseMotos.FirstOrDefaultAsync(u => u.IdCompteClient == id && u.IdCompteClient == id2 && u.IdCompteClient == id3);
         }
         //recherche par nom de moto
         public async Task<ActionResult<RepriseMoto>> GetByStringAsync(string nom)

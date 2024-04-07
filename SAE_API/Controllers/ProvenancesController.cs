@@ -50,7 +50,7 @@ namespace SAE_API.Controllers
         [ActionName("PutProvenance")]
         public async Task<IActionResult> PutProvenance(int id, int id2,Provenance provenance)
         {
-            if (id != provenance.IdConcessionnaire)
+            if (id != provenance.IdCommande)
             {
                 return BadRequest();
             }

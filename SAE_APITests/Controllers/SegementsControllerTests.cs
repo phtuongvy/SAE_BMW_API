@@ -38,7 +38,7 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod()]
-        public void TypeEquipementsControllersTest()
+        public void SegementsControllerTest()
         {
 
         }
