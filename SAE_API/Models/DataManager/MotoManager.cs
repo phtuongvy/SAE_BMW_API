@@ -150,9 +150,9 @@ namespace SAE_API.Models.DataManager
             await bmwDBContext.SaveChangesAsync();
         }
 
-        public Task<ActionResult<Moto>> GetByIdAsync(Int32 id)
+        public async Task<ActionResult<Moto>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await bmwDBContext.Motos.FirstOrDefaultAsync(u => u.MotoId == id);
         }
 
         public Task<ActionResult<IEnumerable<Moto>>> GetByIdAsyncList(int id)

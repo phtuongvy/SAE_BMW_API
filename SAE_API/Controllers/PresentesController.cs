@@ -31,10 +31,10 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetPresenteById")]
-        public async Task<ActionResult<Presente>> GetPresenteById(int id)
+        public async Task<ActionResult<Presente>> GetPresenteById(int id, int id2, int id3)
         {
 
-            var presente = await _presente.GetByIdAsync(id);
+            var presente = await _presente.GetByIdAsync(id,id2,id3);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (presente == null)
             {
@@ -48,13 +48,13 @@ namespace SAE_API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [ActionName("PutPresente")]
-        public async Task<IActionResult> PutPresente(int id, Presente presente)
+        public async Task<IActionResult> PutPresente(int id,int id2, int id3, Presente presente)
         {
             if (id != presente.IdPhoto)
             {
                 return BadRequest();
             }
-            var userToUpdate = await _presente.GetByIdAsync(id);
+            var userToUpdate = await _presente.GetByIdAsync(id,id2,id3);
             if (userToUpdate == null)
             {
                 return NotFound();
@@ -83,9 +83,9 @@ namespace SAE_API.Controllers
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
         [ActionName("DeletePresente")]
-        public async Task<IActionResult> DeletePresente(int id)
+        public async Task<IActionResult> DeletePresente(int id,int id2,int id3)
         {
-            var presente = await _presente.GetByIdAsync(id);
+            var presente = await _presente.GetByIdAsync(id,id2,id3);
             if (presente == null)
             {
                 return NotFound();

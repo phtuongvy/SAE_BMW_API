@@ -28,9 +28,9 @@ namespace SAE_API.Controllers
         // GET: api/Posseders/5
         [HttpGet("IdEquipementMoto{id}/IdMoto{id2}")]
         [ActionName("GetPossederById")]
-        public async Task<ActionResult<Posseder>> GetPossederById(int id)
+        public async Task<ActionResult<Posseder>> GetPossederById(int id,int id2)
         {
-            var posseder = possederManager.GetByIdAsync(id);
+            var posseder = possederManager.GetByIdAsync(id,id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (posseder == null)
             {

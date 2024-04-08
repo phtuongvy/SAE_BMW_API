@@ -29,7 +29,7 @@ namespace SAE_API.Models.DataManager
         }
         public async Task<ActionResult<Posseder>> GetByIdAsync(int id , int id2)
         {
-            return await bmwDBContext.Posseders.FirstOrDefaultAsync(u => u.IdEquipementMoto == id && u.IdMoto == id2);
+            return await bmwDBContext.Posseders.FirstOrDefaultAsync(u => u.IdMoto == id && u.IdEquipementMoto == id2);
         }
         public async Task<ActionResult<Posseder>> GetByIdAsync(int id, int? id2, int? id3)
         {

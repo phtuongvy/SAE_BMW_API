@@ -33,7 +33,7 @@ namespace SAE_API.Models.DataManager
         }
         public async Task<ActionResult<Presente>> GetByIdAsync(int id , int? id2, int? id3)
         {
-            return await bmwDBContext.Presentes.FirstOrDefaultAsync(u => u.IdCouleurEquipement == id && u.IdPhoto == id2 && u.IdEquipement == id3);
+            return await bmwDBContext.Presentes.FirstOrDefaultAsync(u => u.IdPhoto == id && u.IdEquipement == id2 && u.IdCouleurEquipement == id3);
         }
         //recherche par nom de moto
         public async Task<ActionResult<Presente>> GetByStringAsync(string nom)
