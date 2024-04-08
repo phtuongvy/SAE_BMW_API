@@ -23,9 +23,10 @@ namespace SAE_API.Models.DataManager
             return await bmwDBContext.Enregistrers.ToListAsync();
         }
         //recherche par ID moto
-        public async Task<ActionResult<Enregistrer>> GetByIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<Enregistrer>>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return   await bmwDBContext.Enregistrers.Where(u => u.IdCompteClient == id).ToListAsync();
+             
         }
         public async Task<ActionResult<Enregistrer>> GetByIdAsync(int id , int id2)
         {
@@ -71,6 +72,16 @@ namespace SAE_API.Models.DataManager
         public Task<ActionResult<IEnumerable<Object>>> GetAllAsync1()
         {
             throw new NotImplementedException();
+        }
+
+        Task<ActionResult<Enregistrer>> IDataRepository<Enregistrer>.GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ActionResult<IEnumerable<Enregistrer>>> GetByIdAsyncList(int id)
+        {
+            return await bmwDBContext.Enregistrers.Where(u => u.IdCompteClient == id).ToListAsync();
         }
     }
 }

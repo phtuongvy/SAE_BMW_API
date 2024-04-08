@@ -43,6 +43,21 @@ namespace SAE_API.Controllers
             return Enregistrer;
         }
 
+        // GET: api/Utilisateurs/5
+        [HttpGet("IdCompteClient{id}")]
+        [ActionName("GetEnregistrerById")]
+        public async Task<ActionResult<IEnumerable<Enregistrer>>>  GetEnregistrerByIdClient(int id)
+        {
+
+            var Enregistrer = await _Enregistrer.GetByIdAsyncList(id);
+            //var utilisateur = await _context.Utilisateurs.FindAsync(id);
+            if (Enregistrer == null)
+            {
+                return NotFound();
+            }
+            return Enregistrer;
+        }
+
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
