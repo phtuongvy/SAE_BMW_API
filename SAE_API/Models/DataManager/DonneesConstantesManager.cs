@@ -77,5 +77,10 @@ namespace SAE_API.Models.DataManager
         {
             throw new NotImplementedException();
         }
+
+        public Task<ActionResult<IEnumerable<DonneesConstante>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

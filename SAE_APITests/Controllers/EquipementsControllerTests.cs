@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -155,7 +156,7 @@ namespace SAE_API.Controllers.Tests
         /// Test PostEquipementTest 
         /// </summary>
         [TestMethod()]
-        public void PostEquipementTestAvecMoq()
+        public async Task PostEquipementTestAvecMoqAsync()
         {
             // Arrange
             var mockRepository = new Mock<IDataRepository<Equipement>>();
@@ -185,6 +186,9 @@ namespace SAE_API.Controllers.Tests
             Assert.IsInstanceOfType(result.Value, typeof(Equipement), "Pas un Commande");
             equipement.IdEquipement = ((Equipement)result.Value).IdEquipement;
             Assert.AreEqual(equipement, (Equipement)result.Value, "Commande pas identiques");
+
+            context.Equipements.Remove(equipement);
+            await context.SaveChangesAsync();
         }
 
         /// <summary>

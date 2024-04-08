@@ -249,5 +249,10 @@ namespace SAE_API.Models.DataManager
 
             return users;
         }
+
+        public Task<ActionResult<IEnumerable<CompteClient>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

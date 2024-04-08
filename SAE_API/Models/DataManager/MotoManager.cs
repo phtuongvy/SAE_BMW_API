@@ -154,5 +154,10 @@ namespace SAE_API.Models.DataManager
         {
             return await bmwDBContext.Motos.FirstOrDefaultAsync(u => u.MotoId == id);
         }
+
+        public Task<ActionResult<IEnumerable<Moto>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

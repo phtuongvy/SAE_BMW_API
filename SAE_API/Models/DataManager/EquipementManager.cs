@@ -146,6 +146,11 @@ namespace SAE_API.Models.DataManager
             }
 
         }
+
+        public Task<ActionResult<IEnumerable<Equipement>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

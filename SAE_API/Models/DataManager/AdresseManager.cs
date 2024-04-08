@@ -82,6 +82,9 @@ namespace SAE_API.Models.DataManager
             throw new NotImplementedException();
         }
 
-       
+        public Task<ActionResult<IEnumerable<Adresse>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
