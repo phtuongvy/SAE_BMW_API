@@ -83,9 +83,9 @@ namespace SAE_API.Controllers
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
         [ActionName("DeleteDetient")]
-        public async Task<IActionResult> DeleteDetient(int id)
+        public async Task<IActionResult> DeleteDetient(int id , int id2)
         {
-            var Detient = await _Detient.GetByIdAsync(id);
+            var Detient = await _Detient.GetByIdAsync(id, id2);
             if (Detient == null)
             {
                 return NotFound();
