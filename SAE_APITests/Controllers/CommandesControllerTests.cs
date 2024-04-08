@@ -125,30 +125,30 @@ namespace SAE_API.Controllers.Tests
         [TestMethod]
         public void PutCommandeTest_AvecMoq()
         {
-            //Commande commande = new Commande
-            //{
-            //    IdCommande = 100,
-            //    PrixFraisLivraison = 30,
-            //    DateCommande = new DateTime(2003, 3, 10),
-            //    PrixTotal = 100,
-            //};
+           Commande commande = new Commande
+           {
+               IdCommande = 100,
+               PrixFraisLivraison = 30,
+               DateCommande = new DateTime(2003, 3, 10),
+               PrixTotal = 100,
+           };
 
-            //Commande commande2 = new Commande
-            //{
-            //    IdCommande = 100,
-            //    PrixFraisLivraison = 30,
-            //    DateCommande = new DateTime(2003, 3, 10),
-            //    PrixTotal = 100,
-            //};
+           Commande commande2 = new Commande
+           {
+               IdCommande = 100,
+               PrixFraisLivraison = 30,
+               DateCommande = new DateTime(2003, 3, 10),
+               PrixTotal = 100,
+           };
 
-            //mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(userToUpdate);
-            //mockRepository.Setup(x => x.UpdateAsync(userToUpdate, userUpdated)).Returns(Task.CompletedTask);
+           //mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(userToUpdate);
+           //mockRepository.Setup(x => x.UpdateAsync(userToUpdate, userUpdated)).Returns(Task.CompletedTask);
 
-            //// Act
-            //var actionResult = userController.PutUtilisateur(100, userUpdated).Result;
+           //// Act
+           //var actionResult = userController.PutUtilisateur(100, userUpdated).Result;
 
-            //// Assert
-            //Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Not a NoContentResult");
+           // Assert
+           //Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Not a NoContentResult");
 
         }
 
@@ -158,32 +158,33 @@ namespace SAE_API.Controllers.Tests
         [TestMethod()]
         public void PostCommandeTest()
         {
-            //// Arrange
-            //Random rnd = new Random();
-            //int chiffre = rnd.Next(1, 1000000000);
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<Commande>>();
+            var userController = new CommandesController(mockRepository.Object);
 
 
-            //Commande commande = new Commande
-            //{
-            //    IdCommande = 100,
-            //    PrixFraisLivraison = 30,
-            //    DateCommande = new DateTime(10 / 03 / 2003),
-            //    PrixTotal = 100,
-            //};
 
-            //// Act
-            //var result = controller.PostCommande(commande).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+            // Arrange
+            Commande commande1 = new Commande
+            {
+                IdCommande = 100,
+                PrixFraisLivraison = 30,
+                DateCommande = new DateTime(2003, 3, 10),
+                PrixTotal = 100,
+            };
 
-            //// Assert
-            //// On récupère l'utilisateur créé directement dans la BD grace à son mail unique
-            //Commande? userRecupere = context.Commandes
-            //    .Where(u => u.IdCommande == commande.IdCommande)
-            //    .FirstOrDefault();
+            // Act
+            var actionResult = userController.PostCommande(commande1).Result;
+            // Assert
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<Commande>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
 
-            //// On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
-            //// Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
-            //commande.IdCommande = userRecupere.IdCommande;
-            //Assert.AreEqual(userRecupere, commande, "Utilisateurs pas identiques");
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(Commande), "Pas un Commande");
+
+            commande1.IdCommande = ((Commande)result.Value).IdCommande;
+
+            Assert.AreEqual(commande1, (Commande)result.Value, "Commande pas identiques");
         }
         /// <summary>
         /// Test Post Avex MOQ 

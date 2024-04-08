@@ -155,49 +155,57 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             var mockRepository = new Mock<IDataRepository<CompteAdmin>>();
             var userController = new CompteAdminController(mockRepository.Object);
-            var fakeId = 1;
+
+
+
             // Arrange
-            CompteAdmin client = new CompteAdmin
+            CompteAdmin option = new CompteAdmin
             {
-                IdCompteClient = fakeId,
-               
+                IdCompteClient= 31
             };
 
             // Act
-            var actionResult = userController.PostCompteAdmin(client).Result;
+            var actionResult = userController.PostCompteAdmin(option).Result;
             // Assert
-            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
-            var okResult = actionResult.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            var resultValue = okResult.Value as CompteAdmin;
-            Assert.IsNotNull(resultValue);
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteAdmin>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(CompteAdmin), "Pas un Utilisateur");
+
+            option.IdCompteClient = ((CompteAdmin)result.Value).IdCompteClient;
+
+            Assert.AreEqual(option, (CompteAdmin)result.Value, "Utilisateurs pas identiques");
         }
 
         /// <summary>
         /// Test PostCompteAdminTest 
         /// </summary>
-        [TestMethod]
-        public void PostCompteAdminTest()
+        [TestMethod()]
+        public async Task PostCommanderTestAsync()
         {
-            //// Arrange
-            var fakeId = 1;
-            CompteAdmin client = new CompteAdmin
+            // Arrange : préparation des données attendues
+            CompteAdmin compte = new CompteAdmin
             {
-                IdCompteClient = fakeId,
+                IdCompteClient = 33,
             };
-            // Act
-            var actionResult = controller.PostCompteAdmin(client).Result;
-            // Assert
-            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
-            var okResult = actionResult.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            Assert.IsInstanceOfType(okResult.Value, typeof(CompteAdmin), "Pas un CompteAdmin");
-            var clientResult = okResult.Value as CompteAdmin;
-            Assert.IsNotNull(clientResult);
 
-            context.CompteAdmins.Remove(client);
-            context.SaveChangesAsync();
+            // Act : appel de la méthode à tester
+            var result = controller.PostCompteAdmin(compte).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
 
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            CompteAdmin? optionRecupere = context.CompteAdmins
+                .Where(u => u.IdCompteClient == compte.IdCompteClient )
+                .FirstOrDefault();
+
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            compte.IdCompteClient = optionRecupere.IdCompteClient;
+
+            Assert.AreEqual(optionRecupere, compte, "Utilisateurs pas identiques");
+
+            context.CompteAdmins.Remove(compte);
+            await context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -207,7 +215,7 @@ namespace SAE_API.Controllers.Tests
         public void DeleteCompteAdminTest()
         {
             // Arrange
-            var fakeId = 100;
+            var fakeId = 31;
             CompteAdmin client = new CompteAdmin
             {
                 IdCompteClient = fakeId,
@@ -230,7 +238,7 @@ namespace SAE_API.Controllers.Tests
         {
             var mockRepository = new Mock<IDataRepository<CompteAdmin>>();
             var userController = new CompteAdminController(mockRepository.Object);
-            var fakeId = 1;
+            var fakeId = 5;
             // Arrange
             CompteAdmin client = new CompteAdmin
             {
@@ -239,7 +247,7 @@ namespace SAE_API.Controllers.Tests
             };
 
             // Act
-            mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(client);
+            mockRepository.Setup(x => x.GetByIdAsync(client.IdCompteClient).Result).Returns(client);
             var actionResult = userController.DeleteCompteAdmin(client.IdCompteClient).Result;
             // Assert
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour

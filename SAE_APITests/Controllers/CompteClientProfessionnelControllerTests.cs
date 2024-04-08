@@ -61,7 +61,7 @@ namespace SAE_API.Controllers.Tests
             // Act
             var res = controller.GetCompteClientProfessionnels().Result;
             // Assert
-            Assert.AreEqual(client, res.Value.ToList(), "Les listes ne sont pas identiques");
+            CollectionAssert.AreEqual(client, res.Value.ToList(), "Les listes ne sont pas identiques");
         }
 
         /// <summary>
@@ -154,48 +154,58 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             var mockRepository = new Mock<IDataRepository<CompteClientProfessionnel>>();
             var userController = new CompteClientProfessionnelController(mockRepository.Object);
-            var fakeId = 1;
-            // Arrange
-            CompteClientProfessionnel client = new CompteClientProfessionnel
-            {
-                IdCompteClient = fakeId,
 
+
+
+            // Arrange
+            CompteClientProfessionnel option = new CompteClientProfessionnel
+            {
+                IdCompteClient = 31
             };
 
             // Act
-            var actionResult = userController.PostCompteClientProfessionnel(client).Result;
+            var actionResult = userController.PostCompteClientProfessionnel(option).Result;
             // Assert
-            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
-            var okResult = actionResult.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            var resultValue = okResult.Value as CompteClientProfessionnel;
-            Assert.IsNotNull(resultValue);
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<CompteClientProfessionnel>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+
+            var result = actionResult.Result as CreatedAtActionResult;
+            Assert.IsInstanceOfType(result.Value, typeof(CompteClientProfessionnel), "Pas un Utilisateur");
+
+            option.IdCompteClient = ((CompteClientProfessionnel)result.Value).IdCompteClient;
+
+            Assert.AreEqual(option, (CompteClientProfessionnel)result.Value, "Utilisateurs pas identiques");
         }
 
         /// <summary>
         /// Test PostCompteClientProfessionnelTest 
         /// </summary>
         [TestMethod]
-        public void PostCompteClientProfessionnelTest()
+        public async Task PostCompteClientProfessionnelTest()
         {
-            //// Arrange
-            var fakeId = 1;
-            CompteClientProfessionnel client = new CompteClientProfessionnel
+            // Arrange : préparation des données attendues
+            CompteClientProfessionnel compte = new CompteClientProfessionnel
             {
-                IdCompteClient = fakeId,
+                IdCompteClient = 29,
+                NomCompagnie = " test"
             };
-            // Act
-            var actionResult = controller.PostCompteClientProfessionnel(client).Result;
-            // Assert
-            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un OkObjectResult");
-            var okResult = actionResult.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            Assert.IsInstanceOfType(okResult.Value, typeof(CompteClientProfessionnel), "Pas un CompteClientProfessionnel");
-            var clientResult = okResult.Value as CompteClientProfessionnel;
-            Assert.IsNotNull(clientResult);
 
-            context.CompteClientProfessionnels.Remove(client);
-            context.SaveChangesAsync();
+            // Act : appel de la méthode à tester
+            var result = controller.PostCompteClientProfessionnel(compte).Result; // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
+
+            // Assert : vérification que les données obtenues correspondent aux données attendues
+            CompteClientProfessionnel? optionRecupere = context.CompteClientProfessionnels
+                .Where(u => u.IdCompteClient == compte.IdCompteClient)
+                .FirstOrDefault();
+
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            compte.IdCompteClient = optionRecupere.IdCompteClient;
+
+            Assert.AreEqual(optionRecupere, compte, "Utilisateurs pas identiques");
+
+            context.CompteClientProfessionnels.Remove(compte);
+            await context.SaveChangesAsync();
 
         }
 
@@ -206,10 +216,11 @@ namespace SAE_API.Controllers.Tests
         public void DeleteCompteClientProfessionnelTest()
         {
             // Arrange
-            var fakeId = 100;
+            var fakeId = 30;
             CompteClientProfessionnel client = new CompteClientProfessionnel
             {
                 IdCompteClient = fakeId,
+                NomCompagnie = " test"
             };
 
             context.CompteClientProfessionnels.Add(client);
@@ -229,7 +240,7 @@ namespace SAE_API.Controllers.Tests
         {
             var mockRepository = new Mock<IDataRepository<CompteClientProfessionnel>>();
             var userController = new CompteClientProfessionnelController(mockRepository.Object);
-            var fakeId = 1;
+            var fakeId = 5;
             // Arrange
             CompteClientProfessionnel client = new CompteClientProfessionnel
             {
@@ -238,7 +249,7 @@ namespace SAE_API.Controllers.Tests
             };
 
             // Act
-            mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(client);
+            mockRepository.Setup(x => x.GetByIdAsync(client.IdCompteClient).Result).Returns(client);
             var actionResult = userController.DeleteCompteClientProfessionnel(client.IdCompteClient).Result;
             // Assert
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour

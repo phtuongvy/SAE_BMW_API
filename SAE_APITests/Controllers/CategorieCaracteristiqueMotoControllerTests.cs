@@ -240,7 +240,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             CategorieCaracteristiqueMoto option = new CategorieCaracteristiqueMoto
             {
-                IdCategorieCaracteristiqueMoto = 109,
+                IdCategorieCaracteristiqueMoto = 234,
                 NomCategorieCaracteristiqueMoto = "test"
 
             };
@@ -249,7 +249,7 @@ namespace SAE_API.Controllers.Tests
 
             // Act
             CategorieCaracteristiqueMoto option1 = context.CategorieCaracteristiqueMotos.FirstOrDefault(u => u.IdCategorieCaracteristiqueMoto == option.IdCategorieCaracteristiqueMoto);
-
+            _ = controller.DeleteCategorieCaracteristiqueMoto(option.IdCategorieCaracteristiqueMoto).Result;
             // Arrange
             CategorieCaracteristiqueMoto res = context.CategorieCaracteristiqueMotos.FirstOrDefault(u => u.IdCategorieCaracteristiqueMoto == option.IdCategorieCaracteristiqueMoto);
             Assert.IsNull(res, "utilisateur non supprimé");
@@ -263,7 +263,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange
             CategorieCaracteristiqueMoto option = new CategorieCaracteristiqueMoto
             {
-                IdCategorieCaracteristiqueMoto = 102,
+                IdCategorieCaracteristiqueMoto = 201,
                 NomCategorieCaracteristiqueMoto = "test"
 
             };

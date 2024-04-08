@@ -75,7 +75,8 @@ namespace SAE_API.Controllers.Tests
             // Act : appel de la méthode à tester 
             var res = controller.GetColoriss().Result;
             // Assert : vérification que les données obtenues correspondent aux données attendues 
-            Assert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
+            CollectionAssert.AreEqual(expected, res.Value.ToList(), "Les listes ne sont pas identiques");
+
         }
         #endregion
 
