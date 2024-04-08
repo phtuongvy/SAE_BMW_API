@@ -44,8 +44,8 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/Utilisateurs/5
-        [HttpGet("IdCompteClient{id}")]
-        [ActionName("GetEnregistrerById")]
+        [HttpGet("{id}")]
+        [ActionName("GetEnregistrerByIdClient")]
         public async Task<ActionResult<IEnumerable<Enregistrer>>>  GetEnregistrerByIdClient(int id)
         {
 
