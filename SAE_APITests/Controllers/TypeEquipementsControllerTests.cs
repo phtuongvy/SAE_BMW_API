@@ -66,9 +66,9 @@ namespace SAE_API.Controllers.Tests
             public void GetTypeEquipementByIdTest()
             {
                 // Arrange
-                TypeEquipement type = context.TypeEquipements.Find(1);
+                TypeEquipement type = context.TypeEquipements.Find(10);
                 // Act
-                var res = controller.GetTypeEquipementById(1,1).Result;
+                var res = controller.GetTypeEquipementById(10).Result;
                 // Assert
                 Assert.AreEqual(type, res.Value);
             }
@@ -89,8 +89,8 @@ namespace SAE_API.Controllers.Tests
                 };
                 // Act
 
-                mockRepository.Setup(x => x.GetByIdAsync(100, 1).Result).Returns(type);
-                var actionResult = userController.GetTypeEquipementById(100, 1).Result;
+                mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(type);
+                var actionResult = userController.GetTypeEquipementById(100).Result;
                 // Assert
                 Assert.IsNotNull(actionResult);
                 Assert.IsNotNull(actionResult.Value);
@@ -107,7 +107,7 @@ namespace SAE_API.Controllers.Tests
                 TypeEquipement type = context.TypeEquipements.Find(1);
 
                 // Act
-                var res = controller.PutTypeEquipement(1, 1, type);
+                var res = controller.PutTypeEquipement(1, type);
 
                 // Arrange
                 TypeEquipement type_nouveau = context.TypeEquipements.Find(1);
@@ -127,14 +127,14 @@ namespace SAE_API.Controllers.Tests
                 };
 
                 var mockRepository = new Mock<IDataRepository<TypeEquipement>>();
-                mockRepository.Setup(x => x.GetByIdAsync(fakeId, 1))
+                mockRepository.Setup(x => x.GetByIdAsync(fakeId))
                     .ReturnsAsync(typeToUpdate); // Simule la récupération de l'équipement existant
                 mockRepository.Setup(x => x.UpdateAsync(typeToUpdate, typeToUpdate)).Returns(Task.CompletedTask);
 
                 var controller = new TypeEquipementsController(mockRepository.Object);
 
                 // Act
-                var actionResult = controller.PutTypeEquipement(fakeId, 1, typeToUpdate).Result;
+                var actionResult = controller.PutTypeEquipement(fakeId,  typeToUpdate).Result;
 
                 // Assert
                 Assert.IsInstanceOfType(actionResult, typeof(NoContentResult)); // On s'attend à ce qu'aucun contenu ne soit retourné pour une mise à jour réussie
@@ -218,7 +218,7 @@ namespace SAE_API.Controllers.Tests
 
                 // Act
                 TypeEquipement deletedType = context.TypeEquipements.FirstOrDefault(u => u.IdTypeEquipement == type.IdTypeEquipement);
-                _ = controller.DeleteTypeEquipement(deletedType.IdTypeEquipement, 1).Result;
+                _ = controller.DeleteTypeEquipement(deletedType.IdTypeEquipement).Result;
 
                 // Arrange
                 TypeEquipement res = context.TypeEquipements.FirstOrDefault(u => u.IdTypeEquipement == deletedType.IdTypeEquipement);
@@ -240,8 +240,8 @@ namespace SAE_API.Controllers.Tests
                 };
 
                 // Act
-                mockRepository.Setup(x => x.GetByIdAsync(100, 1).Result).Returns(type);
-                var actionResult = userController.DeleteTypeEquipement(type.IdTypeEquipement, 1).Result;
+                mockRepository.Setup(x => x.GetByIdAsync(100).Result).Returns(type);
+                var actionResult = userController.DeleteTypeEquipement(type.IdTypeEquipement).Result;
                 // Assert
                 Assert.IsInstanceOfType(actionResult, typeof(NoContentResult), "Pas un NoContentResult"); // Test du type de retour
             }

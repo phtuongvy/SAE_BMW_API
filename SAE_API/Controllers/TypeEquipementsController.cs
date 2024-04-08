@@ -26,11 +26,11 @@ namespace SAE_API.Controllers
         }
 
         // GET: api/TypeEquipements/5
-        [HttpGet("IdTypeEquipement{id}/IdSurTypeEquipement{id2}")]
+        [HttpGet("IdTypeEquipement{id}")]
         [ActionName("GetTypeEquipementById")]
-        public async Task<ActionResult<TypeEquipement>> GetTypeEquipementById(int id , int id2)
+        public async Task<ActionResult<TypeEquipement>> GetTypeEquipementById(int id )
         {
-            var typeEquipement = typeEquipementManager.GetByIdAsync(id , id2);
+            var typeEquipement = typeEquipementManager.GetByIdAsync(id );
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (typeEquipement == null)
             {
@@ -45,13 +45,13 @@ namespace SAE_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutTypeEquipement(int id,int id2 ,TypeEquipement typeEquipement)
+        public async Task<IActionResult> PutTypeEquipement(int id ,TypeEquipement typeEquipement)
         {
             if (id != typeEquipement.IdTypeEquipement)
             {
                 return BadRequest();
             }
-            var typeEquipementToUpdate = await typeEquipementManager.GetByIdAsync(id, id2);
+            var typeEquipementToUpdate = await typeEquipementManager.GetByIdAsync(id);
             if (typeEquipementToUpdate == null)
             {
                 return NotFound();
@@ -80,9 +80,9 @@ namespace SAE_API.Controllers
         [HttpDelete("IdTypeEquipement{id}/IdSurTypeEquipement{id2}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteTypeEquipement(int id , int id2)
+        public async Task<IActionResult> DeleteTypeEquipement(int id )
         {
-            var typeEquipement = await typeEquipementManager.GetByIdAsync(id , id2);
+            var typeEquipement = await typeEquipementManager.GetByIdAsync(id );
             if (typeEquipement == null)
             {
                 return NotFound();
