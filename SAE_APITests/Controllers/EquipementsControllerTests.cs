@@ -187,15 +187,14 @@ namespace SAE_API.Controllers.Tests
             equipement.IdEquipement = ((Equipement)result.Value).IdEquipement;
             Assert.AreEqual(equipement, (Equipement)result.Value, "Commande pas identiques");
 
-            context.Equipements.Remove(equipement);
-            await context.SaveChangesAsync();
+            
         }
 
         /// <summary>
         /// Test PostEquipementTest 
         /// </summary>
         [TestMethod]
-        public void PostEquipementTest()
+        public async Task PostEquipementTestAsync()
         {
             //// Arrange
 
@@ -222,7 +221,7 @@ namespace SAE_API.Controllers.Tests
             Assert.AreEqual(equipement, (Equipement)result.Value, "Utilisateurs pas identiques");
 
             context.Equipements.Remove(equipement);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
         }
 

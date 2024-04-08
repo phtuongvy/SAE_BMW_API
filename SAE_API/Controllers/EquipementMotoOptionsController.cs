@@ -14,24 +14,24 @@ namespace SAE_API.Controllers
     [ApiController]
     public class EquipementMotoOptionsController : ControllerBase
     {
-        private readonly IDataRepository<EquipementAccessoire> _equipementMotoOptions;
+        private readonly IDataRepository<EquipementMotoOption> _equipementMotoOptions;
 
-        public EquipementMotoOptionsController(IDataRepository<EquipementAccessoire> acquerirRepository)
+        public EquipementMotoOptionsController(IDataRepository<EquipementMotoOption> acquerirRepository)
         {
             this._equipementMotoOptions = acquerirRepository;
         }
 
         [HttpGet]
-        [ActionName("GetEquipementAccessoires")]
-        public async Task<ActionResult<IEnumerable<EquipementAccessoire>>> GetEquipementAccessoires()
+        [ActionName("GetEquipementMotoOptions")]
+        public async Task<ActionResult<IEnumerable<EquipementMotoOption>>> GetEquipementMotoOptions()
         {
             return await _equipementMotoOptions.GetAllAsync();
         }
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
-        [ActionName("GetEquipementAccessoireById")]
-        public async Task<ActionResult<EquipementAccessoire>> GetEquipementAccessoireById(int id)
+        [ActionName("GetEquipementMotoOptionById")]
+        public async Task<ActionResult<EquipementMotoOption>> GetEquipementMotoOptionById(int id)
         {
 
             var acquerir = await _equipementMotoOptions.GetByIdAsync(id);
@@ -47,8 +47,8 @@ namespace SAE_API.Controllers
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [ActionName("PutEquipementAccessoire")]
-        public async Task<IActionResult> PutEquipementAccessoire(int id, EquipementAccessoire acquerir)
+        [ActionName("PutEquipementMotoOption")]
+        public async Task<IActionResult> PutEquipementMotoOption(int id, EquipementMotoOption acquerir)
         {
             if (id != acquerir.IdEquipementMoto)
             {
@@ -69,21 +69,21 @@ namespace SAE_API.Controllers
         // POST: api/Utilisateurs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [ActionName("PostEquipementAccessoire")]
-        public async Task<ActionResult<EquipementAccessoire>> PostEquipementAccessoire(EquipementAccessoire acquerir)
+        [ActionName("PostEquipementMotoOption")]
+        public async Task<ActionResult<EquipementMotoOption>> PostEquipementMotoOption(EquipementMotoOption acquerir)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             await _equipementMotoOptions.AddAsync(acquerir);
-            return CreatedAtAction("GetEquipementAccessoireById", new { id = acquerir.IdEquipementMoto }, acquerir); // GetById : nom de l’action
+            return CreatedAtAction("GetEquipementMotoOptionById", new { id = acquerir.IdEquipementMoto }, acquerir); // GetById : nom de l’action
         }
 
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
-        [ActionName("DeleteEquipementAccessoire")]
-        public async Task<IActionResult> DeleteEquipementAccessoire(int id)
+        [ActionName("DeleteEquipementMotoOption")]
+        public async Task<IActionResult> DeleteEquipementMotoOption(int id)
         {
             var acquerir = await _equipementMotoOptions.GetByIdAsync(id);
             if (acquerir == null)

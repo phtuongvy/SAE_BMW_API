@@ -31,10 +31,10 @@ namespace SAE_API.Controllers
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
         [ActionName("GetFavorisById")]
-        public async Task<ActionResult<Favoris>> GetFavorisById(int id)
+        public async Task<ActionResult<Favoris>> GetFavorisById(int id , int id2)
         {
 
-            var Favoris = await _Favoris.GetByIdAsync(id);
+            var Favoris = await _Favoris.GetByIdAsync(id, id2);
             //var utilisateur = await _context.Utilisateurs.FindAsync(id);
             if (Favoris == null)
             {
@@ -48,9 +48,9 @@ namespace SAE_API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [ActionName("PutFavoris")]
-        public async Task<IActionResult> PutFavoris(int id, Favoris Favoris)
+        public async Task<IActionResult> PutFavoris(int id, int id2, Favoris Favoris)
         {
-            if (id != Favoris.IdCompteClient)
+            if (id != Favoris.IdCompteClient && id2 != Favoris.IdConcessionnaire)
             {
                 return BadRequest();
             }
@@ -83,9 +83,9 @@ namespace SAE_API.Controllers
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
         [ActionName("DeleteFavoris")]
-        public async Task<IActionResult> DeleteFavoris(int id)
+        public async Task<IActionResult> DeleteFavoris(int id ,int id2)
         {
-            var Favoris = await _Favoris.GetByIdAsync(id);
+            var Favoris = await _Favoris.GetByIdAsync(id , id2);
             if (Favoris == null)
             {
                 return NotFound();
