@@ -172,7 +172,7 @@ namespace SAE_API.Controllers.Tests
             var result = await _controller.PutConfigMoto(1, ConfigurationMoto);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
         }
 
         [TestMethod]
@@ -188,7 +188,7 @@ namespace SAE_API.Controllers.Tests
             var result = await _controller.PutConfigMoto(1000, ConfigurationMoto);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
         }
         #endregion
 
@@ -204,7 +204,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1,
+                IdConfigurationMoto = 120,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
@@ -244,7 +244,7 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1,
+                IdConfigurationMoto = 120,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
@@ -255,9 +255,9 @@ namespace SAE_API.Controllers.Tests
             var actionResult = userController.PostConfigMoto(option).Result;
             // Assert : vérification que les données obtenues correspondent aux données attendues
             Assert.IsInstanceOfType(actionResult, typeof(ActionResult<ConfigurationMoto>), "Pas un ActionResult<Utilisateur>");
-            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Pas un CreatedAtActionResult");
 
-            var result = actionResult.Result as CreatedAtActionResult;
+            var result = actionResult.Result as OkObjectResult;
             Assert.IsInstanceOfType(result.Value, typeof(ConfigurationMoto), "Pas un Utilisateur");
 
             option.IdConfigurationMoto = ((ConfigurationMoto)result.Value).IdConfigurationMoto;
@@ -276,7 +276,6 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
