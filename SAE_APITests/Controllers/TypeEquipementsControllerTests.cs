@@ -54,9 +54,9 @@ namespace SAE_API.Controllers.Tests
                 // Arrange
                 List<TypeEquipement> type = context.TypeEquipements.ToList();
                 // Act
-                var res = controller.GetTypeEquipements().Result;
+                var resu = controller.GetTypeEquipements().Result;
                 // Assert
-                CollectionAssert.AreEqual(type, res.Value.ToList(), "Les listes ne sont pas identiques");
+                CollectionAssert.AreEqual(type, resu.Value.ToList(), "Les listes ne sont pas identiques");
             }
 
             /// <summary>
