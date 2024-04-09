@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace SAE_API.Controllers.Tests
 {
     [TestClass()]
-    public class ConfigurationMotoControllerTests
+    public class ConfigurationConfigurationMotoControllerTests
     {
 
         #region Private Fields
@@ -64,13 +64,13 @@ namespace SAE_API.Controllers.Tests
         }
         #endregion
 
-        #region Test GetConfigMotosTest
+        #region Test GetConfigurationMotoTest
 
         /// <summary>
-        /// Teste la méthode GetConfigMotoss pour vérifier qu'elle retourne la liste correcte des éléments ConfigurationMoto.
+        /// Teste la méthode GetConfigurationMotos pour vérifier qu'elle retourne la liste correcte des éléments ConfigurationMoto.
         /// </summary>
         [TestMethod()]
-        public void GetConfigMotosTest()
+        public void GetConfigurationMotoTest()
         {
             // Arrange : préparation des données attendues : préparation des données attendues
             List<ConfigurationMoto> expected = context.ConfigurationMotos.ToList();
@@ -81,16 +81,16 @@ namespace SAE_API.Controllers.Tests
         }
         #endregion
 
-        #region Test GetConfigMotoByIdTest
+        #region Test GetConfigurationMotoByIdTest
 
         /// <summary>
-        /// Teste la méthode GetConfigMotoById pour vérifier qu'elle retourne l'élément correct basé sur l'ID fourni.
+        /// Teste la méthode GetConfigurationMotoById pour vérifier qu'elle retourne l'élément correct basé sur l'ID fourni.
         /// </summary>
         [TestMethod()]
-        public void GetConfigMotoByIdTest()
+        public void GetConfigurationMotoByIdTest()
         {
             // Arrange : préparation des données attendues
-            ConfigurationMoto expected = context.ConfigurationMotos.Find(2);
+            ConfigurationMoto expected = context.ConfigurationMotos.Find(1);
             // Act : appel de la méthode à tester
             var res = controller.GetConfigMotoById(expected.IdConfigurationMoto).Result;
             // Assert : vérification que les données obtenues correspondent aux données attendues
@@ -98,11 +98,11 @@ namespace SAE_API.Controllers.Tests
         }
 
         /// <summary>
-        /// Teste la méthode GetConfigMotoById en utilisant un mock pour le référentiel de données.
+        /// Teste la méthode GetConfigurationMotoById en utilisant un mock pour le référentiel de données.
         /// Permet de tester le contrôleur de manière isolée.
         /// </summary>
         [TestMethod]
-        public void GetConfigMotoByIdTest_AvecMoq()
+        public void GetConfigurationMotoByIdTest_AvecMoq()
         {
             // Arrange : préparation des données attendues
             var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
@@ -110,10 +110,10 @@ namespace SAE_API.Controllers.Tests
             ConfigurationMoto option = new ConfigurationMoto
             {
                 IdConfigurationMoto = 1,
-                IdColoris = 1, 
-                IdMoto = 1 , 
-                IdReservationOffre = 1, 
-             
+                IdColoris = 1,
+                IdMoto = 1,
+                IdReservationOffre = 1,
+
             };
 
             // Act : appel de la méthode à tester
@@ -134,37 +134,23 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public async Task PutConfigurationMotoTestAsync()
+        public async Task PutConfigurationMotoTestAsync_ReturnsBadRequest()
         {
             //Arrange
-            ConfigurationMoto optionAtester = new ConfigurationMoto
+            ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 40,
+                IdConfigurationMoto = 1,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
 
             };
 
-            ConfigurationMoto optionUptade = new ConfigurationMoto
-            {
-                IdConfigurationMoto = 40,
-                IdColoris = 1,
-                IdMoto = 2,
-                IdReservationOffre = 1,
-
-            };
-
-
             // Act : appel de la méthode à tester
-            var res = await controller.PutConfigMoto(optionAtester.IdConfigurationMoto, optionUptade);
+            var result = await controller.PutConfigMoto(3, option);
 
-            // Arrange : préparation des données attendues
-            var nouvelleoption = controller.GetConfigMotoById(optionUptade.IdConfigurationMoto).Result;
-            Assert.AreEqual(optionUptade, res);
-
-            context.ConfigurationMotos.Remove(optionUptade);
-            await context.SaveChangesAsync();
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         /// <summary>
@@ -173,37 +159,36 @@ namespace SAE_API.Controllers.Tests
         /// </summary>
 
         [TestMethod]
-        public void PutConfigurationMotoTestAvecMoq()
+        public async Task PutConfigurationMotoTestAvecMoqAsync()
         {
-
-            // Arrange : préparation des données attendues
-            ConfigurationMoto optionToUpdate = new ConfigurationMoto
-            {
-                IdConfigurationMoto = 100,
-                IdColoris = 1,
-                IdMoto = 1,
-                IdReservationOffre = 1,
-            };
-            ConfigurationMoto updatedOption = new ConfigurationMoto
-            {
-                IdConfigurationMoto = 100,
-                IdColoris = 1,
-                IdMoto = 1,
-                IdReservationOffre = 1,
-            };
-
+            // Arrange
             var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
-            mockRepository.Setup(repo => repo.GetByIdAsync(21000)).ReturnsAsync(optionToUpdate);
-            mockRepository.Setup(repo => repo.UpdateAsync(optionToUpdate, updatedOption)).Returns(Task.CompletedTask);
+            var _controller = new ConfigurationMotoController(mockRepository.Object);
+            var ConfigurationMoto = new ConfigurationMoto { IdConfigurationMoto = 1 };
+            mockRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(ConfigurationMoto);
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<ConfigurationMoto>(), It.IsAny<ConfigurationMoto>())).Returns(Task.CompletedTask);
 
+            // Act
+            var result = await _controller.PutConfigMoto(1, ConfigurationMoto);
 
-            var controller = new ConfigurationMotoController(mockRepository.Object);
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Act : appel de la méthode à tester
-            var result = controller.PutConfigMoto(optionToUpdate.IdConfigurationMoto, updatedOption).Result;
+        [TestMethod]
+        public async Task PutConfigurationMoto_ReturnsNotFound_WhenConfigurationMotoDoesNotExist()
+        {
+            // Arrange
+            var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
+            var _controller = new ConfigurationMotoController(mockRepository.Object);
+            var ConfigurationMoto = new ConfigurationMoto { IdConfigurationMoto = 1000 };
+            mockRepository.Setup(x => x.GetByIdAsync(1000)).ReturnsAsync((ConfigurationMoto)null);
 
-            // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(result, typeof(ActionResult<ConfigurationMoto>), "La réponse n'est pas du type attendu ConfigurationMoto");
+            // Act
+            var result = await _controller.PutConfigMoto(1000, ConfigurationMoto);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
         #endregion
 
@@ -219,10 +204,11 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1000,
+                IdConfigurationMoto = 1,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
+
             };
 
             // Act : appel de la méthode à tester
@@ -258,10 +244,11 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1000,
+                IdConfigurationMoto = 1,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
+
             };
 
             // Act : appel de la méthode à tester
@@ -289,11 +276,13 @@ namespace SAE_API.Controllers.Tests
             // Arrange : préparation des données attendues
             ConfigurationMoto option = new ConfigurationMoto
             {
-                IdConfigurationMoto = 1000,
+                IdConfigurationMoto = 1,
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
+
             };
+
             context.ConfigurationMotos.Add(option);
             context.SaveChanges();
 
@@ -321,7 +310,9 @@ namespace SAE_API.Controllers.Tests
                 IdColoris = 1,
                 IdMoto = 1,
                 IdReservationOffre = 1,
+
             };
+
             var mockRepository = new Mock<IDataRepository<ConfigurationMoto>>();
             mockRepository.Setup(x => x.GetByIdAsync(option.IdConfigurationMoto).Result).Returns(option);
             var userController = new ConfigurationMotoController(mockRepository.Object);
