@@ -39,7 +39,16 @@ namespace SAE_API.Controllers.Tests
             [TestMethod()]
             public void TypeEquipementsControllersTest()
             {
+                // Arrange
+                var builder = new DbContextOptionsBuilder<BMWDBContext>().UseNpgsql("Server = 51.83.36.122; port = 5432; Database = sa25; uid = sa25; password = 1G1Nxb; SearchPath = bmw");
+                context = new BMWDBContext(builder.Options);
+                dataRepository = new TransationManager(context);
 
+                // Act
+                var option = new TransationsController(dataRepository);
+
+                // Assert
+                Assert.IsNotNull(option, "L'instance de MaClasse ne devrait pas être null.");
             }
 
             /// <summary>
