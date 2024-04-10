@@ -33,7 +33,7 @@ namespace SAE_API.Repository
         // Met à jour de manière asynchrone une entité existante en la remplaçant par une nouvelle version.
         Task UpdateAsync(TEntity entityToUpdate, TEntity entity);
         #endregion
-S
+
         #region DeleteAsync
         // Supprime de manière asynchrone une entité spécifiée du référentiel.
         Task DeleteAsync(TEntity entity);
