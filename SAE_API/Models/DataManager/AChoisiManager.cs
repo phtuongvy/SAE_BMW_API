@@ -16,7 +16,6 @@ namespace SAE_API.Models.DataManager
         {
             bmwDBContext = context;
         }
-
         // recherche toute les moto 
         public async Task<ActionResult<IEnumerable<AChoisi>>> GetAllAsync()
         {
@@ -31,15 +30,6 @@ namespace SAE_API.Models.DataManager
         public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int id2)
         {
             return await bmwDBContext.Achoisis.FirstOrDefaultAsync(u => u.IDPack == id && u.IDConfigurationMoto == id2);
-        }
-        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int? id2,int? id3)
-        {
-            throw new NotImplementedException();
-        }
-        //recherche par nom de moto
-        public async Task<ActionResult<AChoisi>> GetByStringAsync(string nom)
-        {
-            throw new NotImplementedException();
         }
         //ajoute une moto 
         public async Task AddAsync(AChoisi entity)
@@ -65,7 +55,10 @@ namespace SAE_API.Models.DataManager
             bmwDBContext.Achoisis.Remove(AChoisi);
             await bmwDBContext.SaveChangesAsync();
         }
-
+        public async Task<ActionResult<AChoisi>> GetByIdAsync(int id, int? id2, int? id3)
+        {
+            throw new NotImplementedException();
+        }
         public Task<ActionResult<Object>> GetByIdCustomAsync1(Int32 id)
         {
             throw new NotImplementedException();
@@ -77,6 +70,11 @@ namespace SAE_API.Models.DataManager
         }
 
         public Task<ActionResult<IEnumerable<AChoisi>>> GetByIdAsyncList(int id)
+        {
+            throw new NotImplementedException();
+        }
+        //recherche par nom de moto
+        public async Task<ActionResult<AChoisi>> GetByStringAsync(string nom)
         {
             throw new NotImplementedException();
         }
