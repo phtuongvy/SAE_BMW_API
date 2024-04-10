@@ -218,10 +218,7 @@ namespace SAE_API.Controllers.Tests
                 .Where(u => u.IDPack == option.IDPack && u.IDConfigurationMoto == option.IDConfigurationMoto)
                 .FirstOrDefault();
 
-            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
-            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
-            option.IDPack = optionRecupere.IDPack;
-            option.IDConfigurationMoto = optionRecupere.IDConfigurationMoto;
+          
             Assert.AreEqual(optionRecupere, option, "Utilisateurs pas identiques");
 
             context.Achoisis.Remove(option);
@@ -251,15 +248,13 @@ namespace SAE_API.Controllers.Tests
             // Act : appel de la méthode à tester
             var actionResult = userController.PostAChoisi(option).Result;
             // Assert : vérification que les données obtenues correspondent aux données attendues
-            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<AChoisi>), "Pas un ActionResult<Utilisateur>");
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<AChoisi>), "Pas un ActionResult<AChoisi>");
             Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult), "Pas un CreatedAtActionResult");
 
             var result = actionResult.Result as CreatedAtActionResult;
-            Assert.IsInstanceOfType(result.Value, typeof(AChoisi), "Pas un Utilisateur");
 
-            option.IDPack = ((AChoisi)result.Value).IDPack;
-            option.IDConfigurationMoto = ((AChoisi)result.Value).IDConfigurationMoto;
-            Assert.AreEqual(option, (AChoisi)result.Value, "Utilisateurs pas identiques");
+            Assert.IsInstanceOfType(result.Value, typeof(AChoisi), "Pas un Utilisateur");
+            Assert.AreEqual(option, (AChoisi)result.Value, "AChoisi pas identiques");
         }
         #endregion
 
